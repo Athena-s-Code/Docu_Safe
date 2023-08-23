@@ -1,9 +1,17 @@
+/* body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Hide scrollbars */
+
+*/
+
 .desktop {
-  background-color: #ffffff;
+  background-color: #ffffff; 
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: auto;
+   flex-direction: row; 
+   justify-content: center; 
+   width: auto;
 }
 
 .desktop .overlap-wrapper {

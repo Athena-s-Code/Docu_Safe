@@ -1,0 +1,38 @@
+
+  /* HomePage.css */
+
+.home-page {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    height: 100vh;
+  }
+  
+  .image-container {
+    display: flex;
+    flex-direction: column; /* Stack image and button vertically */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* background: linear-gradient(180deg, #FF0000 0%, #00FF00 100%); */
+    background: linear-gradient(180deg, #023C80 6.04%, #150042 100%);
+    /* opacity: 0.7; */
+    /* background-color:linear-gradient(45deg, #ff0000 10%, #00ff00 90%);*/
+  } 
+  
+  .image-container img {
+    max-width: 50%;
+    max-height: 50%;
+  }
+  
+  .image-button {
+    margin-top: 10px; /* Add spacing between image and button */
+    padding: 10px 20px;
+    background-color: #15CAF2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4%;
+  }
+  
