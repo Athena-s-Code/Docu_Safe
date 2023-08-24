@@ -1,26 +1,26 @@
 /* Card.css */
 
 .card {
-    padding: 20px;
-    /* border: 1px solid #ccc; */
-    /* border-radius: 8px; */
-    background-color: royalblue;
-    /* margin: 10px; */
-  }
-  
-  .content-container {
-    display: flex;
-    justify-content: space-between;
-    /* align-items: center; */
-  }
-  
-  .text {
-    font-size: 18px;
-  }
-  
-  .content-container img {
-    width: 350px;
-    height: auto;
-    margin-left: 0px; /* Add margin to push image to the right */
-  }
-  
+  padding: 20px;
+  /* border: 1px solid #ccc; */
+  /* border-radius: 8px; */
+  background-color: royalblue;
+  /* margin: 10px; */
+}
+
+.content-container {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.text {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.content-container img {
+  width: 350px;
+  height: auto;
+  margin-left: 0px; /* Add margin to push image to the right */
+}
