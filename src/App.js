@@ -1,18 +1,26 @@
-import React from 'react';
-import './App.css';
-import Home from '../src/component/Home';
-import Footer from './component/Footer/Footer';
-import Header from './component/Header/Header';
-import HomePage from './component/Home/HomePage';
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import "./App.css";
+
+import HomePage from "./component/Home/HomePage";
+import ErrorPage from "./component/Pages/ErrorPage";
+import TestPage from "./component/TestPage/TestPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "", element: <HomePage /> },
+      { path: "test-page", element: <TestPage /> },
+    ],
+  },
+]);
 
 function App() {
-  return (
-  <>
-  <Header/>
-  <HomePage/>
-  {/* <Home /> */}
-  <Footer/>
-  </>);
+  return <RouterProvider router={router} />;
 }
 
 export default App;
