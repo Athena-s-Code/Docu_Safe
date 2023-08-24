@@ -1,44 +1,59 @@
-import React from 'react';
-import './HomePage.css'; // Import your CSS file for styling
-import { Button } from 'antd';
-import { Col, Row } from 'antd';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import imag1 from '../../assets/img.png';
-import imag2 from '../../assets/png.png';
-import Card from '../UI/Card';
+import "./HomePage.css"; // Import  CSS file for styling
+import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import computerImg from "../../assets/img.png";
+import imag2 from "../../assets/png.png";
+import Card from "../UI/Card";
 
 function HomePage() {
+  const navigate = useNavigate();
+
+  function navigateButtonOne() {
+    navigate("/test-page");
+  }
+
+  function navigateButtonTwo() {
+    navigate("/test-page");
+  }
+
+  function navigateButtonThree() {
+    navigate("/test-page");
+  }
+
+  function navigateButtonFour() {
+    navigate("/test-page");
+  }
+
   return (
     <>
-    {/* <Row>
-    <Col span={12}>col-12</Col>
-    <Col span={12}>col-12</Col>
-    </Row>
-    <Row>
-    <Col span={12}>col-12</Col>
-    <Col span={12}>col-12</Col>
-    </Row> */}
-
-    {/* <Button type="primary">Button</Button> */}
-    <Card img={imag2} heading="Docu Safe" text="is a powerful free, open source tool for working with messy data" />
-    <div className="home-page">
-      <div className="image-container">
-        <img src={imag1} alt="Image 1" />
-        <button className="image-button">Button 1</button>
+      <Header />
+      <Card
+        img={imag2}
+        heading="Docu Safe"
+        text="is a powerful free, open source tool for working with messy data"
+      />
+      <div className="home-page">
+        <div className="image-container">
+          <img src={computerImg} alt="computer" />
+          <button className="image-button" onClick={navigateButtonOne}>Data Classification</button>
+        </div>
+        <div className="image-container">
+          <img src={computerImg} alt="computer" />
+          <button className="image-button" onClick={navigateButtonTwo}>Data Encryption</button>
+        </div>
+        <div className="image-container">
+          <img src={computerImg} alt="computer" />
+          <button className="image-button" onClick={navigateButtonThree}>Data Highlight & Hidden</button>
+        </div>
+        <div className="image-container">
+          <img src={computerImg} alt="computer" />
+          <button className="image-button" onClick={navigateButtonFour}>Data Hygiene solutions</button>
+        </div>
       </div>
-      <div className="image-container">
-        <img src={imag1} alt="Image 2" />
-        <button className="image-button">Button 1</button>
-      </div>
-      <div className="image-container">
-        <img src={imag1} alt="Image 3" />
-        <button className="image-button">Button 1</button>
-      </div>
-      <div className="image-container">
-        <img src={imag1} alt="Image 4" />
-        <button className="image-button">Button 1</button>
-      </div>    </div> 
-
+      <Footer />
     </>
   );
 }
