@@ -35,6 +35,8 @@
     flex: 3;
     /* background-color: #ffa726; */
     padding-top: 2%;
+    max-width: 400px;
+    margin: auto;
   }
   
   .column2 {
@@ -127,20 +129,6 @@
   }
   
 
-  
-  .colTopic{
-    color: #ffffff;
-    font-family: "Inter-ExtraBold", Helvetica;
-    font-size: 24px;
-    font-weight: 800;
-    left: 0;
-    letter-spacing: 0;
-    line-height: 40px;
-    text-align: center;
-    top: 0;
-    white-space: nowrap;
-    width: 216px;
-  }
   .password-input {
     margin-right: 10px; /* Adjust as needed */
     padding: 8px; /* Adjust as needed */
@@ -149,8 +137,9 @@
     color: #000;
     font-family: "Inter-Regular", Helvetica;
     font-size: 14px;
-    width: 120px; /* Adjust the width as needed */
-    
+    width: 1200px; /* Adjust the width as needed */
+    height: 85px;
+  
     display: inline-flex;
   align-items: center;
   justify-content: center;

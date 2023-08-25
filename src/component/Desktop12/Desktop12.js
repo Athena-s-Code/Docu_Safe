@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import "./Desktop3.css";
+import "./Desktop12.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
-import imageSrc from '../..//assets/dataHygiene2.png';
+import imageSrc from '../..//assets/dataClassification2.png';
 
-function Desktop3() {
+function Desktop12() {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
@@ -19,15 +17,15 @@ function Desktop3() {
     <div>
       <Header></Header>
       <HeadingBox
-        text="Data Hygiene Solution"
-        image="dataHygiene.png"
-        alt="image of data hygiene solution"
+        text="Data Classification"
+        image="dataClassification.png"
+        alt="image of data classification"
       ></HeadingBox>
       <div className="container">
         <div className="row row1">
           <div className="underline-container">
             <h3>
-              <span className="underline">Data Hygiene Solution</span>
+              <span className="underline">Data Classification</span>
             </h3>
           </div>
         </div>
@@ -41,8 +39,7 @@ function Desktop3() {
             <div className="row column1_row1">
             <div className="label">
             <p className="text-wrapper">
-            Duplication Recodes, Missing Values, Inconsistent Formatting if present in your files or images, can be
-            identified here you can also get real time data backup and voice activated control facility.
+            Data Classification is a crucial task in the field of data science and it’s importance has increased significantly with the rise of digital data. In here we classify data from text document format and image format.
             </p>
         </div>
             </div>
@@ -58,20 +55,15 @@ function Desktop3() {
 
           <div className="column column3">
             <div className="row column1_row1">
-            <GradientButton 
-                    startGradientColor="rgb(10, 111, 168)" // Start color
-                    endGradientColor="rgb(5, 167, 244)" 
-                    link="#" 
-                    buttonText="Link with your own real time data backup storage"
-                    />   
+            
 
                 <img src={imageSrc} alt="Image" className="image" />
                 <GradientButton 
                     startGradientColor="rgb(10, 111, 168)" // Start color
                     endGradientColor="rgb(5, 167, 244)" 
                     link="#" 
-                    buttonText="Active voice control"
-                    icon={<FontAwesomeIcon icon={faMicrophone} />}  />    
+                    buttonText="Next"
+                      />    
             </div>
           </div>
         </div>
@@ -84,4 +76,4 @@ function Desktop3() {
     </div>
   );
 }
-export default Desktop3;
+export default Desktop12;
