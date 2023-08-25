@@ -5,6 +5,7 @@
   justify-content: space-between;
   background: linear-gradient(180deg, #023c80 6.04%, #150042 100%);
   padding-bottom: 50px;
+  padding-left: 20px;
 }
 
 .row {
@@ -67,6 +68,7 @@
 .underline-container {
   display: inline-block;
   position: relative;
+  margin-left: 110px;
 }
 
 .underline {
@@ -159,14 +161,6 @@
 }
 .image {
   max-width: auto; /* Set the maximum width of the image */
-  margin-top: 10%;
-  margin-bottom: 10%;
-}
-
-.top_button {
-  padding-right: 20%;
-  margin-right: 20%;
-  margin-left: 20%;
-  align-self: center;
-  align-items: center;
+  margin-top: 8%;
+  margin-bottom: 8%;
 }

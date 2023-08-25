@@ -1,31 +1,30 @@
 .gradient-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 40px;
-    border: 2px solid #15caf2;
-    border-radius: 10px;
-    color: #ffffff;
-    font-family: "Inter-ExtraBold", Helvetica;
-    font-size: 24px;
-    font-weight: 800;
-    text-align: center;
-    text-decoration: none;
-    transition: background 0.3s;
-    margin-top: 10px;   /* Add spacing above the icon */
-    margin-bottom: 10px;
-    min-width: 100%;
-    
- }
-  .button-icon {
-    margin-right: 10px;
-    margin-top: 10px;   /* Add spacing above the icon */
-    margin-bottom: 10px; /* Add spacing between icon and text */
-  }
-  .buttonText {
-    padding: 10px 10px; /* Add padding to the top and bottom of the text */
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 40px;
+  border: 2px solid #15caf2;
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: "Inter-ExtraBold", Helvetica;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s;
+  margin-top: 10px; /* Add spacing above the icon */
+  margin-bottom: 10px;
+  min-width: 100%;
+}
+.button-icon {
+  margin-right: 10px;
+  margin-top: 10px; /* Add spacing above the icon */
+  margin-bottom: 10px; /* Add spacing between icon and text */
+}
+.buttonText {
+  padding: 10px 10px; /* Add padding to the top and bottom of the text */
+}
 
-  .custom-width {
-    width: auto !important; /* Reset width to auto */
-  }
+.custom-width {
+  width: auto !important; /* Reset width to auto */
+}

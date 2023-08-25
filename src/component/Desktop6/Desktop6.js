@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import "./Desktop3.css";
+import "./Desktop6.css";
 import GradientButton from "../UI/GradientButton";
-import CurvedButton from "../UI/CurvedButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
-import imageSrc from "../..//assets/dataHygiene2.png";
+import imageSrc from "../..//assets/mobile_encryption.png";
 
-function Desktop3() {
+function Desktop6() {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
@@ -20,15 +17,15 @@ function Desktop3() {
     <div>
       <Header></Header>
       <HeadingBox
-        text="Data Hygiene Solution"
-        image="dataHygiene.png"
+        text="Data Encryption and Decryption"
+        image="Data_Encryption&Decryption.png"
         alt="image of data hygiene solution"
       ></HeadingBox>
       <div className="container">
         <div className="row row1">
           <div className="underline-container">
             <h3>
-              <span className="underline">Data Hygiene Solution</span>
+              <span className="underline">Data Encryption and Decryption</span>
             </h3>
           </div>
         </div>
@@ -38,10 +35,13 @@ function Desktop3() {
             <div className="row column1_row1">
               <div className="label">
                 <p className="text-wrapper">
-                  Duplication Recodes, Missing Values, Inconsistent Formatting
-                  if present in your files or images, can be identified here you
-                  can also get real time data backup and voice activated control
-                  facility.
+                  Offers a state-of-the-art hybrid cryptography system,
+                  utilizing three advanced algorithms to ensure the utmost
+                  security and seamlessness in protecting your sensitive data.
+                  <br></br> <br></br>
+                  You can easily safeguard your information without compromising
+                  on ease of use. Trust us to keep your data safe and secure
+                  with our cutting-edge solution.
                 </p>
               </div>
             </div>
@@ -55,23 +55,23 @@ function Desktop3() {
 
           <div className="column column3">
             <div className="row column1_row1">
-              <div className="top_button">
-                <GradientButton
-                  startGradientColor="rgb(10, 111, 168)" // Start color
-                  endGradientColor="rgb(5, 167, 244)"
-                  width="950px"
-                  height="60px"
-                  link="#"
-                  buttonText="Link with your own real time data backup storage"
-                />
-              </div>
+              <GradientButton
+                startGradientColor="rgb(10, 111, 168)" // Start color
+                endGradientColor="rgb(5, 167, 244)"
+                link="#"
+                width="400px"
+                height="60px"
+                buttonText="Encryption"
+              />
+
               <img src={imageSrc} alt="Image" className="image" />
               <GradientButton
                 startGradientColor="rgb(10, 111, 168)" // Start color
                 endGradientColor="rgb(5, 167, 244)"
                 link="#"
-                buttonText="Active voice control"
-                icon={<FontAwesomeIcon icon={faMicrophone} />}
+                width="400px"
+                height="60px"
+                buttonText="Decryption"
               />
             </div>
           </div>
@@ -82,4 +82,4 @@ function Desktop3() {
     </div>
   );
 }
-export default Desktop3;
+export default Desktop6;
