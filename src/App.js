@@ -6,7 +6,10 @@ import "./App.css";
 import HomePage from "./component/Home/HomePage";
 import ErrorPage from "./component/Pages/ErrorPage";
 import TestPage from "./component/TestPage/TestPage";
-import Desktop9 from "./component/Pages/DeskTop9";
+import Desktop3 from "./component/Desktop3/Desktop3";
+import Desktop4 from "./component/Desktop4/Desktop4";
+import Desktop5 from "./component/Desktop5/Desktop5";
+import Desktop10 from "./component/Desktop10/Desktop10";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +19,10 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <HomePage /> },
       { path: "test-page", element: <TestPage /> },
-      { path: "desktop9", element: <Desktop9 /> },
+      { path: "desktop10", element: <Desktop10 /> },
+      { path: "desktop3", element: <Desktop3 /> },
+      { path: "desktop4", element: <Desktop4 /> },
+      { path: "desktop5", element: <Desktop5 /> },
     ],
   },
 ]);
