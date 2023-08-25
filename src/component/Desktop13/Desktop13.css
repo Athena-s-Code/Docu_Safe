@@ -27,10 +27,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     /* background-color: #150042; */
   }
-
   
   .column1,
   .column3 {
@@ -40,30 +38,40 @@
   }
   
   .column2 {
-    
+    display: flex;
     /* background-color: #8d6222; */
     flex-direction: column;
     align-items: center; /* Center horizontally */
     justify-content: center; /* Center vertically */
-    flex: 1;
-    
+    flex: 3;
+    padding-top: 5%;
+    padding-bottom: 5%;
   }
   
   
   .column1_row1 {
-    flex: 1;
+    flex: 3;
     display: flex;
     flex-direction: column;
-    align-items: left;  
-    justify-content: top;
+    align-items: center;  
     /* background-color: #880c40; */
-  
     
+    margin-bottom: 10px;
+  
   
     
   }
   
+  .column1_row2 {
+    /* background-color: #23ddc4; */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items:end;
+  
     
+  }
+  
   .column1_row {
     /* background-color: #23ddc4; */
     flex: 1;
@@ -73,7 +81,22 @@
   
     
   }
- 
+  .column1_row3{
+    /* background-color: #23ddc4; */
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    margin-right: 3%;
+    padding-top: 10%;
+  
+  }
+  .column1_row4{
+    /* background-color: #23ddc4; */
+    display: flex;
+    justify-content: flex-start; /* Align items to the right */
+    margin-left: 3%;
+    padding-top: 10%;
+  
+  }
   .underline-container {
     display: inline-block; 
     position: relative; 
@@ -103,6 +126,7 @@
     background-color: rgb(20, 191, 221); /* Set the color of the underline */
   }
   
+
   
   .colTopic{
     color: #ffffff;
@@ -117,62 +141,4 @@
     white-space: nowrap;
     width: 216px;
   }
-  .colDesc{
-    color: #ffffff;
-    font-family: "Inter-ExtraBold", Helvetica;
-    font-size: 14px;
-    font-weight: 800;
-    left: 0;
-    letter-spacing: 0;
-    line-height: 40px;
-    text-align: center;
-    top: 0;
-    white-space: nowrap;
-    width: 216px;
-  }
- 
-.two-column-layout {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  height: 100vh; /* Adjust the height as needed */
-}
-
-
-.left-column {
-  display: flex;
-  flex-direction: column; /* Arrange content in a column */
-  align-items: flex-start; /* Align content to the top */
-  justify-content: flex-start;
-}
-.right-column {
-  justify-content: flex-start;
-}
-.horizontal-line {
-  width: 1px;
-  background-color: #ccc;
-  height: 70vb;
   
-}
-.label {
-  height: 260px;
-  width: 608px;
-}
-
-.label .text-wrapper {
-  color: #ffffff;
-  font-family: "Inter-Regular", Helvetica;
-  font-size: 24px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 40px;
-  
-  top: 0;
-  width: 608px;
-}
-.image {
-  max-width: auto; /* Set the maximum width of the image */
-  margin-top: ;
-  margin-bottom: 10%;
-}
-
