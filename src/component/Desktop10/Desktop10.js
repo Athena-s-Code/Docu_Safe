@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import "./Desktop10.css";
 import RadioButton from "../UI/RadioButton";
 import CurvedButton from "../UI/CurvedButton";
@@ -16,7 +16,11 @@ function Desktop10() {
   return (
     <div>
       <Header></Header>
-      <HeadingBox text="Data Highlighting & Hiding" image="dataHighliting.png" alt="image of data highliting and hiding"></HeadingBox>
+      <HeadingBox
+        text="Data Highlighting & Hiding"
+        image="dataHighliting.png"
+        alt="image of data highliting and hiding"
+      ></HeadingBox>
       <div className="container">
         <div className="row row1">
           <div className="underline-container">
@@ -49,41 +53,41 @@ function Desktop10() {
 
           <div className="column column2">
             <div className="column2Content">
-            <div className="radio-container">
-              <label>
-                <input
-                  type="radio"
-                  value="PIT Data"
-                  checked={selectedOption === "PIT Data"}
-                  onChange={handleOptionChange}
-                />
-                PIT Data
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="Payment Details"
-                  checked={selectedOption === "Payment Details"}
-                  onChange={handleOptionChange}
-                />
-                Payement Details
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="Agreements"
-                  checked={selectedOption === "Agreements"}
-                  onChange={handleOptionChange}
-                />
-                Agreements
-              </label>
-            </div>
-            <CurvedButton
-              text="Highlight"
-              backgroundColor="#00ff00"
-              width="264px"
-              height="60px"
-            />
+              <div className="radio-container">
+                <label>
+                  <input
+                    type="radio"
+                    value="PIT Data"
+                    checked={selectedOption === "PIT Data"}
+                    onChange={handleOptionChange}
+                  />
+                  PIT Data
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="Payment Details"
+                    checked={selectedOption === "Payment Details"}
+                    onChange={handleOptionChange}
+                  />
+                  Payement Details
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="Agreements"
+                    checked={selectedOption === "Agreements"}
+                    onChange={handleOptionChange}
+                  />
+                  Agreements
+                </label>
+              </div>
+              <CurvedButton
+                text="Highlight"
+                backgroundColor="#00ff00"
+                width="264px"
+                height="60px"
+              />
             </div>
           </div>
 
