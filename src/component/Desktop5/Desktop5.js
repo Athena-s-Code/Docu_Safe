@@ -38,6 +38,7 @@ function Desktop5() {
                     startGradientColor="rgb(255, 198.9, 0)" // Start color
                     endGradientColor="rgb(248.32, 255, 171.49)" 
                     link="#" 
+                    width="1260px"
                     buttonText="After verifying you can view the file "
                 
                     />
