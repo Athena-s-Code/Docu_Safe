@@ -17,7 +17,23 @@
     padding-left: 20px;
     /* background-color: lightgray; */
   }
-  
+  .button-wrapper {
+    display: flex;
+    gap: 100px; /* Adjust the gap as needed to control spacing between buttons */
+    justify-content: center;
+    align-items: center;
+  }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .row4 {
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly across the container */
+    margin-top: 20px;
+    
+  }
   .row2 {
     flex: 1;
     /* background-color: lightblue;  */
@@ -35,8 +51,6 @@
     flex: 3;
     /* background-color: #ffa726; */
     padding-top: 2%;
-    max-width: 400px;
-    margin: auto;
   }
   
   .column2 {
@@ -129,39 +143,18 @@
   }
   
 
-  .password-input {
-    margin-right: 10px; /* Adjust as needed */
-    padding: 8px; /* Adjust as needed */
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    color: #000;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 14px;
-    width: 1200px; /* Adjust the width as needed */
-    height: 85px;
   
-    display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  min-width: 200px;
-  border: 2px solid #15caf2;
-  border-radius: 10px;
-  color: #ffffff;
-  font-family: "Inter-ExtraBold", Helvetica;
-  font-size: 24px;
-  font-weight: 800;
-  text-align: center;
-  text-decoration: none;
-  transition: background 0.3s;
-
-  /* Additional input-specific styles */
-  margin-right: 10px; /* Adjust as needed */
-  padding: 8px; /* Adjust as needed */
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  color: #000;
-  font-family: "Inter-Regular", Helvetica;
-  font-size: 14px;
-  width: 120px; /* Adjust the width as needed */
+  .colTopic{
+    color: #ffffff;
+    font-family: "Inter-ExtraBold", Helvetica;
+    font-size: 24px;
+    font-weight: 800;
+    left: 0;
+    letter-spacing: 0;
+    line-height: 40px;
+    text-align: center;
+    top: 0;
+    white-space: nowrap;
+    width: 216px;
   }
+  

@@ -24,7 +24,7 @@ function HomePage() {
   }
 
   function navigateButtonFour() {
-    navigate("/test-page");
+    navigate("/desktop3");
   }
 
   return (

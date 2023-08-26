@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Desktop3.css";
 import GradientButton from "../UI/GradientButton";
-import CurvedButton from "../UI/CurvedButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
@@ -46,13 +45,10 @@ function Desktop3() {
               </div>
             </div>
           </div>
-
-          <div className="column">
-            <div className="row column1_row1">
-              <div className="horizontal-line"></div>
-            </div>
+          <div className="column"></div>
+          <div className="row column2_row1">
+            <div className="horizontal-line"></div>
           </div>
-
           <div className="column column3">
             <div className="row column1_row1">
               <div className="top_button">

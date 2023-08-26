@@ -43,7 +43,7 @@ function Desktop5() {
                 
                     />
            </div>
-           <div className="column1_row1">
+           <div className="column2">
            <input
         type="password"
         value={password}
@@ -55,9 +55,9 @@ function Desktop5() {
         <div className="row row2">
         
         
-          <div className="column column1">
+          <div className="column1">
             
-            <div className="row column1_row1">
+            
               
               <GradientButton 
                     startGradientColor="rgb(10, 111, 168)" // Start color
@@ -65,16 +65,13 @@ function Desktop5() {
                     link="#" 
                     buttonText="View"
                     />  
-            </div>
-            <div className="row column1_row3">
-              
-            </div>
+            
           </div>
 
          
 
-          <div className="column column3">
-            <div className="row column1_row1">
+          <div className="column3 ">
+            
               
               <GradientButton 
                     startGradientColor="rgb(10, 111, 168)" // Start color
@@ -82,7 +79,7 @@ function Desktop5() {
                     link="#" 
                     buttonText="Download"
                     />  
-            </div>
+            
             
             
           </div>
