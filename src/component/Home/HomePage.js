@@ -5,7 +5,6 @@ import "./HomePage.css"; // Import  CSS file for styling
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import computerImg from "../../assets/img.png";
-import imag2 from "../../assets/png.png";
 import Card from "../UI/Card";
 
 function HomePage() {
@@ -30,11 +29,7 @@ function HomePage() {
   return (
     <>
       <Header />
-      <Card
-        img={imag2}
-        heading="Docu Safe"
-        text="is a powerful free, open source tool for working with messy data"
-      />
+      <Card/>
       <div className="home-page">
         <div className="image-container">
           <img src={computerImg} alt="computer" />
