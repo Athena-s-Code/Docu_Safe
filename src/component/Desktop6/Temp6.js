@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Desktop6.css";
+import "./Temp.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
