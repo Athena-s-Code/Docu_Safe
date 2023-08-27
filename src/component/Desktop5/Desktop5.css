@@ -1,0 +1,167 @@
+.container {
+    color: white; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(180deg, #023c80 6.04%, #150042 100%);
+    padding-bottom: 50px;
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .row1 {
+    height: 10%;
+    align-items: center; 
+    padding-left: 20px;
+    /* background-color: lightgray; */
+  }
+  
+  .row2 {
+    flex: 1;
+    /* background-color: lightblue;  */
+  }
+  
+  .column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* background-color: #150042; */
+  }
+  
+  .column1,
+  .column3 {
+    flex: 3;
+    /* background-color: #ffa726; */
+    padding-top: 2%;
+    max-width: 400px;
+    margin: auto;
+  }
+  
+  .column2 {
+    display: flex;
+    /* background-color: #8d6222; */
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    flex: 3;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  
+  
+  .column1_row1 {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    /* background-color: #880c40; */
+    
+    margin-bottom: 10px;
+  
+  
+    
+  }
+  
+  .column1_row2 {
+    /* background-color: #23ddc4; */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items:end;
+  
+    
+  }
+  
+  .column1_row {
+    /* background-color: #23ddc4; */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items:start;
+  
+    
+  }
+  .column1_row3{
+    /* background-color: #23ddc4; */
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    margin-right: 3%;
+    padding-top: 10%;
+  
+  }
+  .column1_row4{
+    /* background-color: #23ddc4; */
+    display: flex;
+    justify-content: flex-start; /* Align items to the right */
+    margin-left: 3%;
+    padding-top: 10%;
+  
+  }
+  .underline-container {
+    display: inline-block; 
+    position: relative; 
+  }
+  
+  .underline {
+    position: relative;
+    text-decoration: none; 
+    color: #ffffff;
+    font-family: "Inter-ExtraBold", Helvetica;
+    font-size: 32px;
+    font-weight: 800;
+    left: 0;
+    letter-spacing: 0;
+    line-height: 40px;
+    top: 0;
+    white-space: nowrap;
+  }
+  
+  .underline::before {
+    content: ""; 
+    position: absolute;
+    bottom: -6px; /* Adjust the distance of the underline from the text */
+    left: 0; /* Start the underline from the beginning of the text */
+    width: 84%; /* Extend the underline across the entire text */
+    height: 3px; /* Set the height of the underline */
+    background-color: rgb(20, 191, 221); /* Set the color of the underline */
+  }
+  
+
+  .password-input {
+    margin-right: 10px; /* Adjust as needed */
+    padding: 8px; /* Adjust as needed */
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    color: #000;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 14px;
+    width: 1200px; /* Adjust the width as needed */
+    height: 85px;
+  
+    display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  min-width: 200px;
+  border: 2px solid #15caf2;
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: "Inter-ExtraBold", Helvetica;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s;
+
+  /* Additional input-specific styles */
+  margin-right: 10px; /* Adjust as needed */
+  padding: 8px; /* Adjust as needed */
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  color: #000;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 14px;
+  width: 120px; /* Adjust the width as needed */
+  }
