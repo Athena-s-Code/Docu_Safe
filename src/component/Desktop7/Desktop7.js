@@ -28,7 +28,7 @@ function Desktop7() {
             </h3>
           </div>
         </div>
-        <div className="top_container">
+        <div className="top_container1">
           <div className="iteam_container ">
             <p className="colTopic">Text File</p>
           </div>
