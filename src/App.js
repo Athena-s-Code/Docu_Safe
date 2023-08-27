@@ -16,6 +16,9 @@ import Desktop10 from "./component/Desktop10/Desktop10";
 import Desktop12 from "./component/Desktop12/Desktop12";
 import Desktop13 from "./component/Desktop13/Desktop13";
 import Desktop14 from "./component/Desktop14/Desktop14";
+import Desktop9 from "./component/Desktop9/Desktop9";
+import Desktop11 from "./component/Desktop11/Desktop11";
+
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,9 @@ const router = createBrowserRouter([
       { path: "desktop12", element: <Desktop12 /> },
       { path: "desktop13", element: <Desktop13 /> },
       { path: "desktop14", element: <Desktop14 /> },
+      { path: "desktop9", element: <Desktop9 /> },
+      { path: "desktop11", element: <Desktop11 /> },
+
     ],
   },
 ]);

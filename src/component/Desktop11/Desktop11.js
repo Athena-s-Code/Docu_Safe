@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "./Desktop10.css";
-import CurvedButton from "../UI/CurvedButton";
-import Footer from "../Footer/Footer";
+import "./Desktop11.css";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import Footer from "../Footer/Footer";
+import CurvedButton from "../UI/CurvedButton";
 
-function Desktop10() {
+function Desktop11() {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
@@ -24,7 +24,7 @@ function Desktop10() {
         <div className="row d11row1">
           <div className="underline-container">
             <h3>
-              <span className="underline">Data Highlighting</span>
+              <span className="underline">Data Hiding</span>
             </h3>
           </div>
         </div>
@@ -84,7 +84,7 @@ function Desktop10() {
             </div>
             <div className="row d11col2row2">
               <CurvedButton
-                text="Highlight"
+                text="Hide"
                 backgroundColor="#00ff00"
                 width="264px"
                 height="60px"
@@ -118,4 +118,5 @@ function Desktop10() {
     </div>
   );
 }
-export default Desktop10;
+
+export default Desktop11;

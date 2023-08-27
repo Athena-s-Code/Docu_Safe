@@ -1,0 +1,113 @@
+.d11row1 {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5%;
+}
+
+.d11row2 {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: center;
+  padding-top: 3%;
+}
+
+.d11col2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5%;
+}
+
+.d11col1row1 {
+  padding-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.d11col3row1 {
+  padding-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.d11col1row2 {
+  padding-bottom: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.d11col3row2 {
+  padding-bottom: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.d11col1row3 {
+  padding-top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: end;
+  padding-right: 5%;
+}
+
+.d11col3row3 {
+  padding-top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  padding-left: 5%;
+}
+
+.d11RadioButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  padding-bottom: 60px;
+}
+
+.d11RadioButtonsLable {
+  font-family: "Inter-ExtraBold", Helvetica;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.d11col1row1Topic {
+  color: #ffffff;
+  font-family: "Inter-ExtraBold", Helvetica;
+  font-size: 24px;
+  font-weight: 800;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 40px;
+  text-align: center;
+  top: 0;
+  white-space: nowrap;
+  width: 216px;
+}
+
+.d11col3row1Topic {
+  color: #ffffff;
+  font-family: "Inter-ExtraBold", Helvetica;
+  font-size: 24px;
+  font-weight: 800;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 40px;
+  text-align: center;
+  top: 0;
+  white-space: nowrap;
+  width: 216px;
+}
