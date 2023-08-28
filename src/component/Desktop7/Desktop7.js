@@ -55,13 +55,13 @@ function Desktop7() {
           </div>
         </div>
         <div className="middle_container">
-          <div className="iteam_container ">
+          <div className="iteam_container_middle">
             <GradientButton
               startGradientColor="rgb(146.62, 0, 0)" // Start color
               endGradientColor="rgb(255, 86.14, 63.11)"
               link="#"
               height="48px"
-              width="1040px"
+              width="1160px"
               buttonText=""
             />
           </div>
