@@ -21,11 +21,11 @@ function GradientButton({
   return (
     <div>
       <Link to={link} className="gradient-button" style={buttonStyle}>
-      {/* <a href={link} className="gradient-button" style={buttonStyle}> */}
+      
         {icon && <span className="button-icon">{icon}</span>}
         <p className="buttonText">{buttonText}</p>
         </Link>
-      {/* </a> */}
+     
     </div>
   );
 }
