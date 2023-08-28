@@ -19,7 +19,6 @@ import Desktop14 from "./component/Desktop14/Desktop14";
 import Desktop9 from "./component/Desktop9/Desktop9";
 import Desktop11 from "./component/Desktop11/Desktop11";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,20 +26,27 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "", element: <HomePage /> },
-      { path: "test-page", element: <TestPage /> },
-      { path: "desktop10", element: <Desktop10 /> },
+      // { path: "test-page", element: <TestPage /> },
+
+      //done
+      { path: "/desktop6", element: <Desktop6 /> },
+      { path: "/desktop6/desktop7", element: <Desktop7 /> },
+      { path: "/desktop6/desktop8", element: <Desktop8 /> },
+
+      //done
+      { path: "desktop9", element: <Desktop9 /> },
+      { path: "/desktop9/desktop10", element: <Desktop10 /> },
+      { path: "/desktop9/desktop11", element: <Desktop11 /> },
+
+      //done
+      { path: "desktop12", element: <Desktop12 /> },
+      { path: "/desktop12/desktop13", element: <Desktop13 /> },
+      { path: "/desktop12/desktop13/desktop14", element: <Desktop14 /> },
+
+      //need to check
       { path: "desktop3", element: <Desktop3 /> },
       { path: "desktop4", element: <Desktop4 /> },
       { path: "desktop5", element: <Desktop5 /> },
-      { path: "desktop6", element: <Desktop6 /> },
-      { path: "desktop7", element: <Desktop7 /> },
-      { path: "desktop8", element: <Desktop8 /> },
-      { path: "desktop12", element: <Desktop12 /> },
-      { path: "desktop13", element: <Desktop13 /> },
-      { path: "desktop14", element: <Desktop14 /> },
-      { path: "desktop9", element: <Desktop9 /> },
-      { path: "desktop11", element: <Desktop11 /> },
-
     ],
   },
 ]);

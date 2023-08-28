@@ -66,7 +66,7 @@ function Desktop13() {
         <GradientButton 
                     startGradientColor="rgb(146.62, 0, 0)" // Start color
                     endGradientColor="rgb(255, 86.14, 63.11)" 
-                    link="#" 
+                    link="/desktop12/desktop13/desktop14" 
                     buttonText="Malware Detection"
                 
                     />
@@ -75,7 +75,7 @@ function Desktop13() {
         <GradientButton 
                     startGradientColor="rgb(13.16, 168, 10)" // Start color
                     endGradientColor="rgb(0, 196.56, 7.86)" 
-                    link="#" 
+                    link="/desktop12/desktop13/desktop14" 
                     buttonText="Next >>"
                     />
            </div>          

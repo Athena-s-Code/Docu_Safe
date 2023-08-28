@@ -13,19 +13,21 @@ function HomePage() {
   const navigate = useNavigate();
 
   function navigateButtonOne() {
-    navigate("/desktop3");
-  }
+    // navigate("/desktop3");
+     navigate("/desktop12");
+    // navigate("/desktop14");
+  }//
 
   function navigateButtonTwo() {
-    navigate("/test-page");
-  }
+    navigate("/desktop6");
+  }//
 
   function navigateButtonThree() {
-    navigate("/test-page");
-  }
+    navigate("/desktop9");
+  }//
 
   function navigateButtonFour() {
-    navigate("/desktop3");
+    navigate("/desktop11");
   }
 
   return (

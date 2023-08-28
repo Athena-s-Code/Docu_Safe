@@ -1,5 +1,6 @@
 import React from "react";
 import "./GradientButton.css";
+import { Link } from "react-router-dom";
 
 function GradientButton({
   startGradientColor,
@@ -19,10 +20,12 @@ function GradientButton({
 
   return (
     <div>
-      <a href={link} className="gradient-button" style={buttonStyle}>
+      <Link to={link} className="gradient-button" style={buttonStyle}>
+      {/* <a href={link} className="gradient-button" style={buttonStyle}> */}
         {icon && <span className="button-icon">{icon}</span>}
         <p className="buttonText">{buttonText}</p>
-      </a>
+        </Link>
+      {/* </a> */}
     </div>
   );
 }

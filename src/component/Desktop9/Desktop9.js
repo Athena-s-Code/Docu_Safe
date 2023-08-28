@@ -4,8 +4,19 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import Footer from "../Footer/Footer";
 import CurvedButton from "../UI/CurvedButton";
+import { useNavigate } from "react-router-dom";
 
 function Desktop9() {
+const navigate = useNavigate()
+
+const dataHighlightClickHanlder = () =>{
+  navigate("/desktop9/desktop10")
+}
+
+const dataHidingClickHanlder = () =>{
+  navigate("/desktop9/desktop11")
+}
+
   return (
     <div>
       <Header />
@@ -29,6 +40,7 @@ function Desktop9() {
               backgroundColor="#0099ff"
               width="500px"
               height="80px"
+              buttonClick={dataHighlightClickHanlder}
             ></CurvedButton>
           </div>
           <div className="column d9row2col2">
@@ -37,6 +49,7 @@ function Desktop9() {
               backgroundColor="#0099ff"
               width="500px"
               height="80px"
+              buttonClick={dataHidingClickHanlder}
             ></CurvedButton>
           </div>
         </div>

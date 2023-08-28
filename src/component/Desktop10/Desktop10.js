@@ -4,13 +4,20 @@ import CurvedButton from "../UI/CurvedButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import { useNavigate } from "react-router-dom";
 
 function Desktop10() {
+ // const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  // function dataHighlightClickHandler() {
+  //   // navigate("/desktop9/desktop10");
+  //   console.log("helloooo")
+  // }
 
   return (
     <div>
@@ -39,6 +46,7 @@ function Desktop10() {
                 backgroundColor="#0099ff"
                 width="300px"
                 height="69px"
+                // buttonClick={dataHighlightClickHandler}
               />
             </div>
             <div className="row d11col1row3">
