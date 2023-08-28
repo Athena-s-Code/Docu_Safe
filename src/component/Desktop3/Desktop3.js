@@ -24,7 +24,7 @@ function Desktop3() {
         alt="image of data hygiene solution"></HeadingBox>
       <div className="container_desk3">
         <div className="heading_container_desk3">
-          <div className="heading_iteam_desk3">
+          <div className="heading_item_desk3">
             <h3>
               <span className="underline">Data Hygiene Solution</span>
             </h3>
@@ -60,7 +60,8 @@ function Desktop3() {
             <img 
               src={imageSrc} 
               alt="Image" 
-              className="image" />
+              className="image" 
+              style={{ marginTop: '30px' }} />
 
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
