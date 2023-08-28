@@ -20,8 +20,8 @@ function GradientButton({
   return (
     <div>
       <a href={link} className="gradient-button" style={buttonStyle}>
-        {icon && <span className="button-icon">{icon}</span>}
-        <p className="buttonText">{buttonText}</p>
+        {icon && <p className="button-icon">{icon}</p>}
+        <h2 className="buttonText">{buttonText}</h2>
       </a>
     </div>
   );
