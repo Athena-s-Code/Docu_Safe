@@ -13,43 +13,49 @@ function HomePage() {
   const navigate = useNavigate();
 
   function navigateButtonOne() {
-    // navigate("/desktop3");
-     navigate("/desktop12");
-    // navigate("/desktop14");
-  }//
+    navigate("/desktop12");
+  }
 
   function navigateButtonTwo() {
     navigate("/desktop6");
-  }//
+  }
 
   function navigateButtonThree() {
     navigate("/desktop9");
-  }//
+  }
 
   function navigateButtonFour() {
-    navigate("/desktop11");
+    navigate("/desktop3");
   }
 
   return (
     <>
       <Header />
-      <Card/>
+      <Card />
       <div className="home-page">
         <div className="image-container-home">
           <img src={img1} alt="computer" />
-          <button className="image-button-home" onClick={navigateButtonOne}>Data Classification</button>
+          <button className="image-button-home" onClick={navigateButtonOne}>
+            Data Classification
+          </button>
         </div>
         <div className="image-container-home">
           <img src={img2} alt="computer" />
-          <button className="image-button-home" onClick={navigateButtonTwo}>Data Encryption</button>
+          <button className="image-button-home" onClick={navigateButtonTwo}>
+            Data Encryption
+          </button>
         </div>
         <div className="image-container-home">
           <img src={img3} alt="computer" />
-          <button className="image-button-home" onClick={navigateButtonThree}>Data Highlight & Hidden</button>
+          <button className="image-button-home" onClick={navigateButtonThree}>
+            Data Highlight & Hidden
+          </button>
         </div>
         <div className="image-container-home">
           <img src={img3} alt="computer" />
-          <button className="image-button-home" onClick={navigateButtonFour}>Data Hygiene solutions</button>
+          <button className="image-button-home" onClick={navigateButtonFour}>
+            Data Hygiene solutions
+          </button>
         </div>
       </div>
       <Footer />

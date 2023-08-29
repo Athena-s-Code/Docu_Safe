@@ -44,9 +44,9 @@ const router = createBrowserRouter([
       { path: "/desktop12/desktop13/desktop14", element: <Desktop14 /> },
 
       //need to check
-      { path: "desktop3", element: <Desktop3 /> },
-      { path: "desktop4", element: <Desktop4 /> },
-      { path: "desktop5", element: <Desktop5 /> },
+      { path: "/desktop3", element: <Desktop3 /> },
+      { path: "/desktop3/desktop4", element: <Desktop4 /> },
+      { path: "/desktop3/desktop4/desktop5", element: <Desktop5 /> },
     ],
   },
 ]);

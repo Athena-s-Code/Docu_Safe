@@ -33,3 +33,6 @@
     margin-right: auto; /* Add this to push "Docu Safe" to the left */
   }
   
+  .img-doc-safe{
+    max-width: 150px;
+  }
