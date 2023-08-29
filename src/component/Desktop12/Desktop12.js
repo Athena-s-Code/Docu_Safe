@@ -54,7 +54,7 @@ function Desktop12() {
             <GradientButton 
                     startGradientColor="rgb(10, 111, 168)" // Start color
                     endGradientColor="rgb(5, 167, 244)" 
-                    link="#" 
+                    link="/desktop12/desktop13"
                     buttonText="Next"
                     height="48px"
                       />    
