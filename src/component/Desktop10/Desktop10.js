@@ -4,13 +4,20 @@ import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import { useNavigate } from "react-router-dom";
 
 function Desktop10() {
+ // const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  // function dataHighlightClickHandler() {
+  //   // navigate("/desktop9/desktop10");
+  //   console.log("helloooo")
+  // }
 
   return (
     <div>

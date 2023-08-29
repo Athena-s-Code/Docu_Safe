@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import "./Desktop6.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -50,7 +52,7 @@ function Desktop6() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="#"
+              link="/desktop6/desktop7"
               width="240px"
               height="48px"
               buttonText="Encryption"
@@ -60,7 +62,7 @@ function Desktop6() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="#"
+              link="/desktop6/desktop8"
               width="240px"
               height="48px"
               buttonText="Decryption"
