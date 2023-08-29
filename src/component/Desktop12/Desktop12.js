@@ -21,9 +21,9 @@ function Desktop12() {
         image="dataClassification.png"
         alt="image of data classification"
       ></HeadingBox>
-      <div className="container">
-        <div className="row row1">
-          <div className="underline-container">
+      <div className="container_desk12">
+        <div className="heading_container_desk12">
+          <div className="heading_item_desk12">
             <h3>
               <span className="underline">Data Classification</span>
             </h3>
@@ -31,40 +31,34 @@ function Desktop12() {
         </div>
 
         
-        <div className="row row2">
-        
-
-    
-          <div className="column column1">
-            <div className="row column1_row1">
+        <div className="middle_container_desk12">
+          <div className="item_container_desk12">
             <div className="label">
             <p className="text-wrapper">
             Data Classification is a crucial task in the field of data science and it’s importance has increased significantly with the rise of digital data. In here we classify data from text document format and image format.
             </p>
-        </div>
             </div>
-            
           </div>
 
           
-          <div className="row column2_row1">
+          <div className="middle_item_container_desk12">
             <div className="horizontal-line"></div>
-             
-            
           </div>
 
-          <div className="column column3">
-            <div className="row column1_row1">
-            
-
-                <img src={imageSrc} alt="Image" className="image" />
-                <GradientButton 
+          <div className="item_container2_desk3">  
+            <img 
+              src={imageSrc} 
+              alt="Image" 
+              className="image" 
+              style={{ marginBottom: '40px' }}/>
+            <GradientButton 
                     startGradientColor="rgb(10, 111, 168)" // Start color
                     endGradientColor="rgb(5, 167, 244)" 
-                    link="#" 
+                    link="/desktop12/desktop13"
                     buttonText="Next"
+                    height="48px"
                       />    
-            </div>
+            
           </div>
         </div>
 

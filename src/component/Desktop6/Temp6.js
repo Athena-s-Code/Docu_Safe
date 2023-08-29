@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
-import "./Desktop6.css";
+import "./Temp.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -23,16 +21,16 @@ function Desktop6() {
         image="Data_Encryption&Decryption.png"
         alt="image of data hygiene solution"
       ></HeadingBox>
-      <div className="container6">
-        <div className="heading_container6">
-          <div className="heading_item6">
+      <div className="container">
+        <div className="heading_container">
+          <div className="heading_iteam">
             <h3>
               <span className="underline">Data Encryption</span>
             </h3>
           </div>
         </div>
-        <div className="middle_container6">
-          <div className="item_container6">
+        <div className="middle_container">
+          <div className="item_container">
             <div className="label">
               <p className="text-wrapper">
                 Offers a state-of-the-art hybrid cryptography system, utilizing
@@ -45,14 +43,14 @@ function Desktop6() {
               </p>
             </div>
           </div>
-          <div className="middle_item_container6">
+          <div className="middle_item_container">
             <div className="horizontal-line"></div>
           </div>
-          <div className="item_container_right_6">
+          <div className="item_container">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="/desktop6/desktop7"
+              link="#"
               width="240px"
               height="48px"
               buttonText="Encryption"
@@ -62,7 +60,7 @@ function Desktop6() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="/desktop6/desktop8"
+              link="#"
               width="240px"
               height="48px"
               buttonText="Decryption"
