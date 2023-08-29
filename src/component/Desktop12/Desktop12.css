@@ -1,159 +1,57 @@
-.container {
-    color: white; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: linear-gradient(180deg, #023c80 6.04%, #150042 100%);
-    padding-bottom: 50px;
-  }
-  
-  .row {
-    display: flex;
-  }
-  
-  .row1 {
-    height: 10%;
-    align-items: center; 
-    padding-left: 20px;
-    /* background-color: lightgray; */
-  }
-  
-  .row2 {
-    flex: 1;
-    /* background-color: lightblue;  */
-  }
-  
-  .column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    /* background-color: #150042; */
-  }
-
-  
-  .column1,
-  .column3 {
-    flex: 3;
-    /* background-color: #ffa726; */
-    padding-top: 2%;
-  }
-  
-  .column2 {
-    
-    /* background-color: #8d6222; */
-    flex-direction: column;
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    flex: 1;
-    
-  }
-  
-  
-  .column1_row1 {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: left;  
-    justify-content: top;
-    /* background-color: #880c40; */
-  
-    
-  
-    
-  }
-  
-    
-  .column1_row {
-    /* background-color: #23ddc4; */
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items:start;
-  
-    
-  }
- 
-  .underline-container {
-    display: inline-block; 
-    position: relative; 
-  }
-  
-  .underline {
-    position: relative;
-    text-decoration: none; 
-    color: #ffffff;
-    font-family: "Inter-ExtraBold", Helvetica;
-    font-size: 32px;
-    font-weight: 800;
-    left: 0;
-    letter-spacing: 0;
-    line-height: 40px;
-    top: 0;
-    white-space: nowrap;
-  }
-  
-  .underline::before {
-    content: ""; 
-    position: absolute;
-    bottom: -6px; /* Adjust the distance of the underline from the text */
-    left: 0; /* Start the underline from the beginning of the text */
-    width: 84%; /* Extend the underline across the entire text */
-    height: 3px; /* Set the height of the underline */
-    background-color: rgb(20, 191, 221); /* Set the color of the underline */
-  }
-  
-  
-  .colTopic{
-    color: #ffffff;
-    font-family: "Inter-ExtraBold", Helvetica;
-    font-size: 24px;
-    font-weight: 800;
-    left: 0;
-    letter-spacing: 0;
-    line-height: 40px;
-    text-align: center;
-    top: 0;
-    white-space: nowrap;
-    width: 216px;
-  }
-  .colDesc{
-    color: #ffffff;
-    font-family: "Inter-ExtraBold", Helvetica;
-    font-size: 14px;
-    font-weight: 800;
-    left: 0;
-    letter-spacing: 0;
-    line-height: 40px;
-    text-align: center;
-    top: 0;
-    white-space: nowrap;
-    width: 216px;
-  }
- 
-.two-column-layout {
+.container_desk12 {
+  color: white;
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #023c80 6.04%, #150042 100%);
+  padding-bottom: 50px;
+  
+}
+
+.heading_container_desk12 {
+  display: grid;
+  grid-template-rows: repeat(1, 1fr);
+  
+}
+.heading_item_desk12 {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12%;
+}
+.middle_container_desk12 {
+  display: grid;
+  grid-template-rows: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  height: 80vh;
+  margin-left: 12%;
+  
+}
+.item_container_desk12 {
+  display: flex;
+  flex-direction: column; /* Stack image and button vertically */
   justify-content: center;
-  height: 100vh; /* Adjust the height as needed */
-}
-
-
-.left-column {
-  display: flex;
-  flex-direction: column; /* Arrange content in a column */
-  align-items: flex-start; /* Align content to the top */
-  justify-content: flex-start;
-}
-.right-column {
-  justify-content: flex-start;
-}
-.horizontal-line {
-  width: 1px;
-  background-color: #ccc;
-  height: 70vb;
+  align-items: center;
+  width: 30vw;
   
 }
+.item_container2_desk12 {
+  display: flex;
+  flex-direction: column; /* Stack image and button vertically */
+  justify-content: center;
+  align-items: center;
+  width: 30vw;
+  margin-left: -40%;
+  
+}
+.middle_item_container_desk12 {
+  display: flex;
+  flex-direction: column; /* Stack image and button vertically */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 8vw;
+}
+
 .label {
   height: 260px;
   width: 608px;
@@ -170,9 +68,5 @@
   top: 0;
   width: 608px;
 }
-.image {
-  max-width: auto; /* Set the maximum width of the image */
-  margin-top: ;
-  margin-bottom: 10%;
-}
+
 

@@ -10,11 +10,13 @@ function GradientButton({
   icon,
   width,
   height,
+  fontColor,
 }) {
   const buttonStyle = {
     background: `linear-gradient(180deg, ${startGradientColor} 0%, ${endGradientColor} 100%)`,
     width: width || "auto", // Set the width to the provided value or 'auto' if not provided
     height: height || "auto", // Set the height to the provided value or 'auto' if not provided
+    color: fontColor || "#ffffff",
   };
   const buttonClass = `gradient-button ${width ? "custom-width" : ""}`;
 
@@ -23,9 +25,10 @@ function GradientButton({
       <Link to={link} className="gradient-button" style={buttonStyle}>
       {/* <a href={link} className="gradient-button" style={buttonStyle}> */}
         {icon && <span className="button-icon">{icon}</span>}
-        <p className="buttonText">{buttonText}</p>
+        <p className="buttonTextGradient">{buttonText}</p>
         </Link>
       {/* </a> */}
+
     </div>
   );
 }

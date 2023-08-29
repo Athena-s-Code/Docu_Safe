@@ -22,20 +22,20 @@ function Desktop7() {
       ></HeadingBox>
       <div className="container7">
         <div className="heading_container7">
-          <div className="heading_iteam">
+          <div className="heading_item7">
             <h3>
               <span className="underline">Data Encryption</span>
             </h3>
           </div>
         </div>
         <div className="top_container7">
-          <div className="iteam_container7 ">
+          <div className="item_container7 ">
             <p className="colTopic">Text File</p>
           </div>
-          <div className="iteam_container7 ">
+          <div className="item_container7 ">
             <p className="colTopic">Image File</p>
           </div>
-          <div className="iteam_container7 ">
+          <div className="item_container7 ">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
@@ -44,7 +44,7 @@ function Desktop7() {
               buttonText="Browser"
             />
           </div>
-          <div className="iteam_container7 ">
+          <div className="item_container7 ">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
@@ -55,7 +55,7 @@ function Desktop7() {
           </div>
         </div>
         <div className="middle_container7">
-          <div className="iteam_container_middle7">
+          <div className="item_container_middle7">
             <GradientButton
               startGradientColor="rgb(146.62, 0, 0)" // Start color
               endGradientColor="rgb(255, 86.14, 63.11)"
@@ -67,7 +67,7 @@ function Desktop7() {
           </div>
         </div>
         <div className="bottom_container7">
-          <div className="iteam_container7">
+          <div className="item_container_last7">
             <GradientButton
               startGradientColor="rgb(255, 230, 0)" // Start color
               endGradientColor="rgb(197, 165, 0)"
@@ -77,7 +77,7 @@ function Desktop7() {
               buttonText="Cancel"
             />
           </div>
-          <div className="iteam_container7 ">
+          <div className="item_container_last7 ">
             <GradientButton
               startGradientColor="rgb(13.16, 168, 10)" // Start color
               endGradientColor="rgb(0, 196.56, 7.86)"
@@ -87,7 +87,7 @@ function Desktop7() {
               buttonText="Encrypt"
             />
           </div>
-          <div className="iteam_container7 ">
+          <div className="item_container_last7 ">
             <GradientButton
               startGradientColor="rgb(209, 39, 252)" // Start color
               endGradientColor="rgb(134, 0, 197)"

@@ -13,7 +13,7 @@
   grid-template-rows: repeat(1, 1fr);
   
 }
-.heading_iteam_desk3 {
+.heading_item_desk3 {
   display: flex;
   flex-direction: column;
   margin-left: 12%;
@@ -23,6 +23,7 @@
   grid-template-rows: repeat(1, 1fr);
   grid-template-columns: repeat(3, 1fr);
   height: 80vh;
+  margin-left: 12%;
   
 }
 .item_container_desk3 {
@@ -31,7 +32,7 @@
   justify-content: center;
   align-items: center;
   width: 30vw;
-  margin-left: 12%;
+  
 }
 .item_container2_desk3 {
   display: flex;
@@ -49,4 +50,25 @@
   align-items: center;
   overflow: hidden;
   width: 8vw;
+}
+.label {
+  height: 260px;
+  width: 608px;
+}
+
+.label .text-wrapper {
+  color: #ffffff;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 40px;
+  
+  top: 0;
+  width: 608px;
+}
+.horizontal-line{
+  width:1px;
+  background-color: #ccc; /* Change color and width as needed */
+  height: 70vb;
 }

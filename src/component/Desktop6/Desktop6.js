@@ -25,9 +25,9 @@ function Desktop6() {
       ></HeadingBox>
       <div className="container6">
         <div className="heading_container6">
-          <div className="heading_iteam6">
+          <div className="heading_item6">
             <h3>
-              {/* <span className="underline">Data Encryption</span> */}
+              <span className="underline">Data Encryption</span>
             </h3>
           </div>
         </div>
