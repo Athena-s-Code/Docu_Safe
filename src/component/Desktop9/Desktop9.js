@@ -28,7 +28,7 @@ function Desktop9() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="#"
+              link="/desktop9/desktop10"
               height="48px"
               buttonText="Data Highlighting"
             />
@@ -37,7 +37,7 @@ function Desktop9() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="#"
+              link="/desktop9/desktop11"
               height="48px"
               buttonText="Data Hiding"
             />

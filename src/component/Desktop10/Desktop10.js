@@ -15,8 +15,8 @@ function Desktop10() {
   };
 
   // function dataHighlightClickHandler() {
-  //   // navigate("/desktop9/desktop10");
-  //   console.log("helloooo")
+  //    navigate("/desktop9/desktop10");
+    
   // }
 
   return (

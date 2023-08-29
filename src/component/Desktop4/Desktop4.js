@@ -74,7 +74,7 @@ function Desktop4() {
               endGradientColor="rgb(0, 196.56, 7.86)"
               height="60px"
               width="160px"
-              link="#"
+              link="/desktop3/desktop4/desktop5"
               buttonText="Next >>"
             />
           </div>
