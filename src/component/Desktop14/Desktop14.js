@@ -1,32 +1,32 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./Desktop14.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
-import { Client } from '../http/Config';
-import Loader from '../UI/Loader';
+import { Client } from "../http/Config";
+import Loader from "../UI/Loader";
 
 function Desktop14() {
   const [selectedOption, setSelectedOption] = useState("");
 
   const [selectedFile, setSelectedFile] = useState(null);
-  const [isLoading,setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
-  const handleUpload = async() => {
-    setIsLoading(true)
+  const handleUpload = async () => {
+    setIsLoading(true);
     if (selectedFile) {
       // const formData = new FormData();
       // formData.append('file', selectedFile);
 
       const obj = { file: selectedFile };
 
-     await  Client.post('/upload', obj)
+      await Client.post("/upload", obj)
         .then((res) => {
           console.log(res.data);
         })
@@ -34,21 +34,18 @@ function Desktop14() {
           console.log(err);
         });
     } else {
-      console.log('No file selected.');
+      console.log("No file selected.");
     }
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
+  let content = (
+    <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
+  );
 
-  let content = <input
-type="text"
-value={selectedFile ? selectedFile.name : ''}
-readOnly
-/>
-
-if(isLoading){
-  content= <Loader/>
-}
+  if (isLoading) {
+    content = <Loader />;
+  }
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -88,16 +85,14 @@ if(isLoading){
             /> */}
             <input
               type="file"
-              style={{ display: 'none' }} // Hide the default file input
+              style={{ display: "none" }} // Hide the default file input
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input
             />
 
             <button onClick={() => fileInputRef.current.click()}>Browse</button>
-            
 
             {content}
-            
           </div>
           <div className="item_container14">
             <GradientButton
@@ -111,56 +106,54 @@ if(isLoading){
         </div>
         <div className="middle_container14">
           <div className="item_container_middle14">
-          {/* <GradientButton 
+            {/* <GradientButton 
                     startGradientColor="rgb(13.16, 168, 10)" // Start color
                     endGradientColor="rgb(0, 196.56, 7.86)" 
                     link="#" 
                     buttonText="Data Classification"
                     height="48px"
                     /> */}
-                     <button onClick={handleUpload}>Data Classification</button> 
+            <button onClick={handleUpload}>Data Classification</button>
           </div>
         </div>
         <div className="bottom_container14">
           <div className="item_container_last14">
-          <GradientButton
-            startGradientColor="rgb(255, 229.5, 0)"
-            endGradientColor="rgb(196.56, 165.11, 0)"
-            link="#"
-            buttonText="View"
-            height="48px"
-          />
+            <GradientButton
+              startGradientColor="rgb(255, 229.5, 0)"
+              endGradientColor="rgb(196.56, 165.11, 0)"
+              link="#"
+              buttonText="View"
+              height="48px"
+            />
           </div>
           <div className="item_container_last14">
-          <GradientButton
-            startGradientColor="rgb(0, 56.1, 255)"
-            endGradientColor="rgb(0, 90.42, 196.56)"
-            link="#"
-            buttonText="Edit"
-            height="48px"
-          />
+            <GradientButton
+              startGradientColor="rgb(0, 56.1, 255)"
+              endGradientColor="rgb(0, 90.42, 196.56)"
+              link="#"
+              buttonText="Edit"
+              height="48px"
+            />
           </div>
           <div className="item_container_last14">
-          <GradientButton
-            startGradientColor="rgb(255, 0, 153)"
-            endGradientColor="rgb(91, 13, 41.08)"
-            link="#"
-            buttonText="Share"
-            height="48px"
-          />
+            <GradientButton
+              startGradientColor="rgb(255, 0, 153)"
+              endGradientColor="rgb(91, 13, 41.08)"
+              link="#"
+              buttonText="Share"
+              height="48px"
+            />
           </div>
           <div className="item_container_last14">
-          <GradientButton
-            startGradientColor="rgba(209, 39, 252, 1)"
-            endGradientColor="rgba(134, 0, 197, 1)"
-            link="#"
-            height="48px"
-            buttonText="Download"
-          />
+            <GradientButton
+              startGradientColor="rgba(209, 39, 252, 1)"
+              endGradientColor="rgba(134, 0, 197, 1)"
+              link="#"
+              height="48px"
+              buttonText="Download"
+            />
           </div>
-          
-        </div> 
-                 
+        </div>
       </div>
       <Footer></Footer>
     </div>
