@@ -48,13 +48,13 @@ function Desktop12() {
           <div className="item_container2_desk3">  
             <img 
               src={imageSrc} 
-              alt="Image" 
+              alt="computer" 
               className="image" 
               style={{ marginBottom: '40px' }}/>
             <GradientButton 
                     startGradientColor="rgb(10, 111, 168)" // Start color
                     endGradientColor="rgb(5, 167, 244)" 
-                    link="/desktop12/desktop13"
+                    link="/desktop12/desktop14"
                     buttonText="Next"
                     height="48px"
                       />    

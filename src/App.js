@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./App.css";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import HomePage from "./component/Home/HomePage";
 import ErrorPage from "./component/Pages/ErrorPage";
@@ -40,8 +41,8 @@ const router = createBrowserRouter([
 
       //done
       { path: "desktop12", element: <Desktop12 /> },
-      { path: "/desktop12/desktop13", element: <Desktop13 /> },
-      { path: "/desktop12/desktop13/desktop14", element: <Desktop14 /> },
+      { path: "/desktop12/desktop14", element: <Desktop14 /> },
+      // { path: "/desktop12/desktop13/desktop14", element: <Desktop14 /> },
 
       //need to check
       { path: "/desktop3", element: <Desktop3 /> },
