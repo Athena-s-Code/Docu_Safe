@@ -11,6 +11,7 @@ function GradientButton({
   width,
   height,
   fontColor,
+  onFileChange
 }) {
   const buttonStyle = {
     background: `linear-gradient(180deg, ${startGradientColor} 0%, ${endGradientColor} 100%)`,
