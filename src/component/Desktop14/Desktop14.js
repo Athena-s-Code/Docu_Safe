@@ -97,7 +97,7 @@ if(isLoading){
             
 
             {content}
-            <button onClick={handleUpload}>Submit</button>
+            
           </div>
           <div className="item_container14">
             <GradientButton
@@ -105,19 +105,20 @@ if(isLoading){
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
-              buttonText="Browser"
+              buttonText="Browse"
             />
           </div>
         </div>
         <div className="middle_container14">
           <div className="item_container_middle14">
-          <GradientButton 
+          {/* <GradientButton 
                     startGradientColor="rgb(13.16, 168, 10)" // Start color
                     endGradientColor="rgb(0, 196.56, 7.86)" 
                     link="#" 
                     buttonText="Data Classification"
                     height="48px"
-                    />
+                    /> */}
+                     <button onClick={handleUpload}>Data Classification</button> 
           </div>
         </div>
         <div className="bottom_container14">
