@@ -8,6 +8,7 @@ import img1 from "../../assets/home-img_1.png";
 import img2 from "../../assets/home-img_2.png";
 import img3 from "../../assets/home-img_3.png";
 import Card from "../UI/Card";
+import GradientButton from "../UI/GradientButton";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function HomePage() {
           <button className="image-button-home" onClick={navigateButtonOne}>
             Data Classification
           </button>
+          
         </div>
         <div className="image-container-home">
           <img src={img2} alt="computer" />

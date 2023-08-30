@@ -1,43 +1,61 @@
 /* Footer.css */
 
 .footer {
-  /* background-color: #653ef0; */
-  padding: 20px 0;
-  background: linear-gradient(180deg, #292950 6.04%, #a89ebd 100%)
-  /* background: linear-gradient(180deg, rgba(217, 217, 217, 0.09) 0%, rgba(217, 217, 217, 0.00) 100%); */
+  background: linear-gradient(180deg, rgba(32, 31, 93) 0%, rgba(24, 7, 72) 100%);
+  padding: 40px 0;
+  color: white;
 }
 
 .footer-content {
   display: flex;
-  justify-content: space-around;
-  max-width: 1200px;
+  justify-content: center;
+  max-width: 2000px;
   margin: 0 auto;
 }
 
 .footer-section {
   flex: 1;
   padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.footer-section h3 {
+
+
+.section-title {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.section-links {
+  list-style: none;
+  padding: 0;
   font-size: 18px;
 }
 
-.footer-section ul {
-  list-style: none;
-  padding: 0;
+.section-links li {
+  margin-bottom: 10px;
 }
 
-.footer-section li {
-  margin-bottom: 8px;
-}
-
-.footer-section a {
+.section-links a {
+  color: white;
   text-decoration: none;
-  color: #ffffff;
+  transition: color 0.3s;
+}
+
+.section-links a:hover {
+  color: #ff9900; /* Change to your desired hover color */
 }
 
 .footer-bottom {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 40px;
+}
+
+/* Additional styling for a modern look */
+.footer-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 40px;
 }
