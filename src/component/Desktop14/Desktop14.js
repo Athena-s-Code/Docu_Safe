@@ -119,8 +119,8 @@ function Desktop14() {
         <div className="bottom_container14">
           <div className="item_container_last14">
             <GradientButton
-              startGradientColor="rgb(255, 229.5, 0)"
-              endGradientColor="rgb(196.56, 165.11, 0)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               buttonText="View"
               height="48px"
@@ -128,8 +128,8 @@ function Desktop14() {
           </div>
           <div className="item_container_last14">
             <GradientButton
-              startGradientColor="rgb(0, 56.1, 255)"
-              endGradientColor="rgb(0, 90.42, 196.56)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               buttonText="Edit"
               height="48px"
@@ -137,8 +137,8 @@ function Desktop14() {
           </div>
           <div className="item_container_last14">
             <GradientButton
-              startGradientColor="rgb(255, 0, 153)"
-              endGradientColor="rgb(91, 13, 41.08)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               buttonText="Share"
               height="48px"
@@ -146,8 +146,8 @@ function Desktop14() {
           </div>
           <div className="item_container_last14">
             <GradientButton
-              startGradientColor="rgba(209, 39, 252, 1)"
-              endGradientColor="rgba(134, 0, 197, 1)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
               buttonText="Download"

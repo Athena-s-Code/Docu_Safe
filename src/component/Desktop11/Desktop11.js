@@ -90,8 +90,8 @@ function Desktop10() {
             <div className="middle_container11">
             <div className="item_container_middle11">
             <GradientButton
-              startGradientColor="rgb(13.16, 168, 10)" // Start color
-              endGradientColor="rgb(0, 196.56, 7.86)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
               buttonText="Hide"
@@ -102,8 +102,8 @@ function Desktop10() {
             
             <div className="item_container_last11">
             <GradientButton
-              startGradientColor="rgb(255, 229.5, 0)" // Start color
-              endGradientColor="rgb(196.56, 165.11, 0)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
               buttonText="View"
@@ -111,8 +111,8 @@ function Desktop10() {
             </div>
             <div className="item_container_last11">
             <GradientButton
-              startGradientColor="rgb(209.3, 39.24, 251.81)" // Start color
-              endGradientColor="rgb(133.66, 0, 196.56) "
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
               buttonText="Download"

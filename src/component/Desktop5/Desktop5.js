@@ -36,13 +36,13 @@ function Desktop5() {
         <div className="top_container5">
           <div className="item_container5">
             <GradientButton 
-              startGradientColor="rgb(255, 198.9, 0)" // Start color
-              endGradientColor="rgb(248.32, 255, 171.49)" 
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#" 
               height="48px"
               width="40vw"
               buttonText="After verifying you can view the file "
-              fontColor="#000000"/>
+              />
               
           </div> 
         
@@ -81,8 +81,8 @@ function Desktop5() {
         <div className="bottom_container5">
           <div className="item_container_last5">
             <GradientButton 
-                    startGradientColor="rgb(13.16, 168, 10)" // Start color
-                    endGradientColor="rgb(0, 196.56, 7.86)" 
+                    startGradientColor="rgb(10, 111, 168)" // Start color
+                    endGradientColor="rgb(5, 167, 244)"
                     link="#" 
                     buttonText="Edit"
                     height="48px"
