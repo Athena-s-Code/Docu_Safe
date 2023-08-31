@@ -58,8 +58,8 @@ function Desktop4() {
         <div className="middle_container4">
           <div className="item_container_middle4">
             <GradientButton
-              startGradientColor="rgb(146.62, 0, 0)" // Start color
-              endGradientColor="rgb(255, 86.14, 63.11)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
               width="1140px"
@@ -70,8 +70,8 @@ function Desktop4() {
         <div className="bottom_container4">
           <div className="item_container_last4">
             <GradientButton
-              startGradientColor="rgb(13.16, 168, 10)" // Start color
-              endGradientColor="rgb(0, 196.56, 7.86)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               height="60px"
               width="160px"
               link="/desktop3/desktop4/desktop5"
