@@ -24,9 +24,9 @@
   height: 100vh;
   margin-left: 5%;
 }
-.item_container6 {
+.item_container_left {
   display: flex;
-  flex-direction: column; /* Stack image and button vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -34,7 +34,7 @@
 }
 .middle_item_container6 {
   display: flex;
-  flex-direction: column; /* Stack image and button vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -44,10 +44,14 @@
 
 .item_container_right_6 {
   display: flex;
-  flex-direction: column; /* Stack image and button vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   margin-left: -5%;
   width: 50vw;
+}
+.image_6 {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
