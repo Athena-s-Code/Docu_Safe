@@ -4,13 +4,32 @@ import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import CurvedButton from "../UI/CurvedButton";
 
 function Desktop7() {
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedImgFile, setSelectedImgFile] = useState();
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  const handle = () => {
+    console.log("heloo");
+  };
+  let txtContent = (
+    <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
+  );
+
+  let imgContent = (
+    <input
+      type="text"
+      value={selectedImgFile ? selectedImgFile.name : ""}
+      readOnly
+    />
+  );
+
 
   return (
     <div>
@@ -36,22 +55,35 @@ function Desktop7() {
             <p className="colTopic">Image File</p>
           </div>
           <div className="item_container7 ">
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              height="60px"
-              buttonText="Browser"
+            {/* text file */}
+            
+            <CurvedButton
+              text="Browse"
+              buttonClick={handle}
+              backgroundColor="rgb(10, 111, 168)"
+              width="auto"
+              height="48px"
             />
+            {txtContent}
           </div>
+
           <div className="item_container7 ">
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              height="60px"
-              buttonText="Browser"
+            {/* image file */}
+            <CurvedButton
+              text="Browse"
+              buttonClick={handle}
+              backgroundColor="rgb(10, 111, 168)"
+              width="auto"
+              height="48px"
             />
+            {/* <input
+              type="file"
+              accept=".jpg"
+              style={{ display: "none" }} // Hide the default file input
+              // onChange={}
+              // ref={} // Create a ref to the file input
+            /> */}
+            {imgContent}
           </div>
         </div>
         <div className="middle_container7">
