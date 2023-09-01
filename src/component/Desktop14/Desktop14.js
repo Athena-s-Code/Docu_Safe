@@ -48,7 +48,7 @@ function Desktop14() {
     if (selectedFile) {
       const obj = { file: selectedFile };
 
-      await Client.post("/upload", obj)
+      await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
         })
