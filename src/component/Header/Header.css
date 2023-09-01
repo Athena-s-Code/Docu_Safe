@@ -1,35 +1,77 @@
 /* Header.css */
 
 .header {
-    background-color:  #023C80;
-    color: white;
-    padding: 10px 0;
-    
-  }
+  background-color: #023C80;
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 3%;
+  padding: 0 20px;
   
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0 2vw;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;/* Change this to your desired font */
+  transition: color 0.3s;
+  font-size: 18px;
+  font-weight: 800;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 40px;
+  top: 0;
+  white-space: nowrap;
+}
+.nav-item a i {
+  margin-left: 5px; /* Adjust the margin as needed */
+}
+
+.nav-item a:hover {
+  color: #ff9900; /* Change to your desired hover color */
+}
+
+.docu-safe {
+  font-weight: bold;
+  margin-left: 0%;
+}
+
+.img-doc-safe {
+  max-width: 200px;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
   .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    text-align: center;
   }
-  
+
   .nav-list {
-    list-style: none;
-    display: flex;
+    margin-top: 15px;
   }
-  
+
   .nav-item {
-    margin: 0 15px;
+    margin: 10px 0;
   }
-  
-  .nav-item a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .docu-safe {
-    font-weight: bold;
-    margin-right: auto; /* Add this to push "Docu Safe" to the left */
-  }
-  
+}
