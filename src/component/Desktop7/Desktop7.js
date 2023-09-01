@@ -1,23 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./Desktop7.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import CurvedButton from "../UI/CurvedButton";
+import { Client } from "../http/Config";
+import Loader from "../UI/Loader";
 
 function Desktop7() {
-  const [selectedOption, setSelectedOption] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  // const [isShowResponse, setIsShowResponse] = useState(false);
+  const fileInputRef = useRef(null);
+  const imageInputRef = useRef(null);
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
   };
 
-  const handle = () => {
-    console.log("heloo");
+  const handleImgFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImgFile(file);
   };
+
+  //upload handler
+  const handleUpload = async () => {
+    setIsLoading(true);
+    if (selectedFile) {
+      const obj = { file: selectedFile };
+
+      await Client.post("/upload", obj)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("No file selected.");
+    }
+    setIsLoading(false);
+  };
+  //
   let txtContent = (
     <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
   );
@@ -29,8 +56,9 @@ function Desktop7() {
       readOnly
     />
   );
-
-
+  if (isLoading) {
+    txtContent = <Loader />;
+  }
   return (
     <div>
       <Header></Header>
@@ -54,12 +82,18 @@ function Desktop7() {
           <div className="item_container7 ">
             <p className="colTopic">Image File</p>
           </div>
-          <div className="item_container7 ">
-            {/* text file */}
-            
+          <div className="item_container14">
+            {/* text file--------------------------------------------------------  */}
+            <input
+              type="file"
+              accept=".txt"
+              style={{ display: "none" }} // Hide the default file input
+              onChange={handleFileChange}
+              ref={fileInputRef} // Create a ref to the file input
+            />
             <CurvedButton
               text="Browse"
-              buttonClick={handle}
+              buttonClick={() => fileInputRef.current.click()}
               backgroundColor="rgb(10, 111, 168)"
               width="auto"
               height="48px"
@@ -67,22 +101,23 @@ function Desktop7() {
             {txtContent}
           </div>
 
-          <div className="item_container7 ">
-            {/* image file */}
+          {/* image file---------------------------------------------------------------------------- */}
+          <div className="item_container14">
+            <input
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              style={{ display: "none" }} // Hide the default file input
+              onChange={handleImgFileChange}
+              ref={imageInputRef} // Create a ref to the file input
+            />
+
             <CurvedButton
               text="Browse"
-              buttonClick={handle}
+              buttonClick={() => imageInputRef.current.click()}
               backgroundColor="rgb(10, 111, 168)"
               width="auto"
               height="48px"
             />
-            {/* <input
-              type="file"
-              accept=".jpg"
-              style={{ display: "none" }} // Hide the default file input
-              // onChange={}
-              // ref={} // Create a ref to the file input
-            /> */}
             {imgContent}
           </div>
         </div>
@@ -94,7 +129,9 @@ function Desktop7() {
               link="#"
               height="48px"
               width="1140px"
+              onClick={handleUpload}
               buttonText=""
+              onC
             />
           </div>
         </div>

@@ -13,7 +13,7 @@ function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  // const [isShowResponse, setIsShowResponse] = useState(false);
+  // 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
