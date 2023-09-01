@@ -12,7 +12,7 @@
   grid-template-rows: repeat(1, 1fr);
   height: 12 vh;
 }
-.heading_iteam6 {
+.heading_item6 {
   display: flex;
   flex-direction: column;
   margin-left: 12%;

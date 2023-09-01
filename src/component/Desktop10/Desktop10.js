@@ -1,57 +1,54 @@
 import React, { useState } from "react";
 import "./Desktop10.css";
-import CurvedButton from "../UI/CurvedButton";
+import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import { useNavigate } from "react-router-dom";
 
 function Desktop10() {
+ // const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
+  // function dataHighlightClickHandler() {
+  //    navigate("/desktop9/desktop10");
+    
+  // }
+
   return (
     <div>
-      <Header />
+      <Header></Header>
       <HeadingBox
         text="Data Highlighting & Hiding"
         image="dataHighliting.png"
         alt="image of data highliting and hiding"
       ></HeadingBox>
-      <div className="container">
-        <div className="row d11row1">
-          <div className="underline-container">
+      <div className="container10">
+        <div className="heading_container10">
+          <div className="heading_item10">
             <h3>
               <span className="underline">Data Highlighting</span>
             </h3>
           </div>
         </div>
-        <div className="row d11row2">
-          <div className="column d11col1">
-            <div className="row d11col1row1">
-              <p className="d11col1row1Topic">Text File</p>
-            </div>
-            <div className="row d11col1row2">
-              <CurvedButton
-                text="Browser"
-                backgroundColor="#0099ff"
-                width="300px"
-                height="69px"
-              />
-            </div>
-            <div className="row d11col1row3">
-              <CurvedButton
-                text="View"
-                backgroundColor=" #ffee00"
-                width="264px"
-                height="60px"
-              />
-            </div>
+
+        <div className="top_container10">
+          <div className="item_container10">
+            <p className="colTopic">Text File</p>
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              buttonText="Browser"
+            />
           </div>
-          <div className="column d11col2">
-            <div className="row d11col2row1">
+          <div className="item_container_topmiddle10">
+            
               <div className="d11RadioButtons">
                 <label className="d11RadioButtonsLable">
                   <input
@@ -81,40 +78,57 @@ function Desktop10() {
                   Agreements
                 </label>
               </div>
-            </div>
-            <div className="row d11col2row2">
-              <CurvedButton
-                text="Highlight"
-                backgroundColor="#00ff00"
-                width="264px"
-                height="60px"
-              />
-            </div>
-          </div>
-          <div className="column d11col3">
-            <div className="row d11col3row1">
-              <p className="d11col3row1Topic">Image File</p>
-            </div>
-            <div className="row d11col3row2">
-              <CurvedButton
-                text="Browser"
-                backgroundColor="#0099ff"
-                width="300px"
-                height="69px"
-              />
-            </div>
-            <div className="row d11col3row3">
-              <CurvedButton
-                text="Download"
-                backgroundColor="#b82888a8"
-                width="264px"
-                height="60px"
-              />
-            </div>
-          </div>
+            
+          
         </div>
+          <div className="item_container10">
+            <p className="colTopic">Image File</p>
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              buttonText="Browser"
+            />
+          </div>
+          
+        </div>
+        
+            <div className="middle_container10">
+            <div className="item_container_middle10">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              buttonText="Highlight"
+            />
+          </div>
+          </div>
+          <div className="bottom_container10">
+            
+            <div className="item_container_last10">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              buttonText="View"
+            />
+            </div>
+            <div className="item_container_last10">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              buttonText="Download"
+            />
+            </div>
+          </div>
+        
       </div>
-      <Footer />
+      <Footer></Footer>
     </div>
   );
 }
