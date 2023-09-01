@@ -26,7 +26,7 @@
 }
 .item_container6 {
   display: flex;
-  flex-direction: column; /* Stack image and button vertically */
+  flex-direction: column; 
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -34,7 +34,7 @@
 }
 .middle_item_container6 {
   display: flex;
-  flex-direction: column; /* Stack image and button vertically */
+  flex-direction: column; 
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -44,7 +44,7 @@
 
 .item_container_right_6 {
   display: flex;
-  flex-direction: column; /* Stack image and button vertically */
+  flex-direction: column; 
   justify-content: center;
   align-items: center;
   overflow: hidden;
