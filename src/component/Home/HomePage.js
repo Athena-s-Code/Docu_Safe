@@ -7,6 +7,7 @@ import Header from "../Header/Header";
 import img1 from "../../assets/home-img_1.png";
 import img2 from "../../assets/home-img_2.png";
 import img3 from "../../assets/home-img_3.png";
+import img4 from '../../assets/data_hygine.png'
 import Card from "../UI/Card";
 import GradientButton from "../UI/GradientButton";
 
@@ -54,7 +55,7 @@ function HomePage() {
           </button>
         </div>
         <div className="image-container-home">
-          <img src={img3} alt="computer" />
+          <img src={img4} alt="computer" />
           <button className="image-button-home" onClick={navigateButtonFour}>
             Data Hygiene solutions
           </button>
