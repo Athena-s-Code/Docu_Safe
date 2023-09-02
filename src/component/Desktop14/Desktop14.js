@@ -13,7 +13,12 @@ function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  // 
+  const [isShowData, setIsShowData] = useState(true);
+  //response
+  const [isError, setIsError] = useState();
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState();
+  //
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
@@ -43,22 +48,36 @@ function Desktop14() {
   //   }
   // };
   //need to handle both file submit in this function
+  const showResponseData = () => {
+    setIsShowData((isShowData) => !isShowData);
+    console.log("click");
+  };
+
   const handleUpload = async () => {
     setIsLoading(true);
-    if (selectedFile) {
-      const obj = { file: selectedFile };
+    if (selectedFile || selectedImgFile) {
+      let obj
+      if(selectedFile){
+         obj = { file: selectedFile };
+      }else{
+         obj = { file: selectedImgFile };
+      }
+      
 
       await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
+          setResponseData(res.data);
         })
         .catch((err) => {
           console.log(err);
+          setError(err.message);
         });
     } else {
       console.log("No file selected.");
     }
     setIsLoading(false);
+    window.alert("Click View Button to See Response")
   };
 
   let txtContent = (
@@ -80,6 +99,21 @@ function Desktop14() {
   // const handleOptionChange = (event) => {
   //   setSelectedOption(event.target.value);
   // };
+  let responseView;
+  if (error) {
+    responseView = (
+      <>
+        <h1>{error["message"]}</h1>
+        <h2>{error["status"]}</h2>
+      </>
+    );
+  }
+  if (responseData) {
+    responseView = <>
+    <h1>{responseData["classification"]}</h1>
+    <h2>{responseData["status"]}</h2>
+    </>;
+  }
 
   return (
     <div>
@@ -100,7 +134,7 @@ function Desktop14() {
 
         <div className="top_container14">
           <div className="item_container14 ">
-            <p className="colTopic">Text File</p>
+            <p className="colTopic">Pdf File</p>
           </div>
           <div className="item_container14">
             <p className="colTopic">Image File</p>
@@ -109,7 +143,7 @@ function Desktop14() {
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
-              accept=".txt"
+              accept=".pdf"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input
@@ -157,12 +191,23 @@ function Desktop14() {
         </div>
         <div className="bottom_container14">
           <div className="item_container_last14">
-            <GradientButton
+            {/* <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               buttonText="View"
               height="48px"
+            /> */}
+
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              width="1140px"
+              onClick={showResponseData}
+              buttonText="View"
+              onC
             />
           </div>
           <div className="item_container_last14">
@@ -192,6 +237,7 @@ function Desktop14() {
               buttonText="Download"
             />
           </div>
+          {isShowData && responseView}
         </div>
       </div>
       <Footer></Footer>
