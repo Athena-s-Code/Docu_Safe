@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Desktop4.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -6,64 +6,130 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
+import * as FileSaver from "file-saver"; // Import FileSaver
+
 function Desktop4() {
-  // const navigate = useNavigate();
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedImgFile, setSelectedImgFile] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [isLoadingText, setIsLoadingText] = useState(false);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
+  const [isShowData, setIsShowData] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+  // Response
+  const [isError, setIsError] = useState();
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState();
 
-  //
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+    const files = event.target.files;
+    setSelectedFiles([...selectedFiles, ...files]);
   };
 
   const handleImgFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImgFile(file);
+    const files = event.target.files;
+    setSelectedFiles([...selectedFiles, ...files]);
   };
+  //handle downlod file
 
+  const handleDownloadFile = (data, fileName) => {
+    const blob = new Blob([data]);
+    FileSaver.saveAs(blob, fileName);
+  };
   const handleUpload = async () => {
-    setIsLoading(true);
-    if (selectedFile) {
-      const obj = { file: selectedFile };
-
-      await Client.post("/upload", obj)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      console.log("No file selected.");
+    if (selectedFiles.length === 0) {
+      console.log("No files selected.");
+      return;
     }
-    setIsLoading(false);
+
+    setIsLoadingText(true);
+    setIsLoadingImage(true);
+
+    const promises = selectedFiles.map(async (file) => {
+      try {
+        const obj = { file };
+        console.log(obj);
+        const res = await Client.post("/classification", obj);
+
+        // Assuming the response contains a 'fileData' field with the file content
+        const fileData = res.data.fileData;
+        const fileName = "dataHygiene.pdf"; // Set your desired file name and extension
+
+        handleDownloadFile(fileData, fileName);
+        localStorage.setItem(
+          "savedFileData",
+          JSON.stringify({ fileName, fileData })
+        );
+      } catch (err) {
+        console.log(err);
+        setError(err.message);
+      }
+    });
+
+    try {
+      await Promise.all(promises);
+      window.alert("Click View Button to See Response");
+    } catch (err) {
+      console.error("Error uploading files:", err);
+    }
+
+    setIsLoadingText(false);
+    setIsLoadingImage(false);
+    fileInputRef.current.value = "";
+    imageInputRef.current.value = "";
+    setSelectedFiles([]);
   };
 
-  let txtContent = (
-    <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
-  );
-
-  let imgContent = (
+  let filesContent = (
     <input
-      type="text"
-      value={selectedImgFile ? selectedImgFile.name : ""}
-      readOnly
+      type="file"
+      multiple
+      onChange={handleFileChange}
+      ref={fileInputRef}
+      style={{ display: "none" }}
     />
   );
 
-  if (isLoading) {
-    txtContent = <Loader />;
+  let imagesContent = (
+    <input
+      type="file"
+      multiple
+      onChange={handleImgFileChange}
+      ref={imageInputRef}
+      style={{ display: "none" }}
+    />
+  );
+
+  if (isLoadingText) {
+    filesContent = <Loader />;
   }
+
+  if (isLoadingImage) {
+    imagesContent = <Loader />;
+  }
+
+  let responseView = <p>Nothing to show</p>;
+
+  // if (error) {
+  //   responseView = (
+  //     <>
+  //       <h1>{error.message}</h1>
+  //     </>
+  //   );
+  // }
+
+  // if (responseData) {
+  //   responseView = (
+  //     <>
+  //       <h1>{responseData.classification}</h1>
+  //       <br />
+  //       <h2>{responseData.status}</h2>
+  //     </>
+  //   );
+  // }
+
   return (
     <div>
       <Header></Header>
@@ -83,51 +149,40 @@ function Desktop4() {
 
         <div className="top_container4">
           <div className="item_container4 ">
-            <p className="colTopic">Text File</p>
+            <p className="colTopic">Text Files</p>
           </div>
           <div className="item_container4 ">
-            <p className="colTopic">Image File</p>
+            <p className="colTopic">Image Files</p>
           </div>
           <div className="item_container4 ">
-            {/* text file--------------------------------------------------------  */}
-            <input
-              type="file"
-              accept=".txt"
-              style={{ display: "none" }} // Hide the default file input
-              onChange={handleFileChange}
-              ref={fileInputRef} // Create a ref to the file input
-            />
+            {/* Text files -------------------------------------------------------- */}
             <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
+              startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               onClick={() => fileInputRef.current.click()}
               height="60px"
-              buttonText="Browser"
+              buttonText="Browse"
             />
+            {filesContent}
           </div>
           <div className="item_container4">
-            <input
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              style={{ display: "none" }} // Hide the default file input
-              onChange={handleImgFileChange}
-              ref={imageInputRef} // Create a ref to the file input
-            />
+            {/* Image files -------------------------------------------------------- */}
             <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
+              startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               onClick={() => imageInputRef.current.click()}
               height="60px"
-              buttonText="Browser"
+              buttonText="Browse"
             />
+            {imagesContent}
           </div>
         </div>
         <div className="middle_container4">
           <div className="item_container_middle4">
             <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
+              startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               onClick={handleUpload}
@@ -140,7 +195,7 @@ function Desktop4() {
         <div className="bottom_container4">
           <div className="item_container_last4">
             <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
+              startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
               height="60px"
               width="160px"
@@ -154,4 +209,5 @@ function Desktop4() {
     </div>
   );
 }
+
 export default Desktop4;
