@@ -6,10 +6,11 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-import * as FileSaver from "file-saver"; // Import FileSaver
+import { PDFDocument, rgb } from "pdf-lib"; // Import PDF-lib
 
 function Desktop4() {
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
@@ -24,22 +25,41 @@ function Desktop4() {
   const imageInputRef = useRef(null);
 
   const handleFileChange = (event) => {
-    const files = event.target.files;
-    setSelectedFiles([...selectedFiles, ...files]);
+    const file = event.target.files[0];
+    setSelectedFile(file);
   };
 
   const handleImgFileChange = (event) => {
-    const files = event.target.files;
-    setSelectedFiles([...selectedFiles, ...files]);
+    const file = event.target.files[0];
+    setSelectedImgFile(file);
   };
-  //handle downlod file
 
-  const handleDownloadFile = (data, fileName) => {
-    const blob = new Blob([data]);
-    FileSaver.saveAs(blob, fileName);
+  useEffect(() => {}, [selectedFile]);
+
+  const handleTextToPDF = async (textData, fileName) => {
+    try {
+      const pdfDoc = await PDFDocument.create();
+      const page = pdfDoc.addPage([600, 400]);
+      page.drawText(textData, {
+        x: 50,
+        y: 350,
+        size: 20,
+        color: rgb(0, 0, 0),
+      });
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+      // Save the PDF to local storage
+      const pdfFile = new File([blob], fileName, { type: "application/pdf" });
+      const fileURL = URL.createObjectURL(pdfFile);
+      localStorage.setItem("savedFileURL", fileURL);
+    } catch (err) {
+      console.error("Error converting text to PDF:", err);
+    }
   };
+
   const handleUpload = async () => {
-    if (selectedFiles.length === 0) {
+    if (!selectedFile && !selectedImgFile) {
       console.log("No files selected.");
       return;
     }
@@ -47,88 +67,113 @@ function Desktop4() {
     setIsLoadingText(true);
     setIsLoadingImage(true);
 
-    const promises = selectedFiles.map(async (file) => {
-      try {
-        const obj = { file };
-        console.log(obj);
-        const res = await Client.post("/classification", obj);
-
-        // Assuming the response contains a 'fileData' field with the file content
-        const fileData = res.data.fileData;
-        const fileName = "dataHygiene.pdf"; // Set your desired file name and extension
-
-        handleDownloadFile(fileData, fileName);
-        localStorage.setItem(
-          "savedFileData",
-          JSON.stringify({ fileName, fileData })
-        );
-      } catch (err) {
-        console.log(err);
-        setError(err.message);
-      }
-    });
-
     try {
-      await Promise.all(promises);
+      const obj = { file: selectedFile || selectedImgFile };
+      const res = await Client.post("/hygeine", obj);
+      console.log(res.data);
+      const textData = res.data.textData;
+      const fileName = "dataHygiene.pdf";
+
+      // Convert text data to PDF and save to local storage
+      handleTextToPDF(textData, fileName);
+
+      // Save response data to state
+      setResponseData({ textData, fileName });
+
       window.alert("Click View Button to See Response");
     } catch (err) {
-      console.error("Error uploading files:", err);
+      console.error("Error uploading file:", err);
+      setError(err.message);
     }
 
     setIsLoadingText(false);
     setIsLoadingImage(false);
     fileInputRef.current.value = "";
     imageInputRef.current.value = "";
-    setSelectedFiles([]);
+    setSelectedFile(null);
+    setSelectedImgFile(null);
   };
 
-  let filesContent = (
-    <input
-      type="file"
-      multiple
-      onChange={handleFileChange}
-      ref={fileInputRef}
-      style={{ display: "none" }}
-    />
+  // const handleUpload = async () => {
+  //   let obj;
+
+  //   if (selectedFile) {
+  //     console.log("text file");
+  //     setIsLoadingText(true);
+  //     obj = { file: selectedFile };
+  //     await Client.post("/classification", obj)
+  //       .then((res) => {
+  //         console.log(res.data);
+  //         setResponseData(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         setError(err.message);
+  //       });
+  //     window.alert("Click View Button to See Response");
+  //   } else if (selectedImgFile) {
+  //     setIsLoadingImage(true);
+  //     obj = { file: selectedImgFile };
+  //     await Client.post("/classification", obj)
+  //       .then((res) => {
+  //         console.log(res.data);
+  //         setResponseData(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         setError(err.message);
+  //       });
+  //     window.alert("Click View Button to See Response");
+  //   } else {
+  //     console.log("No file selected.");
+  //   }
+  //   setIsLoadingImage(false);
+  //   setIsLoadingText(false);
+  //   fileInputRef.current.value = "";
+  //   imageInputRef.current.value = "";
+  //   //setSelectedFile()
+  // };
+
+  let txtContent = (
+    <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
   );
 
-  let imagesContent = (
+  let imgContent = (
     <input
-      type="file"
-      multiple
-      onChange={handleImgFileChange}
-      ref={imageInputRef}
-      style={{ display: "none" }}
+      type="text"
+      value={selectedImgFile ? selectedImgFile.name : ""}
+      readOnly
     />
   );
 
   if (isLoadingText) {
-    filesContent = <Loader />;
+    txtContent = <Loader />;
   }
 
   if (isLoadingImage) {
-    imagesContent = <Loader />;
+    imgContent = <Loader />;
   }
 
   let responseView = <p>Nothing to show</p>;
 
-  // if (error) {
-  //   responseView = (
-  //     <>
-  //       <h1>{error.message}</h1>
-  //     </>
-  //   );
-  // }
-
-  // if (responseData) {
-  //   responseView = (
-  //     <>
-  //       <h1>{responseData.classification}</h1>
-  //       <br />
-  //       <h2>{responseData.status}</h2>
-  //     </>
-  //   );
-  // }
+  if (error) {
+    responseView = (
+      <>
+        <h1>{error["message"]}</h1>
+        <br />
+        <h2>{error["status"]}</h2>
+      </>
+    );
+  }
+  if (responseData) {
+    responseView = (
+      <>
+        <h1>{responseData["classification"]}</h1>
+        <br />
+        <h2>{responseData["status"]}</h2>
+      </>
+    );
+  }
 
   return (
     <div>
@@ -155,7 +200,14 @@ function Desktop4() {
             <p className="colTopic">Image Files</p>
           </div>
           <div className="item_container4 ">
-            {/* Text files -------------------------------------------------------- */}
+            {/* text file--------------------------------------------------------  */}
+            <input
+              type="file"
+              accept=".txt"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              ref={fileInputRef}
+            />
             <GradientButton
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
@@ -164,10 +216,17 @@ function Desktop4() {
               height="60px"
               buttonText="Browse"
             />
-            {filesContent}
+            {txtContent}
           </div>
           <div className="item_container4">
             {/* Image files -------------------------------------------------------- */}
+            <input
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              style={{ display: "none" }}
+              onChange={handleImgFileChange}
+              ref={imageInputRef}
+            />
             <GradientButton
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
@@ -176,7 +235,7 @@ function Desktop4() {
               height="60px"
               buttonText="Browse"
             />
-            {imagesContent}
+            {imgContent}
           </div>
         </div>
         <div className="middle_container4">
