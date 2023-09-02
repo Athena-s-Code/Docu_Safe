@@ -1,16 +1,92 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Desktop7.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import CurvedButton from "../UI/CurvedButton";
+import { Client } from "../http/Config";
+import Loader from "../UI/Loader";
 
 function Desktop7() {
-  const [selectedOption, setSelectedOption] = useState("");
+  const navigate = useNavigate();
+  const [selectedFile, setSelectedFile] = useState(null);
+  //const [selectedImgFile, setSelectedImgFile] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isShowData, setIsShowData] = useState(false);
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+  // const [isShowResponse, setIsShowResponse] = useState(false);
+  const fileInputRef = useRef(null);
+  const imageInputRef = useRef(null);
+
+  const [isError, setIsError] = useState();
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState();
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
   };
+
+  const showResponseData = () => {
+    setIsShowData((isShowData) => !isShowData);
+    console.log("click");
+  };
+
+  //upload handler
+  const handleUpload = async () => {
+    setIsLoading(true);
+    if (selectedFile) {
+      const obj = { file: selectedFile };
+
+      await Client.post("/encrypt", obj)
+        .then((res) => {
+          console.log(res.data);
+          responseData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setError(err.message);
+        });
+    } else {
+      console.log("No file selected.");
+    }
+    setIsLoading(false);
+  };
+  //
+  let txtContent = (
+    <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
+  );
+
+  if (isLoading) {
+    txtContent = <Loader />;
+  }
+
+  const backHandler = () => {
+    navigate("/desktop6");
+  };
+
+  let responseView = <p>Nothing to show</p>;
+
+  if (error) {
+    responseView = (
+      <>
+        <h1>{error["message"]}</h1>
+        <br />
+        <h2>{error["status"]}</h2>
+      </>
+    );
+  }
+  if (responseData) {
+    responseView = (
+      <>
+        <h1>{responseData["encrypted"]}</h1>
+        <br />
+        <h2>{responseData["status"]}</h2>
+      </>
+    );
+  }
 
   return (
     <div>
@@ -30,73 +106,81 @@ function Desktop7() {
         </div>
         <div className="top_container7">
           <div className="item_container7 ">
-            <p className="colTopic">Text File</p>
+            <p className="colTopic">Pdf File</p>
           </div>
           <div className="item_container7 ">
-            <p className="colTopic">Image File</p>
+            {/* <p className="colTopic">Image File</p> */}
           </div>
-          <div className="item_container7 ">
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              height="60px"
-              buttonText="Browser"
+          <div className="item_container14">
+            {/* text file--------------------------------------------------------  */}
+            <input
+              type="file"
+              accept=".pdf"
+              style={{ display: "none" }} // Hide the default file input
+              onChange={handleFileChange}
+              ref={fileInputRef} // Create a ref to the file input
             />
-          </div>
-          <div className="item_container7 ">
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              height="60px"
-              buttonText="Browser"
+            <CurvedButton
+              text="Browse"
+              buttonClick={() => fileInputRef.current.click()}
+              backgroundColor="rgb(10, 111, 168)"
+              width="auto"
+              height="48px"
             />
+            {txtContent}
           </div>
+
+          {/* image file---------------------------------------------------------------------------- */}
+          <div className="item_container14"></div>
         </div>
         <div className="middle_container7">
           <div className="item_container_middle7">
             <GradientButton
-              startGradientColor="rgb(146.62, 0, 0)" // Start color
-              endGradientColor="rgb(255, 86.14, 63.11)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
               width="1140px"
-              buttonText=""
+              onClick={handleUpload}
+              buttonText="Encrypt"
+              onC
             />
           </div>
         </div>
         <div className="bottom_container7">
           <div className="item_container_last7">
             <GradientButton
-              startGradientColor="rgb(255, 230, 0)" // Start color
-              endGradientColor="rgb(197, 165, 0)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               height="60px"
               width="160px"
               link="#"
-              buttonText="Cancel"
+              onClick={backHandler}
+              buttonText="Back"
             />
           </div>
           <div className="item_container_last7 ">
             <GradientButton
-              startGradientColor="rgb(13.16, 168, 10)" // Start color
-              endGradientColor="rgb(0, 196.56, 7.86)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               height="60px"
               width="160px"
               link="#"
-              buttonText="Encrypt"
+              onClick={showResponseData}
+              buttonText="View"
             />
           </div>
           <div className="item_container_last7 ">
             <GradientButton
-              startGradientColor="rgb(209, 39, 252)" // Start color
-              endGradientColor="rgb(134, 0, 197)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               height="60px"
               width="160px"
               link="#"
-              buttonText="Share"
+              buttonText="Download"
             />
           </div>
+          {isShowData && responseView}
         </div>
       </div>
       <Footer></Footer>

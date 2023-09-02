@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./App.css";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import HomePage from "./component/Home/HomePage";
 import ErrorPage from "./component/Pages/ErrorPage";
@@ -26,8 +27,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "", element: <HomePage /> },
-      // { path: "test-page", element: <TestPage /> },
 
+      { path: "/desktop13", element: <Desktop13 /> },
       //done
       { path: "/desktop6", element: <Desktop6 /> },
       { path: "/desktop6/desktop7", element: <Desktop7 /> },
@@ -40,13 +41,13 @@ const router = createBrowserRouter([
 
       //done
       { path: "desktop12", element: <Desktop12 /> },
-      { path: "/desktop12/desktop13", element: <Desktop13 /> },
-      { path: "/desktop12/desktop13/desktop14", element: <Desktop14 /> },
+      { path: "/desktop12/desktop14", element: <Desktop14 /> },
+      // { path: "/desktop12/desktop13/desktop14", element: <Desktop14 /> },
 
       //need to check
-      { path: "desktop3", element: <Desktop3 /> },
-      { path: "desktop4", element: <Desktop4 /> },
-      { path: "desktop5", element: <Desktop5 /> },
+      { path: "/desktop3", element: <Desktop3 /> },
+      { path: "/desktop3/desktop4", element: <Desktop4 /> },
+      { path: "/desktop3/desktop4/desktop5", element: <Desktop5 /> },
     ],
   },
 ]);

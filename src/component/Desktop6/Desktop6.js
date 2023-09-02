@@ -32,11 +32,10 @@ function Desktop6() {
           </div>
         </div>
         <div className="middle_container6">
-          <div className="item_container6">
+          <div className="item_container_left">
             <div className="label">
               <p className="text-wrapper">
-                Offers a state-of-the-art hybrid cryptography system, utilizing
-                three advanced algorithms to ensure the utmost security and
+                Offers a cryptography system, utilizing advanced algorithm to ensure the utmost security and
                 seamlessness in protecting your sensitive data.
                 <br></br> <br></br>
                 You can easily safeguard your information without compromising
@@ -58,7 +57,7 @@ function Desktop6() {
               buttonText="Encryption"
             />
 
-            <img src={imageSrc} alt="Image" className="image" />
+            <img src={imageSrc} alt="Image" className="image_6" />
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"

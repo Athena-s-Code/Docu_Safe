@@ -5,9 +5,9 @@
   justify-content: space-between;
   background: linear-gradient(180deg, #023c80 6.04%, #150042 100%);
   padding-bottom: 50px;
-  
+  max-width: 100%; /* Limit maximum width */
+  overflow-x: hidden; /* Hide horizontal overflow */
 }
-
 .heading_container_desk3 {
   display: grid;
   grid-template-rows: repeat(1, 1fr);
@@ -22,7 +22,7 @@
   display: grid;
   grid-template-rows: repeat(1, 1fr);
   grid-template-columns: repeat(3, 1fr);
-  height: 80vh;
+  height: 90vh;
   margin-left: 12%;
   
 }
@@ -36,12 +36,12 @@
 }
 .item_container2_desk3 {
   display: flex;
-  flex-direction: column; /* Stack image and button vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 30vw;
-  margin-left: -40%;
-  
+  max-width: 100%; /* Adjust to your desired width */
+  margin-left: 0; /* Remove negative margin if it's causing issues */
+  margin-right: 20%;
 }
 .middle_item_container_desk3 {
   display: flex;

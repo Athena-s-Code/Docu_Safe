@@ -1,22 +1,29 @@
 import React, { useState, useRef, useEffect } from "react";
-
-import "./Desktop14.css";
+import "./Desktop10.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import { useNavigate } from "react-router-dom";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 import CurvedButton from "../UI/CurvedButton";
-import Modal from "../UI/Modal";
+import { faFileImage } from "@fortawesome/free-solid-svg-icons";
 
-function Desktop14() {
+function Desktop10() {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
   //response
   const [isError, setIsError] = useState();
   const [error, setError] = useState();
@@ -29,6 +36,10 @@ function Desktop14() {
     setIsModalOpen(true);
   };
 
+  const backHandler = () => {
+    navigate("/desktop9");
+  };
+  
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -140,52 +151,76 @@ function Desktop14() {
       </>
     );
   }
-
   return (
     <div>
       <Header></Header>
       <HeadingBox
-        text="Data Classification"
-        image="dataClassification.png"
-        alt="image of data classification"
+        text="Data Highlighting & Hiding"
+        image="dataHighliting.png"
+        alt="image of data highliting and hiding"
       ></HeadingBox>
-      <div className="container14">
-        <div className="heading_container14">
-          <div className="heading_item14">
+      <div className="container10">
+        <div className="heading_container10">
+          <div className="heading_item10">
             <h3>
-              <span className="underline">Data Classification</span>
+              <span className="underline">Data Highlighting</span>
             </h3>
           </div>
         </div>
 
-        <div className="top_container14">
-          <div className="item_container14 ">
-            <p className="colTopic">Pdf File</p>
-          </div>
-          <div className="item_container14">
-            <p className="colTopic">Image File</p>
-          </div>
-          <div className="item_container14">
+        <div className="top_container10">
+          <div className="item_container10">
+            <p className="colTopic">Text File</p>
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
-              accept=".pdf"
+              accept=".txt"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input
             />
-            <CurvedButton
-              text="Browse"
-              buttonClick={() => fileInputRef.current.click()}
-              backgroundColor="rgb(10, 111, 168)"
-              width="auto"
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              onClick={() => fileInputRef.current.click()}
               height="48px"
+              buttonText="Browse"
             />
-            {txtContent}
           </div>
-
-          {/* image file---------------------------------------------------------------------------- */}
-          <div className="item_container14">
+          <div className="item_container_topmiddle10">
+            <div className="d11RadioButtons">
+              <label className="d11RadioButtonsLable">
+                <input
+                  type="radio"
+                  value="PIT Data"
+                  checked={selectedOption === "PIT Data"}
+                  onChange={handleOptionChange}
+                />
+                PIT Data
+              </label>
+              <label className="d11RadioButtonsLable">
+                <input
+                  type="radio"
+                  value="Payment Details"
+                  checked={selectedOption === "Payment Details"}
+                  onChange={handleOptionChange}
+                />
+                Payement Details
+              </label>
+              <label className="d11RadioButtonsLable">
+                <input
+                  type="radio"
+                  value="Agreements"
+                  checked={selectedOption === "Agreements"}
+                  onChange={handleOptionChange}
+                />
+                Agreements
+              </label>
+            </div>
+          </div>
+          <div className="item_container10">
+            <p className="colTopic">Image File</p>
             <input
               type="file"
               accept=".jpg, .jpeg, .png"
@@ -193,60 +228,50 @@ function Desktop14() {
               onChange={handleImgFileChange}
               ref={imageInputRef} // Create a ref to the file input
             />
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              onClick={() => imageInputRef.current.click()}
+              height="48px"
+              buttonText="Browse"
+            />
+          </div>
+        </div>
 
-            <CurvedButton
-              text="Browse"
-              buttonClick={() => imageInputRef.current.click()}
-              backgroundColor="rgb(10, 111, 168)"
-              width="auto"
+        <div className="middle_container10">
+          <div className="item_container_middle10">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              onClick={handleUpload}
               height="48px"
-            />
-            {imgContent}
-          </div>
-        </div>
-        <div className="middle_container14">
-          <div className="item_container_middle14">
-            <CurvedButton
-              text="Data Classification"
-              buttonClick={handleUpload}
-              backgroundColor="rgb(10, 111, 168)"
-              width="300px"
-              height="48px"
+              buttonText="Highlight"
             />
           </div>
         </div>
-        <div className="bottom_container14">
-          <div className="item_container_last14">
+        <div className="bottom_container10">
+          <div className="item_container_last10">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
-              onClick={showResponseData}
-              buttonText="View Result"
-              
+              onClick={backHandler}
+              buttonText="Back"
             />
           </div>
-          <div className="item_container_last14">
+          <div className="item_container_last10">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
-              onClick={editButtonHandler}
-              buttonText="Clear Files and Result"
               height="48px"
+              buttonText="View"
             />
           </div>
-          <div className="item_container_last14">
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              buttonText="Share"
-              height="48px"
-            />
-          </div>
-          <div className="item_container_last14">
+          <div className="item_container_last10">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
@@ -255,11 +280,10 @@ function Desktop14() {
               buttonText="Download"
             />
           </div>
-          {isShowData && responseView}
         </div>
       </div>
       <Footer></Footer>
     </div>
   );
 }
-export default Desktop14;
+export default Desktop10;

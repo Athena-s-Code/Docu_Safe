@@ -51,7 +51,7 @@ function Desktop3() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              width="840px"
+              width="540px"
               height="48px"
               link="#"
               buttonText="Link with your own real time data backup storage"
@@ -71,7 +71,17 @@ function Desktop3() {
               height="48px"
               buttonText="Active voice control "
               icon={<FontAwesomeIcon icon={faMicrophone} />}/>
+              
+              <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              width="340px"
+              height="48px"
+              link="/desktop3/desktop4"
+              buttonText="Next"
+              />
           </div>
+
         </div>
       </div>
 
