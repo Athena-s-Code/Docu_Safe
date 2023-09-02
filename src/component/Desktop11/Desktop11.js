@@ -1,26 +1,46 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Desktop11.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import { useNavigate } from "react-router-dom";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-import { useNavigate } from "react-router-dom";
+
 function Desktop10() {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingText, setIsLoadingText] = useState(false);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
+  const [isShowData, setIsShowData] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
+  //response
+  const [isError, setIsError] = useState();
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState();
   //
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const backHandler = () => {
+    navigate("/desktop9");
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -31,25 +51,53 @@ function Desktop10() {
     const file = event.target.files[0];
     setSelectedImgFile(file);
   };
-  const backHandler = () => {
-    navigate("/desktop9");
-  };
-  const handleUpload = async () => {
-    setIsLoading(true);
-    if (selectedFile) {
-      const obj = { file: selectedFile };
 
-      await Client.post("/upload", obj)
+  useEffect(() => {}, [selectedFile]);
+
+  const showResponseData = () => {
+    setIsShowData((isShowData) => !isShowData);
+    console.log("click");
+  };
+
+
+  const handleUpload = async () => {
+    let obj;
+
+    if (selectedFile) {
+      console.log("text file");
+      setIsLoadingText(true);
+      obj = { file: selectedFile };
+      await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
+          setResponseData(res.data);
         })
         .catch((err) => {
           console.log(err);
+          setError(err.message);
         });
+      window.alert("Click View Button to See Response");
+    } else if (selectedImgFile) {
+      setIsLoadingImage(true);
+      obj = { file: selectedImgFile };
+      await Client.post("/classification", obj)
+        .then((res) => {
+          console.log(res.data);
+          setResponseData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setError(err.message);
+        });
+      window.alert("Click View Button to See Response");
     } else {
       console.log("No file selected.");
     }
-    setIsLoading(false);
+    setIsLoadingImage(false);
+    setIsLoadingText(false);
+    fileInputRef.current.value = "";
+    imageInputRef.current.value = "";
+    //setSelectedFile()
   };
 
   let txtContent = (
@@ -64,8 +112,33 @@ function Desktop10() {
     />
   );
 
-  if (isLoading) {
+  if (isLoadingText) {
     txtContent = <Loader />;
+  }
+
+  if (isLoadingImage) {
+    imgContent = <Loader />;
+  }
+
+  let responseView = <p>Nothing to show</p>;
+
+  if (error) {
+    responseView = (
+      <>
+        <h1>{error["message"]}</h1>
+        <br />
+        <h2>{error["status"]}</h2>
+      </>
+    );
+  }
+  if (responseData) {
+    responseView = (
+      <>
+        <h1>{responseData["classification"]}</h1>
+        <br />
+        <h2>{responseData["status"]}</h2>
+      </>
+    );
   }
   return (
     <div>
@@ -103,6 +176,7 @@ function Desktop10() {
               height="48px"
               buttonText="Browse"
             />
+            {txtContent}
           </div>
           <div className="item_container_topmiddle11">
             <div className="d11RadioButtons">
@@ -152,6 +226,7 @@ function Desktop10() {
               height="48px"
               buttonText="Browse"
             />
+            {imgContent}
           </div>
         </div>
 
@@ -169,7 +244,7 @@ function Desktop10() {
         </div>
         <div className="bottom_container11">
           <div className="item_container_last11">
-          <GradientButton
+            <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
@@ -177,17 +252,17 @@ function Desktop10() {
               onClick={backHandler}
               buttonText="Back"
             />
-            
           </div>
           <div className="item_container_last11">
-          <GradientButton
+            <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
+              onClick={showResponseData}
               buttonText="View"
             />
-            </div>
+          </div>
           <div className="item_container_last11">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
@@ -198,6 +273,7 @@ function Desktop10() {
             />
           </div>
         </div>
+        {isShowData && responseView}
       </div>
       <Footer></Footer>
     </div>
