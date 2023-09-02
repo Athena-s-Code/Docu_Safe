@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 
 import "./Desktop14.css";
 import GradientButton from "../UI/GradientButton";
@@ -8,12 +8,14 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 import CurvedButton from "../UI/CurvedButton";
+import Modal from '../UI/Modal';
 
 function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [isShowData, setIsShowData] = useState(true);
+  const [isShowData, setIsShowData] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   //response
   const [isError, setIsError] = useState();
   const [error, setError] = useState();
@@ -21,6 +23,17 @@ function Desktop14() {
   //
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -32,38 +45,33 @@ function Desktop14() {
     setSelectedImgFile(file);
   };
 
-  // const imageUpload = async () => {
-  //   if (selectedImgFile) {
-  //     const obj = { file: selectedImgFile };
+useEffect(()=>{},[selectedFile])
 
-  //     await Client.post("/upload", obj)
-  //       .then((res) => {
-  //         console.log(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     console.log("No image file selected.");
-  //   }
-  // };
-  //need to handle both file submit in this function
+
+
+  
   const showResponseData = () => {
+   
     setIsShowData((isShowData) => !isShowData);
     console.log("click");
+    
+  };
+
+  const editButtonHandler = () => {
+    if (window.confirm("Are you sure to remove uploaded file")) {
+      fileInputRef.current.value = "";
+      imageInputRef.current.value = "";
+      setSelectedFile(null)
+      setSelectedImgFile(null)
+    }
   };
 
   const handleUpload = async () => {
     setIsLoading(true);
-    if (selectedFile || selectedImgFile) {
-      let obj
-      if(selectedFile){
-         obj = { file: selectedFile };
-      }else{
-         obj = { file: selectedImgFile };
-      }
-      
+    let obj;
 
+    if (selectedFile) {
+      obj = { file: selectedFile };
       await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
@@ -73,11 +81,26 @@ function Desktop14() {
           console.log(err);
           setError(err.message);
         });
+      window.alert("Click View Button to See Response");
+    } else if (selectedImgFile) {
+      obj = { file: selectedImgFile };
+      await Client.post("/classification", obj)
+        .then((res) => {
+          console.log(res.data);
+          setResponseData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setError(err.message);
+        });
+      window.alert("Click View Button to See Response");
     } else {
       console.log("No file selected.");
     }
     setIsLoading(false);
-    window.alert("Click View Button to See Response")
+    fileInputRef.current.value = "";
+    imageInputRef.current.value = "";
+    setSelectedFile()
   };
 
   let txtContent = (
@@ -96,23 +119,27 @@ function Desktop14() {
     txtContent = <Loader />;
   }
 
-  // const handleOptionChange = (event) => {
-  //   setSelectedOption(event.target.value);
-  // };
-  let responseView;
+ 
+  let responseView = ( <p>Nothing to show</p>
+  );
+
   if (error) {
     responseView = (
       <>
         <h1>{error["message"]}</h1>
+        <br />
         <h2>{error["status"]}</h2>
       </>
     );
   }
   if (responseData) {
-    responseView = <>
-    <h1>{responseData["classification"]}</h1>
-    <h2>{responseData["status"]}</h2>
-    </>;
+    responseView = (
+      <>
+        <h1>{responseData["classification"]}</h1>
+        <br />
+        <h2>{responseData["status"]}</h2>
+      </>
+    );
   }
 
   return (
@@ -162,7 +189,7 @@ function Desktop14() {
           <div className="item_container14">
             <input
               type="file"
-              accept=".jpg"
+              accept=".jpg, .jpeg, .png"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleImgFileChange}
               ref={imageInputRef} // Create a ref to the file input
@@ -191,13 +218,7 @@ function Desktop14() {
         </div>
         <div className="bottom_container14">
           <div className="item_container_last14">
-            {/* <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              buttonText="View"
-              height="48px"
-            /> */}
+           
 
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
@@ -206,7 +227,7 @@ function Desktop14() {
               height="48px"
               width="1140px"
               onClick={showResponseData}
-              buttonText="View"
+              buttonText="View Result"
               onC
             />
           </div>
@@ -215,6 +236,7 @@ function Desktop14() {
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
+              onClick={editButtonHandler}
               buttonText="Edit"
               height="48px"
             />

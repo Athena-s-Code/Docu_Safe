@@ -35,8 +35,7 @@ function Desktop6() {
           <div className="item_container_left">
             <div className="label">
               <p className="text-wrapper">
-                Offers a state-of-the-art hybrid cryptography system, utilizing
-                three advanced algorithms to ensure the utmost security and
+                Offers a cryptography system, utilizing advanced algorithm to ensure the utmost security and
                 seamlessness in protecting your sensitive data.
                 <br></br> <br></br>
                 You can easily safeguard your information without compromising
