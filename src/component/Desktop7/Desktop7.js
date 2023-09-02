@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./Desktop7.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -9,22 +10,37 @@ import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 
 function Desktop7() {
+  const navigate = useNavigate()
   const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedImgFile, setSelectedImgFile] = useState();
+  //const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [isShowData, setIsShowData] = useState(false);
+  
   // const [isShowResponse, setIsShowResponse] = useState(false);
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
+
+
+  const [isError, setIsError] = useState();
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
 
-  const handleImgFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImgFile(file);
+  const showResponseData = () => {
+   
+    setIsShowData((isShowData) => !isShowData);
+    console.log("click");
+    
   };
+
+  // const handleImgFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectedImgFile(file);
+  // };
 
   //upload handler
   const handleUpload = async () => {
@@ -32,13 +48,15 @@ function Desktop7() {
     if (selectedFile) {
       const obj = { file: selectedFile };
 
-      await Client.post("/upload", obj)
+      await Client.post("/encrypt", obj)
         .then((res) => {
           console.log(res.data);
+          responseData(res.data)
         })
         .catch((err) => {
           console.log(err);
-        });
+          setError(err.message)
+               });
     } else {
       console.log("No file selected.");
     }
@@ -49,16 +67,46 @@ function Desktop7() {
     <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
   );
 
-  let imgContent = (
-    <input
-      type="text"
-      value={selectedImgFile ? selectedImgFile.name : ""}
-      readOnly
-    />
-  );
+  // let imgContent = (
+  //   <input
+  //     type="text"
+  //     value={selectedImgFile ? selectedImgFile.name : ""}
+  //     readOnly
+  //   />
+  // );
   if (isLoading) {
     txtContent = <Loader />;
   }
+
+const backHandler = () =>{
+  navigate("/desktop6")
+}
+
+
+let responseView = ( <p>Nothing to show</p>
+);
+
+if (error) {
+  responseView = (
+    <>
+      <h1>{error["message"]}</h1>
+      <br />
+      <h2>{error["status"]}</h2>
+    </>
+  );
+}
+if (responseData) {
+  responseView = (
+    <>
+      <h1>{responseData["encrypted"]}</h1>
+      <br />
+      <h2>{responseData["status"]}</h2>
+    </>
+  );
+}
+
+
+
   return (
     <div>
       <Header></Header>
@@ -77,16 +125,16 @@ function Desktop7() {
         </div>
         <div className="top_container7">
           <div className="item_container7 ">
-            <p className="colTopic">Text File</p>
+            <p className="colTopic">Pdf File</p>
           </div>
           <div className="item_container7 ">
-            <p className="colTopic">Image File</p>
+            {/* <p className="colTopic">Image File</p> */}
           </div>
           <div className="item_container14">
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
-              accept=".txt"
+              accept=".pdf"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input
@@ -103,22 +151,22 @@ function Desktop7() {
 
           {/* image file---------------------------------------------------------------------------- */}
           <div className="item_container14">
-            <input
+            {/* <input
               type="file"
               accept=".jpg, .jpeg, .png"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleImgFileChange}
               ref={imageInputRef} // Create a ref to the file input
-            />
+            /> */}
 
-            <CurvedButton
+            {/* <CurvedButton
               text="Browse"
               buttonClick={() => imageInputRef.current.click()}
               backgroundColor="rgb(10, 111, 168)"
               width="auto"
               height="48px"
             />
-            {imgContent}
+            {imgContent} */}
           </div>
         </div>
         <div className="middle_container7">
@@ -130,7 +178,7 @@ function Desktop7() {
               height="48px"
               width="1140px"
               onClick={handleUpload}
-              buttonText=""
+              buttonText="Encrypt"
               onC
             />
           </div>
@@ -143,7 +191,8 @@ function Desktop7() {
               height="60px"
               width="160px"
               link="#"
-              buttonText="Cancel"
+              onClick={backHandler}
+              buttonText="Back"
             />
           </div>
           <div className="item_container_last7 ">
@@ -153,7 +202,8 @@ function Desktop7() {
               height="60px"
               width="160px"
               link="#"
-              buttonText="Encrypt"
+              onClick={showResponseData}
+              buttonText="View"
             />
           </div>
           <div className="item_container_last7 ">
@@ -163,9 +213,11 @@ function Desktop7() {
               height="60px"
               width="160px"
               link="#"
-              buttonText="Share"
+              
+              buttonText="Download"
             />
           </div>
+          {isShowData && responseView}
         </div>
       </div>
       <Footer></Footer>
