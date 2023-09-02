@@ -6,8 +6,9 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
+import { useNavigate } from "react-router-dom";
 function Desktop10() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +31,9 @@ function Desktop10() {
     const file = event.target.files[0];
     setSelectedImgFile(file);
   };
-
+  const backHandler = () => {
+    navigate("/desktop9");
+  };
   const handleUpload = async () => {
     setIsLoading(true);
     if (selectedFile) {
@@ -98,7 +101,7 @@ function Desktop10() {
               link="#"
               onClick={() => fileInputRef.current.click()}
               height="48px"
-              buttonText="Browser"
+              buttonText="Browse"
             />
           </div>
           <div className="item_container_topmiddle11">
@@ -147,7 +150,7 @@ function Desktop10() {
               link="#"
               onClick={() => imageInputRef.current.click()}
               height="48px"
-              buttonText="Browser"
+              buttonText="Browse"
             />
           </div>
         </div>
@@ -166,14 +169,25 @@ function Desktop10() {
         </div>
         <div className="bottom_container11">
           <div className="item_container_last11">
-            <GradientButton
+          <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              onClick={backHandler}
+              buttonText="Back"
+            />
+            
+          </div>
+          <div className="item_container_last11">
+          <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
               buttonText="View"
             />
-          </div>
+            </div>
           <div className="item_container_last11">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
