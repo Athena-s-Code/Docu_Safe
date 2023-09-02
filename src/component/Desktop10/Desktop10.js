@@ -18,7 +18,8 @@ function Desktop10() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const [pdfURL, setPdfURL] = useState(""); // To store the PDF URL
+  const [pdfData, setPdfData] = useState(null);
+  var pdfFile
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -52,31 +53,70 @@ function Desktop10() {
   useEffect(() => {}, [selectedFile]);
 
   const showResponseData = () => {
-    setIsShowData((isShowData) => !isShowData);
+    //setIsShowData((isShowData) => !isShowData);
+    if (pdfData) { 
+      
+      const blob = new Blob([pdfData], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+  
+      // Open the PDF in a new browser tab or window
+      window.open(url, '_blank');
+  
+      // Release the URL object to free up resources (optional)
+      URL.revokeObjectURL(url);
+    }
   };
+
+  // const handleDownload = () => {
+  //   // Download the PDF file
+  //   console.log(pdfFile)
+  //   if (pdfFile) { // Assuming you have the PDF data stored in the 'pdfData' variable
+  //      const blob = new Blob([pdfFile], { type: 'application/pdf' });
+  //     const url = URL.createObjectURL(blob);
+  
+  //     const a = document.createElement("a");
+  //     a.href = url;
+  //     a.download = "response.pdf";
+  //     a.click();
+  
+  //     // Release the URL object to free up resources
+  //     URL.revokeObjectURL(url);
+  //   }
+
+  // };
 
   const handleDownload = () => {
-    // Download the PDF file
-    console.log("Download clicked !")
-    if (pdfURL) {
+    if (pdfData) {
+      const blob = new Blob([pdfData], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+  
       const a = document.createElement("a");
-      a.href = pdfURL;
+      a.href = url;
       a.download = "response.pdf";
       a.click();
+  
+      // Release the URL object to free up resources
+      URL.revokeObjectURL(url);
     }
-
   };
-
+ 
   const handleUpload = async () => {
     let obj;
+
 
     if (selectedFile) {
       setIsLoadingText(true);
       obj = { file: selectedFile };
-      await Client.post("/classification", obj)
+      await Client.post("/highlight", obj, {
+        responseType: 'arraybuffer', // Important for binary data like PDFs
+      })
         .then((res) => {
-          console.log(res.data);
-          setPdfURL(res.data.pdfURL); // Set the PDF URL received from the server
+          //console.log(res.data);
+          //setPdfURL(res.data); 
+          //pdfFile = new Blob([res.data], { type: 'application/pdf' });
+          setPdfData(res.data);
+          
+          console.log(pdfData)// Set the PDF URL received from the server
         })
         .catch((err) => {
           console.log(err);
@@ -85,10 +125,10 @@ function Desktop10() {
     } else if (selectedImgFile) {
       setIsLoadingImage(true);
       obj = { file: selectedImgFile };
-      await Client.post("/classification", obj)
+      await Client.post("/highlight", obj)
         .then((res) => {
           console.log(res.data);
-          setPdfURL(res.data.pdfURL); // Set the PDF URL received from the server
+          //setPdfURL(res.data.pdfURL); // Set the PDF URL received from the server
         })
         .catch((err) => {
           console.log(err);
@@ -148,7 +188,7 @@ function Desktop10() {
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
-              accept=".txt"
+              accept=".pdf"
               style={{ display: "none" }}
               onChange={handleFileChange}
               ref={fileInputRef}

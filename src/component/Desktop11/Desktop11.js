@@ -67,7 +67,7 @@ function Desktop10() {
       console.log("text file");
       setIsLoadingText(true);
       obj = { file: selectedFile };
-      await Client.post("/classification", obj)
+      await Client.post("/hide", obj)
         .then((res) => {
           console.log(res.data);
           setResponseData(res.data);
@@ -80,7 +80,7 @@ function Desktop10() {
     } else if (selectedImgFile) {
       setIsLoadingImage(true);
       obj = { file: selectedImgFile };
-      await Client.post("/classification", obj)
+      await Client.post("/hide", obj)
         .then((res) => {
           console.log(res.data);
           setResponseData(res.data);
@@ -134,7 +134,7 @@ function Desktop10() {
   if (responseData) {
     responseView = (
       <>
-        <h1>{responseData["classification"]}</h1>
+        <h1>{responseData["redacted"]}</h1>
         <br />
         <h2>{responseData["status"]}</h2>
       </>
@@ -163,7 +163,7 @@ function Desktop10() {
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
-              accept=".txt"
+              accept=".pdf"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input

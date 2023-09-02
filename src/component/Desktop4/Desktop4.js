@@ -51,17 +51,22 @@ function Desktop4() {
       try {
         const obj = { file };
         console.log(obj);
-        const res = await Client.post("/classification", obj);
+        const res = await Client.post("/hygeine", obj);
 
         // Assuming the response contains a 'fileData' field with the file content
-        const fileData = res.data.fileData;
-        const fileName = "dataHygiene.pdf"; // Set your desired file name and extension
+        // const fileData = res.data;
+        // const fileName = "dataHygiene.pdf"; // Set your desired file name and extension
 
-        handleDownloadFile(fileData, fileName);
-        localStorage.setItem(
-          "savedFileData",
-          JSON.stringify({ fileName, fileData })
-        );
+        // handleDownloadFile(fileData, fileName);
+        // localStorage.setItem(
+        //   "savedFileData",
+        //   JSON.stringify({ fileName, fileData })
+        // );
+        
+
+        // Now you can use pdfData for further processing or display
+        //console.log(pdfData);
+        setResponseData(res.data.hygeine_txt)
       } catch (err) {
         console.log(err);
         setError(err.message);
