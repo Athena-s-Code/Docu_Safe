@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import "./Desktop14.css";
 import GradientButton from "../UI/GradientButton";
@@ -8,12 +8,13 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 import CurvedButton from "../UI/CurvedButton";
-import Modal from '../UI/Modal';
+import Modal from "../UI/Modal";
 
 function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingText, setIsLoadingText] = useState(false);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   //response
@@ -32,9 +33,6 @@ function Desktop14() {
     setIsModalOpen(false);
   };
 
-
-
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -45,32 +43,29 @@ function Desktop14() {
     setSelectedImgFile(file);
   };
 
-useEffect(()=>{},[selectedFile])
+  useEffect(() => {}, [selectedFile]);
 
-
-
-  
   const showResponseData = () => {
-   
     setIsShowData((isShowData) => !isShowData);
     console.log("click");
-    
   };
 
   const editButtonHandler = () => {
     if (window.confirm("Are you sure to remove uploaded file")) {
       fileInputRef.current.value = "";
       imageInputRef.current.value = "";
-      setSelectedFile(null)
-      setSelectedImgFile(null)
+      setSelectedFile(null);
+      setSelectedImgFile(null);
+      setResponseData();
     }
   };
 
   const handleUpload = async () => {
-    setIsLoading(true);
     let obj;
 
     if (selectedFile) {
+      console.log("text file");
+      setIsLoadingText(true);
       obj = { file: selectedFile };
       await Client.post("/classification", obj)
         .then((res) => {
@@ -83,6 +78,7 @@ useEffect(()=>{},[selectedFile])
         });
       window.alert("Click View Button to See Response");
     } else if (selectedImgFile) {
+      setIsLoadingImage(true);
       obj = { file: selectedImgFile };
       await Client.post("/classification", obj)
         .then((res) => {
@@ -97,10 +93,11 @@ useEffect(()=>{},[selectedFile])
     } else {
       console.log("No file selected.");
     }
-    setIsLoading(false);
+    setIsLoadingImage(false);
+    setIsLoadingText(false);
     fileInputRef.current.value = "";
     imageInputRef.current.value = "";
-    setSelectedFile()
+    //setSelectedFile()
   };
 
   let txtContent = (
@@ -115,13 +112,15 @@ useEffect(()=>{},[selectedFile])
     />
   );
 
-  if (isLoading) {
+  if (isLoadingText) {
     txtContent = <Loader />;
   }
 
- 
-  let responseView = ( <p>Nothing to show</p>
-  );
+  if (isLoadingImage) {
+    imgContent = <Loader />;
+  }
+
+  let responseView = <p>Nothing to show</p>;
 
   if (error) {
     responseView = (
@@ -218,8 +217,6 @@ useEffect(()=>{},[selectedFile])
         </div>
         <div className="bottom_container14">
           <div className="item_container_last14">
-           
-
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
@@ -237,7 +234,7 @@ useEffect(()=>{},[selectedFile])
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               onClick={editButtonHandler}
-              buttonText="Edit"
+              buttonText="Clear Files and Result"
               height="48px"
             />
           </div>

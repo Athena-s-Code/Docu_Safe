@@ -1,5 +1,5 @@
-import React, { useState, useRef, } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Desktop7.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -10,16 +10,15 @@ import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 
 function Desktop7() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   //const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
-  
+
   // const [isShowResponse, setIsShowResponse] = useState(false);
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
-
 
   const [isError, setIsError] = useState();
   const [error, setError] = useState();
@@ -31,16 +30,9 @@ function Desktop7() {
   };
 
   const showResponseData = () => {
-   
     setIsShowData((isShowData) => !isShowData);
     console.log("click");
-    
   };
-
-  // const handleImgFileChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setSelectedImgFile(file);
-  // };
 
   //upload handler
   const handleUpload = async () => {
@@ -51,12 +43,12 @@ function Desktop7() {
       await Client.post("/encrypt", obj)
         .then((res) => {
           console.log(res.data);
-          responseData(res.data)
+          responseData(res.data);
         })
         .catch((err) => {
           console.log(err);
-          setError(err.message)
-               });
+          setError(err.message);
+        });
     } else {
       console.log("No file selected.");
     }
@@ -67,45 +59,34 @@ function Desktop7() {
     <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
   );
 
-  // let imgContent = (
-  //   <input
-  //     type="text"
-  //     value={selectedImgFile ? selectedImgFile.name : ""}
-  //     readOnly
-  //   />
-  // );
   if (isLoading) {
     txtContent = <Loader />;
   }
 
-const backHandler = () =>{
-  navigate("/desktop6")
-}
+  const backHandler = () => {
+    navigate("/desktop6");
+  };
 
+  let responseView = <p>Nothing to show</p>;
 
-let responseView = ( <p>Nothing to show</p>
-);
-
-if (error) {
-  responseView = (
-    <>
-      <h1>{error["message"]}</h1>
-      <br />
-      <h2>{error["status"]}</h2>
-    </>
-  );
-}
-if (responseData) {
-  responseView = (
-    <>
-      <h1>{responseData["encrypted"]}</h1>
-      <br />
-      <h2>{responseData["status"]}</h2>
-    </>
-  );
-}
-
-
+  if (error) {
+    responseView = (
+      <>
+        <h1>{error["message"]}</h1>
+        <br />
+        <h2>{error["status"]}</h2>
+      </>
+    );
+  }
+  if (responseData) {
+    responseView = (
+      <>
+        <h1>{responseData["encrypted"]}</h1>
+        <br />
+        <h2>{responseData["status"]}</h2>
+      </>
+    );
+  }
 
   return (
     <div>
@@ -150,24 +131,7 @@ if (responseData) {
           </div>
 
           {/* image file---------------------------------------------------------------------------- */}
-          <div className="item_container14">
-            {/* <input
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              style={{ display: "none" }} // Hide the default file input
-              onChange={handleImgFileChange}
-              ref={imageInputRef} // Create a ref to the file input
-            /> */}
-
-            {/* <CurvedButton
-              text="Browse"
-              buttonClick={() => imageInputRef.current.click()}
-              backgroundColor="rgb(10, 111, 168)"
-              width="auto"
-              height="48px"
-            />
-            {imgContent} */}
-          </div>
+          <div className="item_container14"></div>
         </div>
         <div className="middle_container7">
           <div className="item_container_middle7">
@@ -213,7 +177,6 @@ if (responseData) {
               height="60px"
               width="160px"
               link="#"
-              
               buttonText="Download"
             />
           </div>
