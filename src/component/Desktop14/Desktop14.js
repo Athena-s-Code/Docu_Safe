@@ -222,7 +222,6 @@ function Desktop14() {
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
-              width="1140px"
               onClick={showResponseData}
               buttonText="View Result"
               onC

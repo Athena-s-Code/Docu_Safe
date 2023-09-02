@@ -11,7 +11,7 @@ import CurvedButton from "../UI/CurvedButton";
 import { faFileImage } from "@fortawesome/free-solid-svg-icons";
 
 function Desktop10() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +33,9 @@ function Desktop10() {
   const handleImgFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedImgFile(file);
+  };
+  const backHandler = () => {
+    navigate("/desktop9");
   };
 
   const handleUpload = async () => {
@@ -102,7 +105,7 @@ function Desktop10() {
               link="#"
               onClick={() => fileInputRef.current.click()}
               height="48px"
-              buttonText="Browser"
+              buttonText="Browse"
             />
           </div>
           <div className="item_container_topmiddle10">
@@ -151,7 +154,7 @@ function Desktop10() {
               link="#"
               onClick={() => imageInputRef.current.click()}
               height="48px"
-              buttonText="Browser"
+              buttonText="Browse"
             />
           </div>
         </div>
@@ -169,6 +172,16 @@ function Desktop10() {
           </div>
         </div>
         <div className="bottom_container10">
+        <div className="item_container_last10">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              onClick={backHandler}
+              buttonText="Back"
+            />
+          </div>
           <div className="item_container_last10">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
