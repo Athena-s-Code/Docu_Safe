@@ -92,6 +92,7 @@ function Desktop14() {
       window.alert("Click View Button to See Response");
     } else {
       console.log("No file selected.");
+      window.alert("No file selected");
     }
     setIsLoadingImage(false);
     setIsLoadingText(false);

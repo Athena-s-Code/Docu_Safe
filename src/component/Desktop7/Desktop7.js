@@ -43,15 +43,18 @@ function Desktop7() {
       await Client.post("/encrypt", obj)
         .then((res) => {
           console.log(res.data);
-          responseData(res.data);
+          setResponseData(JSON.stringify(res.data));
+          window.alert("Click View Button to See Response");
         })
         .catch((err) => {
           console.log(err);
           setError(err.message);
+          window.alert("Click View Button to See Response");
         });
     } else {
       console.log("No file selected.");
     }
+   
     setIsLoading(false);
   };
   //
@@ -81,9 +84,9 @@ function Desktop7() {
   if (responseData) {
     responseView = (
       <>
-        <h1>{responseData["encrypted"]}</h1>
+        <h1>{responseData}</h1>
         <br />
-        <h2>{responseData["status"]}</h2>
+        {/* <h2>{responseData["status"]}</h2> */}
       </>
     );
   }
