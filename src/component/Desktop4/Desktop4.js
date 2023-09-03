@@ -29,18 +29,18 @@ function Desktop4() {
 
  const handleTxtToPDF = async (txtData, fileName) => {
    try {
-     const lines = txtData.split("\n"); // Split the text into lines
+     const lines = txtData.split("\n"); 
 
      const pdfDoc = await PDFDocument.create();
      let currentPage = pdfDoc.addPage([600, 400]);
      let y = 350; // Initial y position for text
 
-     // Function to add text to the current page and create a new page if necessary
+     
      const addTextToPage = async (text) => {
-       // Check if the text exceeds the current page height
+       
        if (y - 20 < 0) {
          currentPage = pdfDoc.addPage([600, 400]);
-         y = 350; // Reset y position for the new page
+         y = 350; 
        }
 
        currentPage.drawText(text, {
@@ -50,10 +50,10 @@ function Desktop4() {
          color: rgb(0, 0, 0),
        });
 
-       y -= 20; // Move y position up for the next line of text
+       y -= 20; 
      };
 
-     // Iterate through lines and add them to the PDF
+  
      for (const line of lines) {
        await addTextToPage(line);
      }
