@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "./Desktop8.css";
+import { PDFDocument, rgb } from "pdf-lib";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -18,25 +19,82 @@ function Desktop8() {
   // const [isShowResponse, setIsShowResponse] = useState(false);
   const fileInputRef = useRef(null);
   const [isShowData, setIsShowData] = useState(false);
-//response
-const [isError, setIsError] = useState();
-const [error, setError] = useState();
-const [responseData, setResponseData] = useState();
+  //response
 
-
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
 
+  const saveToFile = async () => {
+    if (responseData) {
+      try {
+        const pdfDoc = await PDFDocument.create();
 
-  const showResponseData = () => {
-    setIsShowData((isShowData) => !isShowData);
-    console.log("click");
+        const page = pdfDoc.addPage([400, 400]);
+        const { width, height } = page.getSize();
+
+        page.drawText(responseData, {
+          x: 50,
+          y: height - 50,
+          size: 12,
+          color: rgb(0, 0, 0),
+        });
+
+        const pdfBytes = await pdfDoc.save();
+
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "data.pdf";
+        a.click();
+
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Error creating and saving PDF:", error);
+      }
+    } else {
+      console.error("No response data to save as PDF.");
+    }
   };
 
+  const showResponseData = async () => {
+    if (responseData) {
+      try {
+        const pdfDoc = await PDFDocument.create();
 
+        const page = pdfDoc.addPage([400, 400]);
+        const { width, height } = page.getSize();
+
+        const textContent = responseData;
+
+        page.drawText(textContent, {
+          x: 50,
+          y: height - 50,
+          size: 12,
+          color: rgb(0, 0, 0),
+        });
+
+        const pdfBytes = await pdfDoc.save();
+
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+        const pdfUrl = URL.createObjectURL(blob);
+
+        window.open(pdfUrl, "_blank");
+      } catch (error) {
+        console.error("Error creating and opening PDF:", error);
+      }
+    } else {
+      console.error("No response data to open as PDF.");
+    }
+  };
 
   //upload handler
   const handleUpload = async () => {
@@ -47,7 +105,7 @@ const [responseData, setResponseData] = useState();
       await Client.post("/decrypt", obj)
         .then((res) => {
           console.log(res.data);
-          setResponseData(res.data)
+          setResponseData(res.data);
           window.alert("Click View Button to See Response");
         })
         .catch((err) => {
@@ -70,12 +128,11 @@ const [responseData, setResponseData] = useState();
     txtContent = <Loader />;
   }
 
-const backButtonHandler = () =>{
-navigate('/desktop6')
-}
+  const backButtonHandler = () => {
+    navigate("/desktop6");
+  };
 
-
-let responseView = <p>Nothing to show</p>;
+  let responseView = <p>Nothing to show</p>;
 
   if (error) {
     responseView = (
@@ -95,9 +152,6 @@ let responseView = <p>Nothing to show</p>;
       </>
     );
   }
-
-
-
 
   return (
     <div>
@@ -182,7 +236,8 @@ let responseView = <p>Nothing to show</p>;
               height="60px"
               width="160px"
               link="#"
-              buttonText="Share"
+              onClick={saveToFile}
+              buttonText="Download"
             />
           </div>
           {isShowData && responseView}

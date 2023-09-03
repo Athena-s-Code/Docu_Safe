@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import { PDFDocument, rgb } from "pdf-lib";
 import "./Desktop14.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -8,7 +8,6 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 import CurvedButton from "../UI/CurvedButton";
-import Modal from "../UI/Modal";
 
 function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -18,20 +17,11 @@ function Desktop14() {
   const [isShowData, setIsShowData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   //response
-  const [isError, setIsError] = useState();
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
   //
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -45,9 +35,36 @@ function Desktop14() {
 
   useEffect(() => {}, [selectedFile]);
 
-  const showResponseData = () => {
-    setIsShowData((isShowData) => !isShowData);
-    console.log("click");
+  const showResponseData = async () => {
+    if (responseData) {
+      try {
+        const pdfDoc = await PDFDocument.create();
+
+        const page = pdfDoc.addPage([400, 400]);
+        const { width, height } = page.getSize();
+
+        const textContent = responseData;
+
+        page.drawText(textContent, {
+          x: 50,
+          y: height - 50,
+          size: 12,
+          color: rgb(0, 0, 0),
+        });
+
+        const pdfBytes = await pdfDoc.save();
+
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+        const pdfUrl = URL.createObjectURL(blob);
+
+        window.open(pdfUrl, "_blank");
+      } catch (error) {
+        console.error("Error creating and opening PDF:", error);
+      }
+    } else {
+      console.error("No response data to open as PDF.");
+    }
   };
 
   const editButtonHandler = () => {
@@ -57,6 +74,41 @@ function Desktop14() {
       setSelectedFile(null);
       setSelectedImgFile(null);
       setResponseData();
+    }
+  };
+
+  const saveToFile = async () => {
+    if (responseData) {
+      try {
+        const pdfDoc = await PDFDocument.create();
+
+        const page = pdfDoc.addPage([400, 400]);
+        const { width, height } = page.getSize();
+
+        page.drawText(responseData, {
+          x: 50,
+          y: height - 50,
+          size: 12,
+          color: rgb(0, 0, 0),
+        });
+
+        const pdfBytes = await pdfDoc.save();
+
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "data.pdf";
+        a.click();
+
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Error creating and saving PDF:", error);
+      }
+    } else {
+      console.error("No response data to save as PDF.");
     }
   };
 
@@ -98,7 +150,6 @@ function Desktop14() {
     setIsLoadingText(false);
     fileInputRef.current.value = "";
     imageInputRef.current.value = "";
-    //setSelectedFile()
   };
 
   let txtContent = (
@@ -225,7 +276,6 @@ function Desktop14() {
               height="48px"
               onClick={showResponseData}
               buttonText="View Result"
-              
             />
           </div>
           <div className="item_container_last14">
@@ -253,6 +303,7 @@ function Desktop14() {
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
+              onClick={saveToFile}
               buttonText="Download"
             />
           </div>

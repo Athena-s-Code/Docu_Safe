@@ -20,7 +20,6 @@ function Desktop7() {
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
-  const [isError, setIsError] = useState();
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
 
@@ -30,8 +29,29 @@ function Desktop7() {
   };
 
   const showResponseData = () => {
-    setIsShowData((isShowData) => !isShowData);
-    console.log("click");
+    if (responseData) {
+      // Create a new window or tab with the data
+      const newWindow = window.open("", "_blank");
+      newWindow.document.open();
+      newWindow.document.write(`<pre>${responseData}</pre>`);
+      newWindow.document.close();
+    } else {
+      console.error("No response data to show.");
+    }
+  };
+
+  const saveToFile = () => {
+    if (responseData) {
+      const blob = new Blob([responseData], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "data.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    } else {
+      console.error("No response data to save.");
+    }
   };
 
   //upload handler
@@ -43,7 +63,9 @@ function Desktop7() {
       await Client.post("/encrypt", obj)
         .then((res) => {
           console.log(res.data);
-          setResponseData(JSON.stringify(res.data));
+          const data = res.data;
+          setResponseData(JSON.stringify(data));
+
           window.alert("Click View Button to See Response");
         })
         .catch((err) => {
@@ -54,7 +76,7 @@ function Desktop7() {
     } else {
       console.log("No file selected.");
     }
-   
+
     setIsLoading(false);
   };
   //
@@ -86,7 +108,6 @@ function Desktop7() {
       <>
         <h1>{responseData}</h1>
         <br />
-        {/* <h2>{responseData["status"]}</h2> */}
       </>
     );
   }
@@ -180,6 +201,7 @@ function Desktop7() {
               height="60px"
               width="160px"
               link="#"
+              onClick={saveToFile}
               buttonText="Download"
             />
           </div>
