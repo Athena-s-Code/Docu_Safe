@@ -6,38 +6,24 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-import * as FileSaver from "file-saver"; // Import FileSaver
 import { PDFDocument, rgb } from "pdf-lib";
 
 function Desktop4() {
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [isLoadingText, setIsLoadingText] = useState(false);
-  const [isLoadingImage, setIsLoadingImage] = useState(false);
-  const [isShowData, setIsShowData] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Response
-  const [isError, setIsError] = useState();
-  const [error, setError] = useState();
-  const [responseData, setResponseData] = useState();
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [responseData, setResponseData] = useState([]);
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
   const handleFileChange = (event) => {
     const files = event.target.files;
-    setSelectedFiles([...selectedFiles, ...files]);
+    setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...files]);
   };
 
   const handleImgFileChange = (event) => {
     const files = event.target.files;
-    setSelectedFiles([...selectedFiles, ...files]);
-  };
-  //handle downlod file
-
-  const handleDownloadFile = (data, fileName) => {
-    const blob = new Blob([data]);
-    FileSaver.saveAs(blob, fileName);
+    setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...files]);
   };
 
   const handleTextToPDF = async (textData, fileName) => {
@@ -61,90 +47,75 @@ function Desktop4() {
     }
   };
 
-
-
   const handleUpload = async () => {
-    try {
-      const formData = new FormData();
+    if (selectedFiles.length === 0) {
+      console.log("No files selected.");
+      return;
+    }
 
-      // Append each selected file to the FormData object with the key 'files'
-      selectedFiles.forEach((file, index) => {
-        formData.append("files", file);
+    setIsLoading(true);
+
+    try {
+      const obj = { files: selectedFiles };
+      console.log(obj);
+      const response = await Client.post("/hygeine", obj, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      console.log(selectedFiles);
+      const responseArray = response.data.map((responseData, index) => {
+        const textData = responseData.textData;
+        const fileName = `dataHygiene_${index}.pdf`;
 
+        handleTextToPDF(textData, fileName);
 
-     await Client.post("/hygeine", formData)
-        .then((res) => {
-          console.log(res)
-          const resData = res.data.hygeine_txt
-          console.log(resData);
+        return { textData, fileName };
+      });
 
+      setResponseData(responseArray);
 
-          const fileName = `dataHygiene.pdf`;
-
-        handleTextToPDF(resData, fileName);
-         window.alert("Click Next Button");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-    
-    } catch (error) {
-      // Handle any errors that occur during the upload
-      console.error("Error uploading files:", error);
+      window.alert("Click View Button to See Response");
+    } catch (err) {
+      console.error("Error uploading files:", err);
+      setIsError(true);
     }
+
+    setIsLoading(false);
+    fileInputRef.current.value = "";
+    imageInputRef.current.value = "";
+    setSelectedFiles([]);
   };
 
-  let filesContent = (
-    <input
-      type="file"
-      multiple
-      onChange={handleFileChange}
-      ref={fileInputRef}
-      style={{ display: "none" }}
-    />
-  );
+  let fileContent = selectedFiles.map((file, index) => (
+    <div key={index}>
+      <p>{file.name}</p>
+    </div>
+  ));
 
-  let imagesContent = (
-    <input
-      type="file"
-      multiple
-      onChange={handleImgFileChange}
-      ref={imageInputRef}
-      style={{ display: "none" }}
-    />
-  );
-
-  if (isLoadingText) {
-    filesContent = <Loader />;
-  }
-
-  if (isLoadingImage) {
-    imagesContent = <Loader />;
+  if (isLoading) {
+    fileContent = <Loader />;
   }
 
   let responseView = <p>Nothing to show</p>;
 
-  // if (error) {
-  //   responseView = (
-  //     <>
-  //       <h1>{error.message}</h1>
-  //     </>
-  //   );
-  // }
+  if (isError) {
+    responseView = (
+      <>
+        <h1>Error uploading files</h1>
+      </>
+    );
+  }
 
-  // if (responseData) {
-  //   responseView = (
-  //     <>
-  //       <h1>{responseData.classification}</h1>
-  //       <br />
-  //       <h2>{responseData.status}</h2>
-  //     </>
-  //   );
-  // }
+  if (responseData.length > 0) {
+    responseView = responseData.map((data, index) => (
+      <div key={index}>
+        <h1>{data.textData}</h1>
+        <br />
+        <h2>{data.fileName}</h2>
+      </div>
+    ));
+  }
 
   return (
     <div>
@@ -171,7 +142,15 @@ function Desktop4() {
             <p className="colTopic">Image Files</p>
           </div>
           <div className="item_container4 ">
-            {/* Text files -------------------------------------------------------- */}
+            {/* text file --------------------------------------------------------  */}
+            <input
+              type="file"
+              accept=".txt, .pdf"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              multiple // Enable multiple file selection
+            />
             <GradientButton
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
@@ -180,10 +159,18 @@ function Desktop4() {
               height="60px"
               buttonText="Browse"
             />
-            {filesContent}
+            {fileContent}
           </div>
           <div className="item_container4">
             {/* Image files -------------------------------------------------------- */}
+            <input
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              style={{ display: "none" }}
+              onChange={handleImgFileChange}
+              ref={imageInputRef}
+              multiple // Enable multiple file selection
+            />
             <GradientButton
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
@@ -192,7 +179,7 @@ function Desktop4() {
               height="60px"
               buttonText="Browse"
             />
-            {imagesContent}
+            {fileContent}
           </div>
         </div>
         <div className="middle_container4">
@@ -226,4 +213,4 @@ function Desktop4() {
   );
 }
 
-export default Desktop4;
+export default Desktop4;
