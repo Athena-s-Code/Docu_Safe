@@ -6,38 +6,25 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-import { PDFDocument, rgb } from "pdf-lib"; // Import PDF-lib
+import { PDFDocument, rgb } from "pdf-lib";
 
 function Desktop4() {
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [isLoadingText, setIsLoadingText] = useState(false);
-  const [isLoadingImage, setIsLoadingImage] = useState(false);
-  const [isShowData, setIsShowData] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Response
-  const [isError, setIsError] = useState();
-  const [error, setError] = useState();
-  const [responseData, setResponseData] = useState();
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [responseData, setResponseData] = useState([]);
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
   const handleFileChange = (event) => {
     const files = event.target.files;
-    setSelectedFiles((prevSelectedFiles) => [
-      ...prevSelectedFiles,
-      files,
-    ]);
+    setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...files]);
   };
+
   const handleImgFileChange = (event) => {
     const files = event.target.files;
-    setSelectedFiles((prevSelectedFiles) => [
-      ...prevSelectedFiles,
-      files,
-    ]);
+    setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...files]);
   };
-  useEffect(() => {}, [selectedFiles]);
 
   const handleTextToPDF = async (textData, fileName) => {
     try {
@@ -52,7 +39,6 @@ function Desktop4() {
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
 
-      // Save the PDF to local storage
       const pdfFile = new File([blob], fileName, { type: "application/pdf" });
       const fileURL = URL.createObjectURL(pdfFile);
       localStorage.setItem("savedFileURL", fileURL);
@@ -61,45 +47,41 @@ function Desktop4() {
     }
   };
 
-
-
   const handleUpload = async () => {
     if (selectedFiles.length === 0) {
       console.log("No files selected.");
       return;
     }
 
-    setIsLoadingText(true);
-    setIsLoadingImage(true);
+    setIsLoading(true);
 
     try {
       const obj = { files: selectedFiles };
       console.log(obj);
-      const res = await Client.post("/hygeine", { obj });
-      console.log(res.data);
+      const response = await Client.post("/hygeine", obj, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      // Assuming res.data is an array of response objects
-      const responseArray = res.data.map((response, index) => {
-        const textData = response.textData;
+      const responseArray = response.data.map((responseData, index) => {
+        const textData = responseData.textData;
         const fileName = `dataHygiene_${index}.pdf`;
 
-        // Convert text data to PDF and save to local storage
         handleTextToPDF(textData, fileName);
 
         return { textData, fileName };
       });
 
-      // Save response data to state
       setResponseData(responseArray);
 
       window.alert("Click View Button to See Response");
     } catch (err) {
       console.error("Error uploading files:", err);
-      setError(err.message);
+      setIsError(true);
     }
 
-    setIsLoadingText(false);
-    setIsLoadingImage(false);
+    setIsLoading(false);
     fileInputRef.current.value = "";
     imageInputRef.current.value = "";
     setSelectedFiles([]);
@@ -111,29 +93,28 @@ function Desktop4() {
     </div>
   ));
 
-  if (isLoadingText || isLoadingImage) {
+  if (isLoading) {
     fileContent = <Loader />;
   }
 
   let responseView = <p>Nothing to show</p>;
 
-  if (error) {
+  if (isError) {
     responseView = (
       <>
-        <h1>{error["message"]}</h1>
-        <br />
-        <h2>{error["status"]}</h2>
+        <h1>Error uploading files</h1>
       </>
     );
   }
-  if (responseData) {
-    responseView = (
-      <>
-        <h1>{responseData["classification"]}</h1>
+
+  if (responseData.length > 0) {
+    responseView = responseData.map((data, index) => (
+      <div key={index}>
+        <h1>{data.textData}</h1>
         <br />
-        <h2>{responseData["status"]}</h2>
-      </>
-    );
+        <h2>{data.fileName}</h2>
+      </div>
+    ));
   }
 
   return (
