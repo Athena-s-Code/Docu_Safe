@@ -43,15 +43,18 @@ function Desktop7() {
       await Client.post("/encrypt", obj)
         .then((res) => {
           console.log(res.data);
-          responseData(res.data);
+          setResponseData(JSON.stringify(res.data));
+          window.alert("Click View Button to See Response");
         })
         .catch((err) => {
           console.log(err);
           setError(err.message);
+          window.alert("Click View Button to See Response");
         });
     } else {
       console.log("No file selected.");
     }
+   
     setIsLoading(false);
   };
   //
@@ -81,9 +84,9 @@ function Desktop7() {
   if (responseData) {
     responseView = (
       <>
-        <h1>{responseData["encrypted"]}</h1>
+        <h1>{responseData}</h1>
         <br />
-        <h2>{responseData["status"]}</h2>
+        {/* <h2>{responseData["status"]}</h2> */}
       </>
     );
   }
@@ -111,7 +114,7 @@ function Desktop7() {
           <div className="item_container7 ">
             {/* <p className="colTopic">Image File</p> */}
           </div>
-          <div className="item_container14">
+          <div className="item_container7">
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
@@ -120,18 +123,18 @@ function Desktop7() {
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input
             />
-            <CurvedButton
-              text="Browse"
-              buttonClick={() => fileInputRef.current.click()}
-              backgroundColor="rgb(10, 111, 168)"
-              width="auto"
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)"
+              endGradientColor="rgb(5, 167, 244)"
+              onClick={() => fileInputRef.current.click()}
               height="48px"
+              buttonText="Browse"
             />
-            {txtContent}
+            <p>{txtContent}</p>
           </div>
 
           {/* image file---------------------------------------------------------------------------- */}
-          <div className="item_container14"></div>
+          <div className="item_container7"></div>
         </div>
         <div className="middle_container7">
           <div className="item_container_middle7">

@@ -92,6 +92,7 @@ function Desktop14() {
       window.alert("Click View Button to See Response");
     } else {
       console.log("No file selected.");
+      window.alert("No file selected");
     }
     setIsLoadingImage(false);
     setIsLoadingText(false);
@@ -174,14 +175,15 @@ function Desktop14() {
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input
             />
-            <CurvedButton
-              text="Browse"
-              buttonClick={() => fileInputRef.current.click()}
-              backgroundColor="rgb(10, 111, 168)"
-              width="auto"
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)"
+              endGradientColor="rgb(5, 167, 244)"
+              onClick={() => fileInputRef.current.click()}
               height="48px"
+              buttonText="Browse"
             />
             {txtContent}
+            
           </div>
 
           {/* image file---------------------------------------------------------------------------- */}
@@ -194,24 +196,27 @@ function Desktop14() {
               ref={imageInputRef} // Create a ref to the file input
             />
 
-            <CurvedButton
-              text="Browse"
-              buttonClick={() => imageInputRef.current.click()}
-              backgroundColor="rgb(10, 111, 168)"
-              width="auto"
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)"
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              onClick={() => imageInputRef.current.click()}
               height="48px"
+              buttonText="Browse"
             />
             {imgContent}
           </div>
         </div>
         <div className="middle_container14">
           <div className="item_container_middle14">
-            <CurvedButton
-              text="Data Classification"
-              buttonClick={handleUpload}
-              backgroundColor="rgb(10, 111, 168)"
-              width="300px"
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)"
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              onClick={handleUpload}
               height="48px"
+              width="300px"
+              buttonText="Data Classification"
             />
           </div>
         </div>

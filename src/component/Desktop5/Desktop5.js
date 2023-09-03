@@ -11,6 +11,9 @@ function Desktop5() {
   const [selectedOption, setSelectedOption] = useState("");
   const [password, setPassword] = useState("");
   const [showFileContainer, setShowFileContainer] = useState(false); // State for controlling visibility
+  const [savedFileURL, setSavedFileURL] = useState(""); // State to store the saved file URL
+
+
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -20,25 +23,31 @@ function Desktop5() {
   const [savedFileData, setSavedFileData] = useState(null);
 
   useEffect(() => {
-    // Retrieve the saved file information from localStorage
-    const savedFile = localStorage.getItem("savedFileData");
-    if (savedFile) {
-      setSavedFileData(JSON.parse(savedFile));
+    // Retrieve the saved file URL from localStorage
+    const fileURL = localStorage.getItem("savedFileURL");
+    if (fileURL) {
+      setSavedFileURL(fileURL);
     }
   }, []);
 
-  // download
+  // Function to handle viewing the file
+  const handleViewFile = () => {
+    console.log("Clicked View!");
+    if (savedFileURL) {
+      // Open the file URL in a new tab/window
+      window.open(savedFileURL);
+    }
+  };
+
+  // Function to handle downloading the file
   const handleDownloadFile = () => {
-    console.log("Clicked Download !");
-    if (savedFileData) {
-      const blob = new Blob([savedFileData.fileData]);
-      const url = window.URL.createObjectURL(blob);
+    console.log("Clicked Download!");
+    if (savedFileURL) {
       const a = document.createElement("a");
-      a.href = url;
-      a.download = savedFileData.fileName;
+      a.href = savedFileURL;
+      a.download = "file.pdf"; // Set an appropriate file name
       document.body.appendChild(a);
       a.click();
-      window.URL.revokeObjectURL(url);
     }
   };
 
@@ -92,7 +101,7 @@ function Desktop5() {
               link="#"
               height="48px"
               buttonText="View"
-              onClick={handleToggleFileContainer} // Call the function to toggle the file container
+              onClick={handleViewFile} // Call the function to toggle the file container
             />
           </div>
           <div className="item_container_middle5">

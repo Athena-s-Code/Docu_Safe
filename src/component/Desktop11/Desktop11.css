@@ -87,12 +87,10 @@
   align-items: start;
   justify-content: start;
   padding-bottom: 60px;
+  
+  padding-top: 30px;
 }
-.d11RadioButtonsLable {
-  font-family: "Inter-ExtraBold", Helvetica;
-  font-size: 24px;
-  font-weight: 800;
-}
+
 .row {
   display: flex;
 }
