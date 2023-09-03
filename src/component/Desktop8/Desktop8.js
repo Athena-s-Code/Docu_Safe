@@ -131,11 +131,10 @@ let responseView = <p>Nothing to show</p>;
               link="#"
               width="360px"
               height="60px"
-              buttonText=""
+              buttonText="Choose Encrypt File"
               onClick={() => fileInputRef.current.click()}
               icon={<FontAwesomeIcon icon={faPaperclip} />}
             />
-            <p className="colTopic">Choose Encrypt File</p>
             {txtContent}
           </div>
         </div>
