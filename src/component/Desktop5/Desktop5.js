@@ -45,7 +45,7 @@ function Desktop5() {
     if (savedFileURL) {
       const a = document.createElement("a");
       a.href = savedFileURL;
-      a.download = "file.pdf"; // Set an appropriate file name
+      a.download = "Hygiene_Solution_file.pdf"; // Set an appropriate file name
       document.body.appendChild(a);
       a.click();
     }
