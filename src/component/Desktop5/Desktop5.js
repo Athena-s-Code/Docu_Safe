@@ -13,7 +13,6 @@ function Desktop5() {
   const [showFileContainer, setShowFileContainer] = useState(false); // State for controlling visibility
   const [savedFileURL, setSavedFileURL] = useState(""); // State to store the saved file URL
 
-
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -32,7 +31,6 @@ function Desktop5() {
 
   // Function to handle viewing the file
   const handleViewFile = () => {
-    console.log("Clicked View!");
     if (savedFileURL) {
       // Open the file URL in a new tab/window
       window.open(savedFileURL);
@@ -41,7 +39,6 @@ function Desktop5() {
 
   // Function to handle downloading the file
   const handleDownloadFile = () => {
-    console.log("Clicked Download!");
     if (savedFileURL) {
       const a = document.createElement("a");
       a.href = savedFileURL;

@@ -7,7 +7,6 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-import CurvedButton from "../UI/CurvedButton";
 
 function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -16,6 +15,7 @@ function Desktop14() {
   const [isLoadingImage, setIsLoadingImage] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [savedHideFileURL, setSavedHideFileURl] = useState(null);
   //response
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
@@ -35,35 +35,67 @@ function Desktop14() {
 
   useEffect(() => {}, [selectedFile]);
 
-  const showResponseData = async () => {
-    if (responseData) {
-      try {
-        const pdfDoc = await PDFDocument.create();
+  // Function to handle viewing the file
+  const handleViewFile = () => {
+    console.log("Clicked View!");
+    if (savedHideFileURL) {
+      // Open the file URL in a new tab/window
+      window.open(savedHideFileURL);
+    }
+  };
 
-        const page = pdfDoc.addPage([400, 400]);
-        const { width, height } = page.getSize();
+  // Function to handle downloading the file
+  const handleDownloadFile = () => {
+    console.log("Clicked Download!");
+    if (savedHideFileURL) {
+      const a = document.createElement("a");
+      a.href = savedHideFileURL;
+      a.download = "Classification_file.pdf"; // Set an appropriate file name
+      document.body.appendChild(a);
+      a.click();
+    }
+  };
+  const handleTxtToPDF = async (txtData, fileName) => {
+    try {
+      const lines = txtData.split("\n"); // Split the text into lines
 
-        const textContent = responseData;
+      const pdfDoc = await PDFDocument.create();
+      let currentPage = pdfDoc.addPage([600, 400]);
+      let y = 350; // Initial y position for text
 
-        page.drawText(textContent, {
+      // Function to add text to the current page and create a new page if necessary
+      const addTextToPage = async (text) => {
+        // Check if the text exceeds the current page height
+        if (y - 20 < 0) {
+          currentPage = pdfDoc.addPage([600, 400]);
+          y = 350; // Reset y position for the new page
+        }
+
+        currentPage.drawText(text, {
           x: 50,
-          y: height - 50,
-          size: 12,
+          y,
+          size: 20,
           color: rgb(0, 0, 0),
         });
 
-        const pdfBytes = await pdfDoc.save();
+        y -= 20; // Move y position up for the next line of text
+      };
 
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-        const pdfUrl = URL.createObjectURL(blob);
-
-        window.open(pdfUrl, "_blank");
-      } catch (error) {
-        console.error("Error creating and opening PDF:", error);
+      // Iterate through lines and add them to the PDF
+      for (const line of lines) {
+        await addTextToPage(line);
       }
-    } else {
-      console.error("No response data to open as PDF.");
+
+      // Save the PDF
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+      const pdfFile = new File([blob], fileName, { type: "application/pdf" });
+      const fileURL = URL.createObjectURL(pdfFile);
+      setSavedHideFileURl(fileURL);
+      localStorage.setItem("savedHideFileURL", fileURL);
+    } catch (err) {
+      console.error("Error converting text to PDF:", err);
     }
   };
 
@@ -77,41 +109,6 @@ function Desktop14() {
     }
   };
 
-  const saveToFile = async () => {
-    if (responseData) {
-      try {
-        const pdfDoc = await PDFDocument.create();
-
-        const page = pdfDoc.addPage([400, 400]);
-        const { width, height } = page.getSize();
-
-        page.drawText(responseData, {
-          x: 50,
-          y: height - 50,
-          size: 12,
-          color: rgb(0, 0, 0),
-        });
-
-        const pdfBytes = await pdfDoc.save();
-
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "data.pdf";
-        a.click();
-
-        URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error("Error creating and saving PDF:", error);
-      }
-    } else {
-      console.error("No response data to save as PDF.");
-    }
-  };
-
   const handleUpload = async () => {
     let obj;
 
@@ -122,7 +119,10 @@ function Desktop14() {
       await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
-          setResponseData(res.data);
+          //setResponseData(res.data);
+          const resData = res.data;
+          const fileName = `dataClassification.pdf`;
+          handleTxtToPDF(resData, fileName);
         })
         .catch((err) => {
           console.log(err);
@@ -135,7 +135,10 @@ function Desktop14() {
       await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
-          setResponseData(res.data);
+          //setResponseData(res.data);
+          const resData = res.data;
+          const fileName = `dataClassification.pdf`;
+          handleTxtToPDF(resData, fileName);
         })
         .catch((err) => {
           console.log(err);
@@ -234,7 +237,6 @@ function Desktop14() {
               buttonText="Browse"
             />
             {txtContent}
-            
           </div>
 
           {/* image file---------------------------------------------------------------------------- */}
@@ -278,7 +280,7 @@ function Desktop14() {
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
-              onClick={showResponseData}
+              onClick={handleViewFile}
               buttonText="View Result"
             />
           </div>
@@ -307,7 +309,7 @@ function Desktop14() {
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
-              onClick={saveToFile}
+              onClick={handleDownloadFile}
               buttonText="Download"
             />
           </div>
