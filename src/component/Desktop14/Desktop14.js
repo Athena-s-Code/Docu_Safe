@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { PDFDocument, rgb } from "pdf-lib";
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
 import "./Desktop14.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -38,32 +39,22 @@ function Desktop14() {
   const showResponseData = async () => {
     if (responseData) {
       try {
-        const pdfDoc = await PDFDocument.create();
-
-        const page = pdfDoc.addPage([400, 400]);
-        const { width, height } = page.getSize();
-
-        const textContent = responseData;
-
-        page.drawText(textContent, {
-          x: 50,
-          y: height - 50,
-          size: 12,
-          color: rgb(0, 0, 0),
-        });
-
-        const pdfBytes = await pdfDoc.save();
-
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-        const pdfUrl = URL.createObjectURL(blob);
-
-        window.open(pdfUrl, "_blank");
+        // Create a blob containing the response data
+        const blob = new Blob([responseData], { type: 'text/plain' });
+  
+        // Create a URL for the blob
+        const textUrl = URL.createObjectURL(blob);
+  
+        // Open the text file in a new tab
+        window.open(textUrl, '_blank');
       } catch (error) {
-        console.error("Error creating and opening PDF:", error);
+        console.error('Error saving and opening text in new tab:', error);
+        // Handle the error as needed
       }
     } else {
-      console.error("No response data to open as PDF.");
+      console.error('No response data to open in a new tab.');
+      // Handle the case where responseData is undefined or empty
+      // You might want to show a message to the user or handle this case differently.
     }
   };
 
@@ -77,38 +68,40 @@ function Desktop14() {
     }
   };
 
-  const saveToFile = async () => {
+  const saveToFile = () => {
     if (responseData) {
       try {
-        const pdfDoc = await PDFDocument.create();
-
-        const page = pdfDoc.addPage([400, 400]);
-        const { width, height } = page.getSize();
-
-        page.drawText(responseData, {
-          x: 50,
-          y: height - 50,
-          size: 12,
-          color: rgb(0, 0, 0),
-        });
-
-        const pdfBytes = await pdfDoc.save();
-
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "data.pdf";
+        // Create a blob containing the response data
+        const blob = new Blob([responseData], { type: 'text/plain' });
+  
+        // Create a URL for the blob
+        const textUrl = URL.createObjectURL(blob);
+  
+        // Create a link element for downloading
+        const a = document.createElement('a');
+        a.href = textUrl;
+        a.download = 'classification_response.txt'; // Set the filename
+        a.style.display = 'none'; // Hide the link
+  
+        // Append the link to the document
+        document.body.appendChild(a);
+  
+        // Trigger a click to download
         a.click();
-
-        URL.revokeObjectURL(url);
+  
+        // Remove the link from the document
+        document.body.removeChild(a);
+  
+        // Revoke the URL to free up resources
+        URL.revokeObjectURL(textUrl);
       } catch (error) {
-        console.error("Error creating and saving PDF:", error);
+        console.error('Error saving response data to text file:', error);
+        // Handle the error as needed
       }
     } else {
-      console.error("No response data to save as PDF.");
+      console.error('No response data to save as a text file.');
+      // Handle the case where responseData is undefined or empty
+      // You might want to show a message to the user or handle this case differently.
     }
   };
 
