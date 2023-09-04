@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef} from "react";
 import "./Desktop4.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -33,7 +33,7 @@ function Desktop4() {
 
      const pdfDoc = await PDFDocument.create();
      let currentPage = pdfDoc.addPage([600, 400]);
-     let y = 350; // Initial y position for text
+     let y = 350; 
 
      
      const addTextToPage = async (text) => {
