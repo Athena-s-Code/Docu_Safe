@@ -83,8 +83,8 @@ const handleUpload = async () => {
 
     await Client.post("/hygeine", formData)
       .then(async (res) => {
-        console.log(res);
-        const resData = res.data.hygeine_txt;
+        console.log(res.data);
+        const resData = res.data;
         console.log(resData);
 
         const fileName = `dataHygiene.pdf`;
@@ -186,10 +186,20 @@ const handleUpload = async () => {
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
               link="#"
+              height="48px"
+              width="440px"
+              buttonText="Malware Detection"
+            />
+          </div>
+          <div className="item_container_middle4">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)"
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
               onClick={handleUpload}
               height="48px"
-              width="1140px"
-              buttonText="Malware Detection"
+              width="440px"
+              buttonText="Check"
             />
           </div>
         </div>

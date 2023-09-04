@@ -16,7 +16,7 @@ function Desktop10() {
   const [isLoadingImage, setIsLoadingImage] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState("");
-const [savedHideFileURL, setSavedHideFileURl] = useState(null);
+  const [savedHideFileURL, setSavedHideFileURl] = useState(null);
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -115,8 +115,8 @@ const [savedHideFileURL, setSavedHideFileURl] = useState(null);
       obj = { file: selectedFile };
       await Client.post("/hide", obj)
         .then((res) => {
-          console.log(res.data.redacted);
-          const resData = res.data.redacted;
+          console.log(res.data);
+          const resData = res.data;
           const fileName = `dataHide.pdf`;
           handleTxtToPDF(resData, fileName);
         })
@@ -130,8 +130,8 @@ const [savedHideFileURL, setSavedHideFileURl] = useState(null);
       obj = { file: selectedImgFile };
       await Client.post("/hide", obj)
         .then((res) => {
-          console.log(res.data.redacted);
-          const resData = res.data.redacted;
+          console.log(res.data);
+          const resData = res.data;
           const fileName = `dataHide.pdf`;
           handleTxtToPDF(resData, fileName);
         })
@@ -169,7 +169,6 @@ const [savedHideFileURL, setSavedHideFileURl] = useState(null);
     imgContent = <Loader />;
   }
 
- 
   return (
     <div>
       <Header></Header>
