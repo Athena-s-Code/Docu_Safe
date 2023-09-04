@@ -7,39 +7,28 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { useNavigate } from "react-router-dom";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-
+import { PDFDocument, rgb } from "pdf-lib";
 function Desktop10() {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
-  const [isShowData, setIsShowData] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
 
+  const [selectedOption, setSelectedOption] = useState("");
+  const [savedHideFileURL, setSavedHideFileURl] = useState(null);
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  //response
-  const [isError, setIsError] = useState();
   const [error, setError] = useState();
-  const [responseData, setResponseData] = useState();
+
   //
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
   const backHandler = () => {
     navigate("/desktop9");
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   const handleFileChange = (event) => {
@@ -53,12 +42,69 @@ function Desktop10() {
   };
 
   useEffect(() => {}, [selectedFile]);
-
-  const showResponseData = () => {
-    setIsShowData((isShowData) => !isShowData);
-    console.log("click");
+  // Function to handle viewing the file
+  const handleViewFile = () => {
+    console.log("Clicked View!");
+    if (savedHideFileURL) {
+      // Open the file URL in a new tab/window
+      window.open(savedHideFileURL);
+    }
   };
 
+  // Function to handle downloading the file
+  const handleDownloadFile = () => {
+    console.log("Clicked Download!");
+    if (savedHideFileURL) {
+      const a = document.createElement("a");
+      a.href = savedHideFileURL;
+      a.download = "Hide_file.pdf"; // Set an appropriate file name
+      document.body.appendChild(a);
+      a.click();
+    }
+  };
+  const handleTxtToPDF = async (txtData, fileName) => {
+    try {
+      const lines = txtData.split("\n"); // Split the text into lines
+
+      const pdfDoc = await PDFDocument.create();
+      let currentPage = pdfDoc.addPage([600, 400]);
+      let y = 350; // Initial y position for text
+
+      // Function to add text to the current page and create a new page if necessary
+      const addTextToPage = async (text) => {
+        // Check if the text exceeds the current page height
+        if (y - 20 < 0) {
+          currentPage = pdfDoc.addPage([600, 400]);
+          y = 350; // Reset y position for the new page
+        }
+
+        currentPage.drawText(text, {
+          x: 50,
+          y,
+          size: 20,
+          color: rgb(0, 0, 0),
+        });
+
+        y -= 20; // Move y position up for the next line of text
+      };
+
+      // Iterate through lines and add them to the PDF
+      for (const line of lines) {
+        await addTextToPage(line);
+      }
+
+      // Save the PDF
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+      const pdfFile = new File([blob], fileName, { type: "application/pdf" });
+      const fileURL = URL.createObjectURL(pdfFile);
+      setSavedHideFileURl(fileURL);
+      localStorage.setItem("savedHideFileURL", fileURL);
+    } catch (err) {
+      console.error("Error converting text to PDF:", err);
+    }
+  };
 
   const handleUpload = async () => {
     let obj;
@@ -70,7 +116,9 @@ function Desktop10() {
       await Client.post("/hide", obj)
         .then((res) => {
           console.log(res.data);
-          setResponseData(res.data);
+          const resData = res.data;
+          const fileName = `dataHide.pdf`;
+          handleTxtToPDF(resData, fileName);
         })
         .catch((err) => {
           console.log(err);
@@ -83,7 +131,9 @@ function Desktop10() {
       await Client.post("/hide", obj)
         .then((res) => {
           console.log(res.data);
-          setResponseData(res.data);
+          const resData = res.data;
+          const fileName = `dataHide.pdf`;
+          handleTxtToPDF(resData, fileName);
         })
         .catch((err) => {
           console.log(err);
@@ -97,7 +147,6 @@ function Desktop10() {
     setIsLoadingText(false);
     fileInputRef.current.value = "";
     imageInputRef.current.value = "";
-    //setSelectedFile()
   };
 
   let txtContent = (
@@ -120,26 +169,6 @@ function Desktop10() {
     imgContent = <Loader />;
   }
 
-  let responseView = <p>Nothing to show</p>;
-
-  if (error) {
-    responseView = (
-      <>
-        <h1>{error["message"]}</h1>
-        <br />
-        <h2>{error["status"]}</h2>
-      </>
-    );
-  }
-  if (responseData) {
-    responseView = (
-      <>
-        <h1>{responseData["redacted"]}</h1>
-        <br />
-        <h2>{responseData["status"]}</h2>
-      </>
-    );
-  }
   return (
     <div>
       <Header></Header>
@@ -259,7 +288,7 @@ function Desktop10() {
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
-              onClick={showResponseData}
+              onClick={handleViewFile}
               buttonText="View"
             />
           </div>
@@ -269,11 +298,11 @@ function Desktop10() {
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
+              onClick={handleDownloadFile}
               buttonText="Download"
             />
           </div>
         </div>
-        {isShowData && responseView}
       </div>
       <Footer></Footer>
     </div>

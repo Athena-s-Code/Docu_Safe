@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef} from "react";
 import "./Desktop4.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -6,20 +6,13 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-import * as FileSaver from "file-saver"; // Import FileSaver
 import { PDFDocument, rgb } from "pdf-lib";
 
 function Desktop4() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
-  const [isShowData, setIsShowData] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Response
-  const [isError, setIsError] = useState();
-  const [error, setError] = useState();
-  const [responseData, setResponseData] = useState();
 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
@@ -33,70 +26,83 @@ function Desktop4() {
     const files = event.target.files;
     setSelectedFiles([...selectedFiles, ...files]);
   };
-  //handle downlod file
 
-  const handleDownloadFile = (data, fileName) => {
-    const blob = new Blob([data]);
-    FileSaver.saveAs(blob, fileName);
-  };
+ const handleTxtToPDF = async (txtData, fileName) => {
+   try {
+     const lines = txtData.split("\n"); 
 
-  const handleTextToPDF = async (textData, fileName) => {
-    try {
-      const pdfDoc = await PDFDocument.create();
-      const page = pdfDoc.addPage([600, 400]);
-      page.drawText(textData, {
-        x: 50,
-        y: 350,
-        size: 20,
-        color: rgb(0, 0, 0),
+     const pdfDoc = await PDFDocument.create();
+     let currentPage = pdfDoc.addPage([600, 400]);
+     let y = 350; 
+
+     
+     const addTextToPage = async (text) => {
+       
+       if (y - 20 < 0) {
+         currentPage = pdfDoc.addPage([600, 400]);
+         y = 350; 
+       }
+
+       currentPage.drawText(text, {
+         x: 50,
+         y,
+         size: 20,
+         color: rgb(0, 0, 0),
+       });
+
+       y -= 20; 
+     };
+
+  
+     for (const line of lines) {
+       await addTextToPage(line);
+     }
+
+     // Save the PDF
+     const pdfBytes = await pdfDoc.save();
+     const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+     const pdfFile = new File([blob], fileName, { type: "application/pdf" });
+     const fileURL = URL.createObjectURL(pdfFile);
+     localStorage.setItem("savedFileURL", fileURL);
+   } catch (err) {
+     console.error("Error converting text to PDF:", err);
+   }
+ };
+
+const handleUpload = async () => {
+  try {
+    const formData = new FormData();
+
+    // Append each selected file to the FormData object with the key 'files'
+    selectedFiles.forEach((file, index) => {
+      formData.append("files", file);
+    });
+
+    console.log(selectedFiles);
+
+    await Client.post("/hygeine", formData)
+      .then(async (res) => {
+        console.log(res.data);
+        const resData = res.data;
+        console.log(resData);
+
+        const fileName = `dataHygiene.pdf`;
+
+        // Call the new function to convert the .txt data to PDF
+        await handleTxtToPDF(resData, fileName);
+
+        window.alert("Click Next Button");
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  } catch (error) {
+    // Handle any errors that occur during the upload
+    console.error("Error uploading files:", error);
+  }
+};
 
-      const pdfFile = new File([blob], fileName, { type: "application/pdf" });
-      const fileURL = URL.createObjectURL(pdfFile);
-      localStorage.setItem("savedFileURL", fileURL);
-    } catch (err) {
-      console.error("Error converting text to PDF:", err);
-    }
-  };
-
-
-
-  const handleUpload = async () => {
-    try {
-      const formData = new FormData();
-
-      // Append each selected file to the FormData object with the key 'files'
-      selectedFiles.forEach((file, index) => {
-        formData.append("files", file);
-      });
-
-      console.log(selectedFiles);
-
-
-     await Client.post("/hygeine", formData)
-        .then((res) => {
-          console.log(res)
-          const resData = res.data.hygeine_txt
-          console.log(resData);
-
-
-          const fileName = `dataHygiene.pdf`;
-
-        handleTextToPDF(resData, fileName);
-         window.alert("Click Next Button");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-    
-    } catch (error) {
-      // Handle any errors that occur during the upload
-      console.error("Error uploading files:", error);
-    }
-  };
 
   let filesContent = (
     <input
@@ -126,26 +132,6 @@ function Desktop4() {
     imagesContent = <Loader />;
   }
 
-  let responseView = <p>Nothing to show</p>;
-
-  // if (error) {
-  //   responseView = (
-  //     <>
-  //       <h1>{error.message}</h1>
-  //     </>
-  //   );
-  // }
-
-  // if (responseData) {
-  //   responseView = (
-  //     <>
-  //       <h1>{responseData.classification}</h1>
-  //       <br />
-  //       <h2>{responseData.status}</h2>
-  //     </>
-  //   );
-  // }
-
   return (
     <div>
       <Header></Header>
@@ -162,7 +148,6 @@ function Desktop4() {
             </h3>
           </div>
         </div>
-
         <div className="top_container4">
           <div className="item_container4 ">
             <p className="colTopic">Text Files</p>
@@ -201,10 +186,20 @@ function Desktop4() {
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
               link="#"
+              height="48px"
+              width="440px"
+              buttonText="Malware Detection"
+            />
+          </div>
+          <div className="item_container_middle4">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)"
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
               onClick={handleUpload}
               height="48px"
-              width="1140px"
-              buttonText="Malware Detection"
+              width="440px"
+              buttonText="Check"
             />
           </div>
         </div>
