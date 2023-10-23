@@ -19,6 +19,9 @@ import Desktop13 from "./component/Desktop13/Desktop13";
 import Desktop14 from "./component/Desktop14/Desktop14";
 import Desktop9 from "./component/Desktop9/Desktop9";
 import Desktop11 from "./component/Desktop11/Desktop11";
+import Desktop15 from "./component/Desktop15/Desktop15";
+import Desktop16 from "./component/Desktop16/Desktop16";
+import Desktop17 from "./component/Desktop17/Desktop17";
 
 const router = createBrowserRouter([
   {
@@ -41,13 +44,20 @@ const router = createBrowserRouter([
 
       //done
       { path: "desktop12", element: <Desktop12 /> },
-      { path: "/desktop12/desktop14", element: <Desktop14 /> },
+      //{ path: "/desktop12/desktop14", element: <Desktop14 /> },
       // { path: "/desktop12/desktop13/desktop14", element: <Desktop14 /> },
 
       //need to check
       { path: "/desktop3", element: <Desktop3 /> },
+
       { path: "/desktop3/desktop4", element: <Desktop4 /> },
       { path: "/desktop3/desktop4/desktop5", element: <Desktop5 /> },
+
+      //new
+      { path: "/desktop3/desktop15", element: <Desktop15 /> },
+      { path: "/desktop12/desktop16", element: <Desktop16 /> },
+      { path: "/desktop12/desktop16/desktop14", element: <Desktop14 /> },
+      { path: "/desktop12/desktop16/desktop17", element: <Desktop17 /> },
     ],
   },
 ]);
