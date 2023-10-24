@@ -1,10 +1,79 @@
+import React, { useState, useRef, useEffect } from "react";
+
 import "./Desktop17.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import { Client } from "../http/Config";
+import Loader from "../UI/Loader";
 
 function Desktop17() {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoadingText, setIsLoadingText] = useState(false);
+
+  //response
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState();
+
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const submitHandler = async () => {
+    let obj;
+
+    if (selectedFile) {
+      console.log("text file");
+      setIsLoadingText(true);
+      obj = { file: selectedFile };
+      await Client.post("/predictor", obj)
+        .then((res) => {
+          console.log(res.data);
+          const excelData = res.data;
+          setResponseData(excelData);
+        })
+        .catch((err) => {
+          console.log(err);
+          setError(err.message);
+          window.alert(err.message);
+        });
+      window.alert("Click View Button to See Response");
+    } else {
+      console.log("No file selected.");
+      window.alert("No file selected");
+    }
+   setIsLoadingText(false);
+    fileInputRef.current.value = "";
+    
+  };
+
+  const showResponseData = () => {
+    if (responseData) {
+      const blob = new Blob([responseData], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "job_titles"; // Set the desired file name
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
+  };
+
+  let txtContent = (
+    <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
+  );
+  if (isLoadingText) {
+    txtContent = <Loader />;
+  }
+
   return (
     <div>
       <Header />
@@ -30,16 +99,17 @@ function Desktop17() {
               type="file"
               accept=".pdf"
               style={{ display: "none" }} // Hide the default file input
-              onChange={{}}
-              ref={{}}
+              onChange={handleFileChange}
+              ref={fileInputRef}
             />
             <GradientButton
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
-              onClick={{}}
+              onClick={() => fileInputRef.current.click()}
               height="48px"
               buttonText="Browse"
             />
+            {txtContent}
           </div>
         </div>
         <div className="middle_container17">
@@ -48,7 +118,7 @@ function Desktop17() {
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
               link="#"
-              onClick={{}}
+              onClick={submitHandler}
               height="48px"
               width="300px"
               buttonText="Job title prediction"
@@ -63,7 +133,7 @@ function Desktop17() {
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
-                link="/desktop3"
+                onClick={showResponseData}
                 buttonText="View"
               />
             </div>
@@ -73,7 +143,7 @@ function Desktop17() {
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
-                link="#"
+                onClick={showResponseData}
                 buttonText="Download"
               />
             </div>

@@ -27,7 +27,7 @@ function Desktop15() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="#"
+              link="/desktop3/desktop15/desktop4"
               height="48px"
               buttonText="Data Duplication detect"
             />
@@ -36,7 +36,7 @@ function Desktop15() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="#"
+              link="/desktop3/desktop15/desktop5"
               height="48px"
               buttonText="Data validation"
             />

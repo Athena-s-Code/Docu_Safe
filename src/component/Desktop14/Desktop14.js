@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 import "./Desktop14.css";
 import GradientButton from "../UI/GradientButton";
@@ -8,7 +7,7 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-import CurvedButton from "../UI/CurvedButton";
+
 
 function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -28,13 +27,15 @@ function Desktop14() {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
-
+  
   const handleImgFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedImgFile(file);
   };
 
   useEffect(() => {}, [selectedFile]);
+
+  
 
   const showResponseData = async () => {
     if (responseData) {

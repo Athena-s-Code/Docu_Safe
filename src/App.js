@@ -26,35 +26,31 @@ import Desktop17 from "./component/Desktop17/Desktop17";
 const router = createBrowserRouter([
   {
     path: "/",
-
     errorElement: <ErrorPage />,
     children: [
       { path: "", element: <HomePage /> },
 
-      { path: "/desktop13", element: <Desktop13 /> },
-      //done
+      // { path: "/desktop13", element: <Desktop13 /> },
+      
+      //encryption
       { path: "/desktop6", element: <Desktop6 /> },
       { path: "/desktop6/desktop7", element: <Desktop7 /> },
       { path: "/desktop6/desktop8", element: <Desktop8 /> },
 
-      //done
+      //highlight & hiding
       { path: "desktop9", element: <Desktop9 /> },
       { path: "/desktop9/desktop10", element: <Desktop10 /> },
       { path: "/desktop9/desktop11", element: <Desktop11 /> },
 
-      //done
-      { path: "desktop12", element: <Desktop12 /> },
-      //{ path: "/desktop12/desktop14", element: <Desktop14 /> },
-      // { path: "/desktop12/desktop13/desktop14", element: <Desktop14 /> },
-
-      //need to check
+    
+      //hygine
       { path: "/desktop3", element: <Desktop3 /> },
-
-      { path: "/desktop3/desktop4", element: <Desktop4 /> },
-      { path: "/desktop3/desktop4/desktop5", element: <Desktop5 /> },
-
-      //new
       { path: "/desktop3/desktop15", element: <Desktop15 /> },
+      { path: "/desktop3/desktop15/desktop4", element: <Desktop4 /> },
+      { path: "/desktop3/desktop15/desktop5", element: <Desktop5 /> },
+
+      //classification
+      { path: "desktop12", element: <Desktop12 /> },
       { path: "/desktop12/desktop16", element: <Desktop16 /> },
       { path: "/desktop12/desktop16/desktop14", element: <Desktop14 /> },
       { path: "/desktop12/desktop16/desktop17", element: <Desktop17 /> },
