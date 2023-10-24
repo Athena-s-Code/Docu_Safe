@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./Desktop11.css";
+import "./Desktop10.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -7,28 +7,41 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { useNavigate } from "react-router-dom";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
-import { PDFDocument, rgb } from "pdf-lib";
+import CurvedButton from "../UI/CurvedButton";
+import { faFileImage } from "@fortawesome/free-solid-svg-icons";
+
 function Desktop10() {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
-
+  const [isShowData, setIsShowData] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [savedHideFileURL, setSavedHideFileURl] = useState(null);
+
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
+  //response
+  const [isError, setIsError] = useState();
   const [error, setError] = useState();
-
+  const [responseData, setResponseData] = useState();
   //
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   const backHandler = () => {
     navigate("/desktop9");
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleFileChange = (event) => {
@@ -42,67 +55,19 @@ function Desktop10() {
   };
 
   useEffect(() => {}, [selectedFile]);
-  // Function to handle viewing the file
-  const handleViewFile = () => {
-    console.log("Clicked View!");
-    if (savedHideFileURL) {
-      // Open the file URL in a new tab/window
-      window.open(savedHideFileURL);
-    }
+
+  const showResponseData = () => {
+    setIsShowData((isShowData) => !isShowData);
+    console.log("click");
   };
 
-  // Function to handle downloading the file
-  const handleDownloadFile = () => {
-    console.log("Clicked Download!");
-    if (savedHideFileURL) {
-      const a = document.createElement("a");
-      a.href = savedHideFileURL;
-      a.download = "Hide_file.pdf"; // Set an appropriate file name
-      document.body.appendChild(a);
-      a.click();
-    }
-  };
-  const handleTxtToPDF = async (txtData, fileName) => {
-    try {
-      const lines = txtData.split("\n"); // Split the text into lines
-
-      const pdfDoc = await PDFDocument.create();
-      let currentPage = pdfDoc.addPage([600, 400]);
-      let y = 350; // Initial y position for text
-
-      // Function to add text to the current page and create a new page if necessary
-      const addTextToPage = async (text) => {
-        // Check if the text exceeds the current page height
-        if (y - 20 < 0) {
-          currentPage = pdfDoc.addPage([600, 400]);
-          y = 350; // Reset y position for the new page
-        }
-
-        currentPage.drawText(text, {
-          x: 50,
-          y,
-          size: 20,
-          color: rgb(0, 0, 0),
-        });
-
-        y -= 20; // Move y position up for the next line of text
-      };
-
-      // Iterate through lines and add them to the PDF
-      for (const line of lines) {
-        await addTextToPage(line);
-      }
-
-      // Save the PDF
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-      const pdfFile = new File([blob], fileName, { type: "application/pdf" });
-      const fileURL = URL.createObjectURL(pdfFile);
-      setSavedHideFileURl(fileURL);
-      localStorage.setItem("savedHideFileURL", fileURL);
-    } catch (err) {
-      console.error("Error converting text to PDF:", err);
+  const editButtonHandler = () => {
+    if (window.confirm("Are you sure to remove uploaded file")) {
+      fileInputRef.current.value = "";
+      imageInputRef.current.value = "";
+      setSelectedFile(null);
+      setSelectedImgFile(null);
+      setResponseData();
     }
   };
 
@@ -113,12 +78,10 @@ function Desktop10() {
       console.log("text file");
       setIsLoadingText(true);
       obj = { file: selectedFile };
-      await Client.post("/hide", obj)
+      await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
-          const resData = res.data;
-          const fileName = `dataHide.pdf`;
-          handleTxtToPDF(resData, fileName);
+          setResponseData(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -128,12 +91,10 @@ function Desktop10() {
     } else if (selectedImgFile) {
       setIsLoadingImage(true);
       obj = { file: selectedImgFile };
-      await Client.post("/hide", obj)
+      await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
-          const resData = res.data;
-          const fileName = `dataHide.pdf`;
-          handleTxtToPDF(resData, fileName);
+          setResponseData(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -147,6 +108,7 @@ function Desktop10() {
     setIsLoadingText(false);
     fileInputRef.current.value = "";
     imageInputRef.current.value = "";
+    //setSelectedFile()
   };
 
   let txtContent = (
@@ -169,6 +131,26 @@ function Desktop10() {
     imgContent = <Loader />;
   }
 
+  let responseView = <p>Nothing to show</p>;
+
+  if (error) {
+    responseView = (
+      <>
+        <h1>{error["message"]}</h1>
+        <br />
+        <h2>{error["status"]}</h2>
+      </>
+    );
+  }
+  if (responseData) {
+    responseView = (
+      <>
+        <h1>{responseData["classification"]}</h1>
+        <br />
+        <h2>{responseData["status"]}</h2>
+      </>
+    );
+  }
   return (
     <div>
       <Header></Header>
@@ -177,22 +159,22 @@ function Desktop10() {
         image="dataHighliting.png"
         alt="image of data highliting and hiding"
       ></HeadingBox>
-      <div className="container11">
-        <div className="heading_container11">
-          <div className="heading_item11">
+      <div className="container10">
+        <div className="heading_container10">
+          <div className="heading_item10">
             <h3>
-              <span className="underline">Data Hiding</span>
+              <span className="underline">Data Highlighting</span>
             </h3>
           </div>
         </div>
 
-        <div className="top_container11">
-          <div className="item_container11">
+        <div className="top_container10">
+          <div className="item_container10">
             <p className="colTopic">Text File</p>
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
-              accept=".pdf"
+              accept=".txt"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input
@@ -205,9 +187,8 @@ function Desktop10() {
               height="48px"
               buttonText="Browse"
             />
-            {txtContent}
           </div>
-          <div className="item_container_topmiddle11">
+          <div className="item_container_topmiddle10">
             <div className="d11RadioButtons">
               <label className="d11RadioButtonsLable">
                 <input
@@ -238,7 +219,7 @@ function Desktop10() {
               </label>
             </div>
           </div>
-          <div className="item_container11">
+          <div className="item_container10">
             <p className="colTopic">Image File</p>
             <input
               type="file"
@@ -255,24 +236,23 @@ function Desktop10() {
               height="48px"
               buttonText="Browse"
             />
-            {imgContent}
           </div>
         </div>
 
-        <div className="middle_container11">
-          <div className="item_container_middle11">
+        <div className="middle_container10">
+          <div className="item_container_middle10">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               onClick={handleUpload}
               height="48px"
-              buttonText="Hide"
+              buttonText="Highlight"
             />
           </div>
         </div>
-        <div className="bottom_container11">
-          <div className="item_container_last11">
+        <div className="bottom_container10">
+          <div className="item_container_last10">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
@@ -282,23 +262,21 @@ function Desktop10() {
               buttonText="Back"
             />
           </div>
-          <div className="item_container_last11">
+          <div className="item_container_last10">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
-              onClick={handleViewFile}
               buttonText="View"
             />
           </div>
-          <div className="item_container_last11">
+          <div className="item_container_last10">
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
-              onClick={handleDownloadFile}
               buttonText="Download"
             />
           </div>

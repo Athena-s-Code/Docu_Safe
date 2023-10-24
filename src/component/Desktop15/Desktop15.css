@@ -1,4 +1,4 @@
-.container4 {
+.container15 {
   color: white;
   display: flex;
   flex-direction: column;
@@ -7,26 +7,26 @@
   padding-bottom: 50px;
 }
 
-.heading_container4 {
+.heading_container15 {
   display: grid;
   grid-template-rows: repeat(1, 1fr);
   height: 12 vh;
 }
-.heading_item4 {
+.heading_item15 {
   display: flex;
   flex-direction: column;
   margin-left: 12%;
 }
 
-.top_container4 {
+.top_container15 {
   display: grid;
   grid-template-rows: repeat(1, 1fr);
   grid-template-columns: repeat(2, 1fr);
-  height: 35vh;
+  height: 25vh;
   margin-left: 9%;
   margin-right: 9%;
 }
-.item_container4 {
+.item_container15 {
   display: flex;
   flex-direction: column; /* Stack image and button vertically */
   justify-content: center;
@@ -35,37 +35,40 @@
   align-items: center;
 }
 
-.item_container_middle4 {
+.item_container_middle15 {
   display: flex;
   flex-direction: column; /* Stack image and button vertically */
   justify-content: center;
   align-items: center;
   margin-top: 5%;
 }
-.middle_container4 {
+.middle_container15 {
   display: grid;
   grid-template-rows: repeat(1, 1fr);
-  grid-template-columns: repeat(2, 1fr);
-  height: 30vh;
+  height: 20vh;
   justify-content: center;
   align-items: center;
   margin-left: 9%;
   margin-right: 9%;
 }
-.item_container_last4 {
+.item_container_last15 {
   display: flex;
-  flex-direction: column; /* Stack image and button vertically */
-
+  flex-direction: row; /* Stack image and button vertically */
+  justify-content: center;
   overflow: hidden;
   align-items: center;
 }
-.bottom_container4 {
+.bottom_container15 {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(1, 1fr);
-  height: 30vh;
+  height: 20vh;
   margin-left: 9%;
   margin-right: 9%;
   justify-content: center;
   align-items: center;
+}
+.button_container_15 {
+  margin-right: 15px;
+  margin-left: 15px;
 }

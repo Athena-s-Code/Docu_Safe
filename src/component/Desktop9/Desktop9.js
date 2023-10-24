@@ -28,7 +28,7 @@ function Desktop9() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="#"
+              link="/desktop9/desktop10"
               height="48px"
               buttonText="Data Highlighting"
             />
@@ -37,7 +37,7 @@ function Desktop9() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
-              link="#"
+              link="/desktop9/desktop11"
               height="48px"
               buttonText="Data Hiding"
             />
@@ -46,8 +46,8 @@ function Desktop9() {
         <div className="middle_container9">
           <div className="item_container_middle9">
             <GradientButton
-              startGradientColor="rgb(146.62, 0, 0)" // Start color
-              endGradientColor="rgb(255, 86.14, 63.11)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               link="#"
               height="48px"
               width="1140px"
@@ -58,8 +58,8 @@ function Desktop9() {
         <div className="bottom_container9">
           <div className="item_container_last9">
             <GradientButton
-              startGradientColor="rgb(13.16, 168, 10)" // Start color
-              endGradientColor="rgb(0, 196.56, 7.86)"
+              startGradientColor="rgb(10, 111, 168)" // Start color
+              endGradientColor="rgb(5, 167, 244)"
               height="48px"
               width="160px"
               link="#"

@@ -13,7 +13,7 @@
     flex-direction: column; /* Stack image and button vertically */
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    
     /* background: linear-gradient(180deg, #FF0000 0%, #00FF00 100%); */
     background: linear-gradient(180deg, #023C80 6.04%, #150042 100%);
     /* opacity: 0.7; */
@@ -26,13 +26,18 @@
   }
   
   .image-button-home {
-    margin-top: 10px; /* Add spacing between image and button */
-    padding: 10px 20px;
-    background-color: #15CAF2;
+    margin-top: 10px;
+    padding: 20px 30px;
+    background: linear-gradient(180deg,rgb(10, 111, 168) 0%, rgb(5, 167, 244) 100%); /* Gradient background */
     color: white;
     border: none;
     cursor: pointer;
     font-weight: bold;
     border-radius: 4%;
+    font-family: "Inter-ExtraBold", Helvetica; /* Use a custom font, you can replace 'Roboto' with your preferred font name */
+    font-size: 16px; /* Set a standard font size */
+    transition: background-color 0.3s; /* Add a smooth transition on hover */
   }
-  
+  .image-button-home:hover {
+    background: linear-gradient(180deg,rgb(10, 111, 168) 100%, rgb(5, 167, 244) 0%); /* Change gradient colors on hover */
+  }
