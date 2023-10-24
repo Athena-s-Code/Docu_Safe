@@ -36,7 +36,9 @@ function Desktop15() {
             <GradientButton
               startGradientColor="rgb(10, 111, 168)" // Start color
               endGradientColor="rgb(5, 167, 244)"
+
               link="/desktop3/desktop15/desktop18"
+
               height="48px"
               buttonText="Data validation"
             />
