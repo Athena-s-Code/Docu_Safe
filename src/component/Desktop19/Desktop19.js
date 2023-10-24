@@ -1,10 +1,10 @@
-import "./Desktop18.css";
+import "./Desktop19.css";
+import GradientButton from "../UI/GradientButton";
+import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
-import Footer from "../Footer/Footer";
-import GradientButton from "../UI/GradientButton";
 
-function Desktop18() {
+function Desktop19() {
   return (
     <div>
       <Header />
@@ -13,17 +13,19 @@ function Desktop18() {
         image="dataHygiene.png"
         alt="image of data hygiene solution"
       ></HeadingBox>
-      <div className="container18">
-        <div className="heading_container18">
-          <div className="heading_item18">
+      <div className="container17">
+        <div className="heading_container17">
+          <div className="heading_item17">
             <h3>
-              <span className="underline">Data Validation</span>
+              <span className="underline">Data validation</span>
             </h3>
           </div>
         </div>
-
-        <div className="top_container18">
-          <div className="item_container18">
+        <div className="top_container17">
+          <div className="item_container17 ">
+            <p className="colTopic">Verify</p>
+          </div>
+          <div className="item_container17">
             <input
               type="file"
               accept=".pdf"
@@ -36,43 +38,30 @@ function Desktop18() {
               endGradientColor="rgb(5, 167, 244)"
               onClick={{}}
               height="48px"
-              buttonText="Browse"
+              buttonText="Password"
             />
           </div>
         </div>
-        <div className="middle_container18">
-          <div className="item_container_middle18">
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)"
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              onClick={{}}
-              height="48px"
-              width="300px"
-              buttonText="Validate"
-            />
-          </div>
-        </div>
-        <div className="bottom_container18">
-          <div className="item_container_last18">
-            <div className="button_container_18">
+        <div className="bottom_container17">
+          <div className="item_container_last17">
+            <div className="button_container_17">
               <GradientButton
                 startGradientColor="rgb(10, 111, 168)" // Start color
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
-                link="/desktop3/desktop15"
-                buttonText="< Back"
+                link="/desktop3"
+                buttonText="View"
               />
             </div>
-            <div className="button_container_18">
+            <div className="button_container_17">
               <GradientButton
                 startGradientColor="rgb(10, 111, 168)" // Start color
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
-                link="/desktop3/desktop15/desktop18/desktop19"
-                buttonText="Next >"
+                link="#"
+                buttonText="Download"
               />
             </div>
           </div>
@@ -83,4 +72,4 @@ function Desktop18() {
   );
 }
 
-export default Desktop18;
+export default Desktop19;
