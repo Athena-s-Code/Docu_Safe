@@ -22,6 +22,7 @@ import Desktop11 from "./component/Desktop11/Desktop11";
 import Desktop15 from "./component/Desktop15/Desktop15";
 import Desktop16 from "./component/Desktop16/Desktop16";
 import Desktop17 from "./component/Desktop17/Desktop17";
+import Desktop18 from "./component/Desktop18/Desktop18";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       { path: "", element: <HomePage /> },
 
       // { path: "/desktop13", element: <Desktop13 /> },
-      
+
       //encryption
       { path: "/desktop6", element: <Desktop6 /> },
       { path: "/desktop6/desktop7", element: <Desktop7 /> },
@@ -42,12 +43,12 @@ const router = createBrowserRouter([
       { path: "/desktop9/desktop10", element: <Desktop10 /> },
       { path: "/desktop9/desktop11", element: <Desktop11 /> },
 
-    
       //hygine
       { path: "/desktop3", element: <Desktop3 /> },
       { path: "/desktop3/desktop15", element: <Desktop15 /> },
       { path: "/desktop3/desktop15/desktop4", element: <Desktop4 /> },
       { path: "/desktop3/desktop15/desktop5", element: <Desktop5 /> },
+      { path: "/desktop3/desktop15/desktop18", element: <Desktop18 /> },
 
       //classification
       { path: "desktop12", element: <Desktop12 /> },
@@ -62,4 +63,4 @@ function App() {
   return <RouterProvider router={router} />;
 }
 
-export default App;
+export default App;
