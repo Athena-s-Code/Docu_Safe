@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { PDFDocument, rgb } from "pdf-lib";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import "./Desktop14.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -16,7 +16,7 @@ function Desktop14() {
   const [isShowData, setIsShowData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [savedHideFileURL, setSavedHideFileURl] = useState(null);
-  //response
+  // response
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
   //
@@ -55,38 +55,39 @@ function Desktop14() {
       a.click();
     }
   };
+
+
   const handleTxtToPDF = async (txtData, fileName) => {
     try {
-      const lines = txtData.split("\n"); // Split the text into lines
-
       const pdfDoc = await PDFDocument.create();
       let currentPage = pdfDoc.addPage([600, 400]);
       let y = 350; // Initial y position for text
 
-      // Function to add text to the current page and create a new page if necessary
       const addTextToPage = async (text) => {
-        // Check if the text exceeds the current page height
         if (y - 20 < 0) {
           currentPage = pdfDoc.addPage([600, 400]);
           y = 350; // Reset y position for the new page
         }
 
-        currentPage.drawText(text, {
+        const encodedText = encodeTextToBase64(text);
+
+        currentPage.drawText(encodedText, {
           x: 50,
           y,
           size: 20,
           color: rgb(0, 0, 0),
+          font: await pdfDoc.embedFont(StandardFonts.Helvetica),
         });
 
         y -= 20; // Move y position up for the next line of text
       };
 
-      // Iterate through lines and add them to the PDF
+      const lines = txtData.split("\n"); // Split the text into lines
+
       for (const line of lines) {
         await addTextToPage(line);
       }
 
-      // Save the PDF
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
 
@@ -98,6 +99,17 @@ function Desktop14() {
       console.error("Error converting text to PDF:", err);
     }
   };
+
+  const encodeTextToBase64 = (text) => {
+    // Convert text to Uint8Array
+    const encoder = new TextEncoder();
+    const textUint8Array = encoder.encode(text);
+
+    // Encode Uint8Array to Base64
+    const encodedText = btoa(String.fromCharCode(...textUint8Array));
+    return encodedText;
+  };
+
 
   const editButtonHandler = () => {
     if (window.confirm("Are you sure to remove uploaded file")) {
@@ -119,7 +131,6 @@ function Desktop14() {
       await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
-          //setResponseData(res.data);
           const resData = res.data;
           const fileName = `dataClassification.pdf`;
           handleTxtToPDF(resData, fileName);
@@ -135,7 +146,6 @@ function Desktop14() {
       await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
-          //setResponseData(res.data);
           const resData = res.data;
           const fileName = `dataClassification.pdf`;
           handleTxtToPDF(resData, fileName);
