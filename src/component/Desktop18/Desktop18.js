@@ -38,7 +38,7 @@ function Desktop18() {
       console.log(selectedFile);
       setIsLoadingText(true);
       obj = { file: selectedFile };
-      await Client.post("/validator", obj)
+      await Client.post("/validate", obj)
         .then((res) => {
           setResponseData(res.data);
           setValidate(true);

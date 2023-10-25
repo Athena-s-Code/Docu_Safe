@@ -17,7 +17,7 @@ function Desktop19() {
   const fileInputRef = useRef(null);
 
   const GetValidationData = async () => {
-    await Client.get("/validator")
+    await Client.get("/validate")
       .then((res) => {
         setResponseData(res.data);
         setValidate(true);
