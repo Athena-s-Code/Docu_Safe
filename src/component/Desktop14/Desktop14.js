@@ -8,7 +8,6 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 
-
 function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
@@ -27,7 +26,7 @@ function Desktop14() {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
-  
+
   const handleImgFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedImgFile(file);
@@ -35,25 +34,23 @@ function Desktop14() {
 
   useEffect(() => {}, [selectedFile]);
 
-  
-
   const showResponseData = async () => {
     if (responseData) {
       try {
         // Create a blob containing the response data
-        const blob = new Blob([responseData], { type: 'text/plain' });
-  
+        const blob = new Blob([responseData], { type: "text/plain" });
+
         // Create a URL for the blob
         const textUrl = URL.createObjectURL(blob);
-  
+
         // Open the text file in a new tab
-        window.open(textUrl, '_blank');
+        window.open(textUrl, "_blank");
       } catch (error) {
-        console.error('Error saving and opening text in new tab:', error);
+        console.error("Error saving and opening text in new tab:", error);
         // Handle the error as needed
       }
     } else {
-      console.error('No response data to open in a new tab.');
+      console.error("No response data to open in a new tab.");
       // Handle the case where responseData is undefined or empty
       // You might want to show a message to the user or handle this case differently.
     }
@@ -73,34 +70,34 @@ function Desktop14() {
     if (responseData) {
       try {
         // Create a blob containing the response data
-        const blob = new Blob([responseData], { type: 'text/plain' });
-  
+        const blob = new Blob([responseData], { type: "text/plain" });
+
         // Create a URL for the blob
         const textUrl = URL.createObjectURL(blob);
-  
+
         // Create a link element for downloading
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = textUrl;
-        a.download = 'classification_response.txt'; // Set the filename
-        a.style.display = 'none'; // Hide the link
-  
+        a.download = "classification_response.txt"; // Set the filename
+        a.style.display = "none"; // Hide the link
+
         // Append the link to the document
         document.body.appendChild(a);
-  
+
         // Trigger a click to download
         a.click();
-  
+
         // Remove the link from the document
         document.body.removeChild(a);
-  
+
         // Revoke the URL to free up resources
         URL.revokeObjectURL(textUrl);
       } catch (error) {
-        console.error('Error saving response data to text file:', error);
+        console.error("Error saving response data to text file:", error);
         // Handle the error as needed
       }
     } else {
-      console.error('No response data to save as a text file.');
+      console.error("No response data to save as a text file.");
       // Handle the case where responseData is undefined or empty
       // You might want to show a message to the user or handle this case differently.
     }
@@ -228,7 +225,6 @@ function Desktop14() {
               buttonText="Browse"
             />
             {txtContent}
-            
           </div>
 
           {/* image file---------------------------------------------------------------------------- */}
@@ -312,4 +308,4 @@ function Desktop14() {
     </div>
   );
 }
-export default Desktop14;
+export default Desktop14;

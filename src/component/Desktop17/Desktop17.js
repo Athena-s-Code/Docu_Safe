@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 
 import "./Desktop17.css";
 import GradientButton from "../UI/GradientButton";
@@ -7,6 +7,7 @@ import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
+import { BACKEND_URL } from '../http/Constant';
 
 function Desktop17() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,7 +15,7 @@ function Desktop17() {
 
   //response
   const [error, setError] = useState();
-  const [responseData, setResponseData] = useState();
+  const [responseData, setResponseData] = useState("");
 
   const fileInputRef = useRef(null);
 
@@ -27,43 +28,37 @@ function Desktop17() {
     let obj;
 
     if (selectedFile) {
-      console.log("text file");
+      console.log(selectedFile);
       setIsLoadingText(true);
       obj = { file: selectedFile };
       await Client.post("/predictor", obj)
         .then((res) => {
+          setResponseData(res.data);
           console.log(res.data);
-          const excelData = res.data;
-          setResponseData(excelData);
         })
         .catch((err) => {
           console.log(err);
           setError(err.message);
           window.alert(err.message);
         });
-      window.alert("Click View Button to See Response");
+      window.alert("Click download button");
     } else {
       console.log("No file selected.");
       window.alert("No file selected");
     }
-   setIsLoadingText(false);
+    setIsLoadingText(false);
     fileInputRef.current.value = "";
-    
   };
 
-  const showResponseData = () => {
+  const downloadHandler = () => {
     if (responseData) {
-      const blob = new Blob([responseData], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "job_titles"; // Set the desired file name
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      try {
+       window.open(BACKEND_URL + responseData, "_blank");
+      } catch (error) {
+        window.alert("Error saving response data to excel file:", error);
+      }
+    } else {
+      window.alert("No response data to save as a excel file.");
     }
   };
 
@@ -128,14 +123,14 @@ function Desktop17() {
         <div className="bottom_container17">
           <div className="item_container_last17">
             <div className="button_container_17">
-              <GradientButton
+              {/* <GradientButton
                 startGradientColor="rgb(10, 111, 168)" // Start color
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
                 onClick={showResponseData}
                 buttonText="View"
-              />
+              /> */}
             </div>
             <div className="button_container_17">
               <GradientButton
@@ -143,7 +138,7 @@ function Desktop17() {
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
-                onClick={showResponseData}
+                onClick={downloadHandler}
                 buttonText="Download"
               />
             </div>
