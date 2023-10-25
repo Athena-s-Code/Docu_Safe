@@ -109,11 +109,11 @@ function Desktop10() {
   const handleUpload = async () => {
     let obj;
 
-    if (selectedFile) {
+    if (selectedOption !== "Payment Details") {
       console.log("text file");
       setIsLoadingText(true);
       obj = { file: selectedFile };
-      await Client.post("/hide", obj)
+      await Client.post("/hide_payments", obj)
         .then((res) => {
           console.log(res.data);
           const resData = res.data;
@@ -125,28 +125,55 @@ function Desktop10() {
           setError(err.message);
         });
       window.alert("Click View Button to See Response");
-    } else if (selectedImgFile) {
-      setIsLoadingImage(true);
-      obj = { file: selectedImgFile };
-      await Client.post("/hide", obj)
-        .then((res) => {
-          console.log(res.data);
-          const resData = res.data;
-          const fileName = `dataHide.pdf`;
-          handleTxtToPDF(resData, fileName);
-        })
-        .catch((err) => {
-          console.log(err);
-          setError(err.message);
-        });
-      window.alert("Click View Button to See Response");
+      setIsLoadingImage(false);
+      setIsLoadingText(false);
+      fileInputRef.current.value = "";
+     
     } else {
-      console.log("No file selected.");
+
+
+      if (selectedFile) {
+        console.log("text file");
+        setIsLoadingText(true);
+        obj = { file: selectedFile };
+        await Client.post("/hide", obj)
+          .then((res) => {
+            console.log(res.data);
+            const resData = res.data;
+            const fileName = `dataHide.pdf`;
+            handleTxtToPDF(resData, fileName);
+          })
+          .catch((err) => {
+            console.log(err);
+            setError(err.message);
+          });
+        window.alert("Click View Button to See Response");
+      } else if (selectedImgFile) {
+        setIsLoadingImage(true);
+        obj = { file: selectedImgFile };
+        await Client.post("/hide", obj)
+          .then((res) => {
+            console.log(res.data);
+            const resData = res.data;
+            const fileName = `dataHide.pdf`;
+            handleTxtToPDF(resData, fileName);
+          })
+          .catch((err) => {
+            console.log(err);
+            setError(err.message);
+          });
+        window.alert("Click View Button to See Response");
+        imageInputRef.current.value = "";
+      } else {
+        console.log("No file selected.");
+      }
+      
+      
     }
     setIsLoadingImage(false);
     setIsLoadingText(false);
     fileInputRef.current.value = "";
-    imageInputRef.current.value = "";
+    //imageInputRef.current.value = "";
   };
 
   let txtContent = (
@@ -169,6 +196,10 @@ function Desktop10() {
     imgContent = <Loader />;
   }
 
+
+
+
+
   return (
     <div>
       <Header></Header>
@@ -188,7 +219,7 @@ function Desktop10() {
 
         <div className="top_container11">
           <div className="item_container11">
-            <p className="colTopic">Text File</p>
+            <p className="colTopic">Pdf File</p>
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
@@ -238,7 +269,7 @@ function Desktop10() {
               </label>
             </div>
           </div>
-          <div className="item_container11">
+          { selectedOption !== "Payment Details" ? <div className="item_container11">
             <p className="colTopic">Image File</p>
             <input
               type="file"
@@ -256,7 +287,8 @@ function Desktop10() {
               buttonText="Browse"
             />
             {imgContent}
-          </div>
+          </div>:""  }
+          
         </div>
 
         <div className="middle_container11">

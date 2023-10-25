@@ -7,6 +7,7 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { useNavigate } from "react-router-dom";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
+import { PDFDocument, rgb } from "pdf-lib";
 
 function Desktop10() {
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ function Desktop10() {
   const [isShowData, setIsShowData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [savedHideFileURL, setSavedHideFileURl] = useState(null);
+  const [error, setError] = useState();
 
   const [pdfData, setPdfData] = useState(null);
   var pdfFile
@@ -100,42 +103,109 @@ function Desktop10() {
     }
   };
  
+  const handleTxtToPDF = async (txtData, fileName) => {
+    try {
+      const lines = txtData.split("\n"); // Split the text into lines
+
+      const pdfDoc = await PDFDocument.create();
+      let currentPage = pdfDoc.addPage([600, 400]);
+      let y = 350; // Initial y position for text
+
+      // Function to add text to the current page and create a new page if necessary
+      const addTextToPage = async (text) => {
+        // Check if the text exceeds the current page height
+        if (y - 20 < 0) {
+          currentPage = pdfDoc.addPage([600, 400]);
+          y = 350; // Reset y position for the new page
+        }
+
+        currentPage.drawText(text, {
+          x: 50,
+          y,
+          size: 20,
+          color: rgb(0, 0, 0),
+        });
+
+        y -= 20; // Move y position up for the next line of text
+      };
+
+      // Iterate through lines and add them to the PDF
+      for (const line of lines) {
+        await addTextToPage(line);
+      }
+
+      // Save the PDF
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+      const pdfFile = new File([blob], fileName, { type: "application/pdf" });
+      const fileURL = URL.createObjectURL(pdfFile);
+      setSavedHideFileURl(fileURL);
+      localStorage.setItem("savedHideFileURL", fileURL);
+    } catch (err) {
+      console.error("Error converting text to PDF:", err);
+    }
+  };
+
+
   const handleUpload = async () => {
     let obj;
 
-
-    if (selectedFile) {
+    if (selectedOption !== "Payment Details") {
+      console.log("text file");
       setIsLoadingText(true);
       obj = { file: selectedFile };
-      await Client.post("/highlight", obj, {
-        responseType: 'arraybuffer', // Important for binary data like PDFs
-      })
-        .then((res) => {
-          //console.log(res.data);
-          //setPdfURL(res.data); 
-          //pdfFile = new Blob([res.data], { type: 'application/pdf' });
-          setPdfData(res.data);
-          
-          console.log(pdfData)// Set the PDF URL received from the server
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      window.alert("Click View Button to See Response");
-    } else if (selectedImgFile) {
-      setIsLoadingImage(true);
-      obj = { file: selectedImgFile };
-      await Client.post("/highlight", obj)
+      await Client.post("/highlight_payment", obj)
         .then((res) => {
           console.log(res.data);
-          //setPdfURL(res.data.pdfURL); // Set the PDF URL received from the server
+          const resData = res.data;
+          const fileName = `dataHide.pdf`;
+          handleTxtToPDF(resData, fileName);
         })
         .catch((err) => {
           console.log(err);
+          setError(err.message);
         });
       window.alert("Click View Button to See Response");
+      setIsLoadingImage(false);
+      setIsLoadingText(false);
+      fileInputRef.current.value = "";
+     
     } else {
-      console.log("No file selected.");
+
+      if (selectedFile) {
+        setIsLoadingText(true);
+        obj = { file: selectedFile };
+        await Client.post("/highlight", obj, {
+          responseType: 'arraybuffer', // Important for binary data like PDFs
+        })
+          .then((res) => {
+            //console.log(res.data);
+            //setPdfURL(res.data); 
+            //pdfFile = new Blob([res.data], { type: 'application/pdf' });
+            setPdfData(res.data);
+          
+            console.log(pdfData)// Set the PDF URL received from the server
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        window.alert("Click View Button to See Response");
+      } else if (selectedImgFile) {
+        setIsLoadingImage(true);
+        obj = { file: selectedImgFile };
+        await Client.post("/highlight", obj)
+          .then((res) => {
+            console.log(res.data);
+            //setPdfURL(res.data.pdfURL); // Set the PDF URL received from the server
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        window.alert("Click View Button to See Response");
+      } else {
+        console.log("No file selected.");
+      }
     }
     setIsLoadingImage(false);
     setIsLoadingText(false);
@@ -234,25 +304,28 @@ function Desktop10() {
               </label>
             </div>
           </div>
-          <div className="item_container10">
-            <p className="colTopic">Image File</p>
-            <input
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              style={{ display: "none" }}
-              onChange={handleImgFileChange}
-              ref={imageInputRef}
-            />
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)"
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              onClick={() => imageInputRef.current.click()}
-              height="48px"
-              buttonText="Browse"
-            />
-            {imgContent}
-          </div>
+
+
+          {selectedOption !== "Payment Details" ?
+            <div className="item_container10">
+              <p className="colTopic">Image File</p>
+              <input
+                type="file"
+                accept=".jpg, .jpeg, .png"
+                style={{ display: "none" }}
+                onChange={handleImgFileChange}
+                ref={imageInputRef}
+              />
+              <GradientButton
+                startGradientColor="rgb(10, 111, 168)"
+                endGradientColor="rgb(5, 167, 244)"
+                link="#"
+                onClick={() => imageInputRef.current.click()}
+                height="48px"
+                buttonText="Browse"
+              />
+              {imgContent}
+            </div> : ""}
         </div>
 
         <div className="middle_container10">
