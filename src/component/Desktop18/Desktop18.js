@@ -1,10 +1,68 @@
+import React, { useState, useRef } from "react";
 import "./Desktop18.css";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
 import Footer from "../Footer/Footer";
 import GradientButton from "../UI/GradientButton";
-
+import { Client } from "../http/Config";
+import Loader from "../UI/Loader";
+import { BACKEND_URL } from "../http/Constant";
+import { useNavigate } from "react-router-dom";
 function Desktop18() {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoadingText, setIsLoadingText] = useState(false);
+  const [isValidate, setValidate] = useState(true);
+  const navigate = useNavigate();
+  //response
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState("");
+
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const NavigateToNext = () => {
+    if (isValidate == true) {
+      navigate("/desktop3/desktop15/desktop18/desktop19");
+    } else {
+      window.alert("Please wait for Validation Complete !");
+    }
+  };
+  const submitHandler = async () => {
+    let obj;
+
+    if (selectedFile) {
+      console.log(selectedFile);
+      setIsLoadingText(true);
+      obj = { file: selectedFile };
+      await Client.post("/validator", obj)
+        .then((res) => {
+          setResponseData(res.data);
+          setValidate(true);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setError(err.message);
+          window.alert(err.message);
+        });
+      window.alert("Click download button");
+    } else {
+      console.log("No file selected.");
+      window.alert("No file selected");
+    }
+    setIsLoadingText(false);
+    fileInputRef.current.value = "";
+  };
+  let txtContent = (
+    <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
+  );
+  if (isLoadingText) {
+    txtContent = <Loader />;
+  }
   return (
     <div>
       <Header />
@@ -28,13 +86,13 @@ function Desktop18() {
               type="file"
               accept=".pdf"
               style={{ display: "none" }} // Hide the default file input
-              onChange={{}}
-              ref={{}}
+              onChange={handleFileChange}
+              ref={fileInputRef}
             />
             <GradientButton
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
-              onClick={{}}
+              onClick={() => fileInputRef.current.click()}
               height="48px"
               buttonText="Browse"
             />
@@ -46,7 +104,7 @@ function Desktop18() {
               startGradientColor="rgb(10, 111, 168)"
               endGradientColor="rgb(5, 167, 244)"
               link="#"
-              onClick={{}}
+              onClick={submitHandler}
               height="48px"
               width="300px"
               buttonText="Validate"
@@ -71,7 +129,8 @@ function Desktop18() {
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
-                link="/desktop3/desktop15/desktop18/desktop19"
+                onClick={NavigateToNext}
+                //link=
                 buttonText="Next >"
               />
             </div>

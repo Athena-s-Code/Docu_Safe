@@ -1,10 +1,60 @@
+import React, { useState, useRef, useEffect } from "react";
 import "./Desktop19.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import HeadingBox from "../HeadingBox/HeadingBox";
+import { Client } from "../http/Config";
+import Loader from "../UI/Loader";
+import { BACKEND_URL } from "../http/Constant";
 
 function Desktop19() {
+  const [isValidate, setValidate] = useState(false);
+  //response
+  const [error, setError] = useState();
+  const [responseData, setResponseData] = useState("");
+
+  const fileInputRef = useRef(null);
+
+  const GetValidationData = async () => {
+    await Client.get("/validator")
+      .then((res) => {
+        setResponseData(res.data);
+        setValidate(true);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.message);
+        window.alert(err.message);
+      });
+    window.alert("Click download button");
+  };
+  const downloadHandler = () => {
+    if (responseData) {
+      try {
+        window.open(BACKEND_URL + responseData, "_blank");
+      } catch (error) {
+        window.alert("Error saving response data to excel file:", error);
+      }
+    } else {
+      window.alert("No response data to save as a excel file.");
+    }
+  };
+  //when loading
+  useEffect(() => {
+    GetValidationData();
+  }, []);
+  let txtContent = (
+    <input
+      type="text"
+      value={isValidate ? " " : "Validation Complete"}
+      readOnly
+    />
+  );
+  if (isValidate) {
+    txtContent = <Loader />;
+  }
   return (
     <div>
       <Header />
@@ -60,6 +110,7 @@ function Desktop19() {
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
+                onClick={downloadHandler}
                 link="#"
                 buttonText="Download"
               />
