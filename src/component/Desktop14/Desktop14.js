@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
-
 import "./Desktop14.css";
 import GradientButton from "../UI/GradientButton";
 import Footer from "../Footer/Footer";
@@ -10,7 +8,6 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 
-
 function Desktop14() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImgFile, setSelectedImgFile] = useState();
@@ -18,9 +15,7 @@ function Desktop14() {
   const [isLoadingImage, setIsLoadingImage] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   //response
-
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
   //
@@ -31,7 +26,7 @@ function Desktop14() {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
-  
+
   const handleImgFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedImgFile(file);
@@ -39,95 +34,27 @@ function Desktop14() {
 
   useEffect(() => {}, [selectedFile]);
 
-  
-
-  // Function to handle downloading the file
-  const handleDownloadFile = () => {
-    console.log("Clicked Download!");
-    if (savedHideFileURL) {
-      const a = document.createElement("a");
-      a.href = savedHideFileURL;
-      a.download = "Classification_file.pdf"; // Set an appropriate file name
-      document.body.appendChild(a);
-      a.click();
-    }
-  };
-
-
-  const handleTxtToPDF = async (txtData, fileName) => {
-    try {
-      const pdfDoc = await PDFDocument.create();
-      let currentPage = pdfDoc.addPage([600, 400]);
-      let y = 350; // Initial y position for text
-
-      const addTextToPage = async (text) => {
-        if (y - 20 < 0) {
-          currentPage = pdfDoc.addPage([600, 400]);
-          y = 350; // Reset y position for the new page
-        }
-
-        const encodedText = encodeTextToBase64(text);
-
-        currentPage.drawText(encodedText, {
-          x: 50,
-          y,
-          size: 20,
-          color: rgb(0, 0, 0),
-          font: await pdfDoc.embedFont(StandardFonts.Helvetica),
-        });
-
-        y -= 20; // Move y position up for the next line of text
-      };
-
-      const lines = txtData.split("\n"); // Split the text into lines
-
-      for (const line of lines) {
-        await addTextToPage(line);
-      }
-
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-      const pdfFile = new File([blob], fileName, { type: "application/pdf" });
-      const fileURL = URL.createObjectURL(pdfFile);
-      setSavedHideFileURl(fileURL);
-      localStorage.setItem("savedHideFileURL", fileURL);
-    } catch (err) {
-      console.error("Error converting text to PDF:", err);
-
   const showResponseData = async () => {
     if (responseData) {
       try {
         // Create a blob containing the response data
-        const blob = new Blob([responseData], { type: 'text/plain' });
-  
+        const blob = new Blob([responseData], { type: "text/plain" });
+
         // Create a URL for the blob
         const textUrl = URL.createObjectURL(blob);
-  
+
         // Open the text file in a new tab
-        window.open(textUrl, '_blank');
+        window.open(textUrl, "_blank");
       } catch (error) {
-        console.error('Error saving and opening text in new tab:', error);
+        console.error("Error saving and opening text in new tab:", error);
         // Handle the error as needed
       }
     } else {
-      console.error('No response data to open in a new tab.');
+      console.error("No response data to open in a new tab.");
       // Handle the case where responseData is undefined or empty
       // You might want to show a message to the user or handle this case differently.
-
     }
   };
-
-  const encodeTextToBase64 = (text) => {
-    // Convert text to Uint8Array
-    const encoder = new TextEncoder();
-    const textUint8Array = encoder.encode(text);
-
-    // Encode Uint8Array to Base64
-    const encodedText = btoa(String.fromCharCode(...textUint8Array));
-    return encodedText;
-  };
-
 
   const editButtonHandler = () => {
     if (window.confirm("Are you sure to remove uploaded file")) {
@@ -143,34 +70,34 @@ function Desktop14() {
     if (responseData) {
       try {
         // Create a blob containing the response data
-        const blob = new Blob([responseData], { type: 'text/plain' });
-  
+        const blob = new Blob([responseData], { type: "text/plain" });
+
         // Create a URL for the blob
         const textUrl = URL.createObjectURL(blob);
-  
+
         // Create a link element for downloading
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = textUrl;
-        a.download = 'classification_response.txt'; // Set the filename
-        a.style.display = 'none'; // Hide the link
-  
+        a.download = "classification_response.txt"; // Set the filename
+        a.style.display = "none"; // Hide the link
+
         // Append the link to the document
         document.body.appendChild(a);
-  
+
         // Trigger a click to download
         a.click();
-  
+
         // Remove the link from the document
         document.body.removeChild(a);
-  
+
         // Revoke the URL to free up resources
         URL.revokeObjectURL(textUrl);
       } catch (error) {
-        console.error('Error saving response data to text file:', error);
+        console.error("Error saving response data to text file:", error);
         // Handle the error as needed
       }
     } else {
-      console.error('No response data to save as a text file.');
+      console.error("No response data to save as a text file.");
       // Handle the case where responseData is undefined or empty
       // You might want to show a message to the user or handle this case differently.
     }
@@ -186,12 +113,7 @@ function Desktop14() {
       await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
-
-          const resData = res.data;
-          const fileName = `dataClassification.pdf`;
-          handleTxtToPDF(resData, fileName);
-  setResponseData(res.data);
-
+          setResponseData(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -204,12 +126,7 @@ function Desktop14() {
       await Client.post("/classification", obj)
         .then((res) => {
           console.log(res.data);
-
-          const resData = res.data;
-          const fileName = `dataClassification.pdf`;
-          handleTxtToPDF(resData, fileName);
-  setResponseData(res.data);
-
+          setResponseData(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -308,7 +225,6 @@ function Desktop14() {
               buttonText="Browse"
             />
             {txtContent}
-            
           </div>
 
           {/* image file---------------------------------------------------------------------------- */}
@@ -392,4 +308,4 @@ function Desktop14() {
     </div>
   );
 }
-export default Desktop14;
+export default Desktop14;
