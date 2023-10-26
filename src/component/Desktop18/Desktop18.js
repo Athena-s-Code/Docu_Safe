@@ -26,7 +26,7 @@ function Desktop18() {
 
   const NavigateToNext = () => {
     if (isValidate == true) {
-      navigate("/desktop3/desktop15/desktop18/desktop19");
+      navigate("/desktop3/desktop15/desktop18/desktop19", { responseData });
     } else {
       window.alert("Please wait for Validation Complete !");
     }
@@ -42,6 +42,7 @@ function Desktop18() {
         .then((res) => {
           setResponseData(res.data);
           setValidate(true);
+          localStorage.setItem("Path",res.data);
           console.log(res.data);
         })
         .catch((err) => {
