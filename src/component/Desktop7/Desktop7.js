@@ -12,25 +12,27 @@ import Loader from "../UI/Loader";
 function Desktop7() {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
-  //const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("PII Data");
 
-  // const [isShowResponse, setIsShowResponse] = useState(false);
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
 
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    console.log(selectedOption);
+  };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
-
   const showResponseData = () => {
     if (responseData) {
-      // Create a new window or tab with the data
       const newWindow = window.open("", "_blank");
       newWindow.document.open();
       newWindow.document.write(`<pre>${responseData}</pre>`);
@@ -60,19 +62,35 @@ function Desktop7() {
     if (selectedFile) {
       const obj = { file: selectedFile };
 
-      await Client.post("/encrypt", obj)
-        .then((res) => {
-          console.log(res.data);
-          const data = res.data;
-          setResponseData(JSON.stringify(data));
+      if (selectedOption !== "Payment Details") {
+        await Client.post("/encrypt_payment", obj)
+          .then((res) => {
+            console.log(res.data);
+            const data = res.data;
+            setResponseData(JSON.stringify(data));
 
-          window.alert("Click View Button to See Response");
-        })
-        .catch((err) => {
-          console.log(err);
-          setError(err.message);
-          window.alert("Click View Button to See Response");
-        });
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            setError(err.message);
+            window.alert("Click View Button to See Response");
+          });
+      } else {
+        await Client.post("/encrypt", obj)
+          .then((res) => {
+            console.log(res.data);
+            const data = res.data;
+            setResponseData(JSON.stringify(data));
+
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            setError(err.message);
+            window.alert("Click View Button to See Response");
+          });
+      }
     } else {
       console.log("No file selected.");
     }
@@ -160,15 +178,24 @@ function Desktop7() {
           </div>
           <div className="d8RadioButtons">
             <label className="d11RadioButtonsLabel">
-              <input type="radio" value="PIT Data" checked={{}} onChange={{}} />
+              <input
+                type="radio"
+                value="PIT Data"
+                checked={selectedOption === "PII Data"}
+                onChange={handleOptionChange}
+              />
               PIT Data
             </label>
             <label className="d11RadioButtonsLabel">
               <input
                 type="radio"
                 value="Payment Details"
-                checked={{}}
-                onChange={{}}
+                checked={selectedOption === "Payment Details"}
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
+                  console.log(event.target.value);
+                  console.log(selectedOption);
+                }}
               />
               Payment Details
             </label>
@@ -176,8 +203,8 @@ function Desktop7() {
               <input
                 type="radio"
                 value="Agreements"
-                checked={{}}
-                onChange={{}}
+                checked={selectedOption === "Agreements"}
+                onChange={handleOptionChange}
               />
               Agreements
             </label>

@@ -14,15 +14,21 @@ import Loader from "../UI/Loader";
 function Desktop8() {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
-
   const [isLoading, setIsLoading] = useState(false);
-  // const [isShowResponse, setIsShowResponse] = useState(false);
-  const fileInputRef = useRef(null);
   const [isShowData, setIsShowData] = useState(false);
-  //response
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const fileInputRef = useRef(null);
+  const imageInputRef = useRef(null);
 
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    debugger;
+    console.log(selectedOption);
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -102,16 +108,30 @@ function Desktop8() {
     if (selectedFile) {
       const obj = { file: selectedFile };
 
-      await Client.post("/decrypt", obj)
-        .then((res) => {
-          console.log(res.data);
-          setResponseData(res.data);
-          window.alert("Click View Button to See Response");
-        })
-        .catch((err) => {
-          console.log(err);
-          window.alert("Click View Button to See Response");
-        });
+      if (selectedOption !== "Payment Details") {
+        console.log(selectedOption);
+        await Client.post("/decrypt_payment", obj)
+          .then((res) => {
+            console.log(res.data);
+            setResponseData(res.data);
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            window.alert("Click View Button to See Response");
+          });
+      } else {
+        await Client.post("/decrypt", obj)
+          .then((res) => {
+            console.log(res.data);
+            setResponseData(res.data);
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            window.alert("Click View Button to See Response");
+          });
+      }
     } else {
       console.log("No file selected.");
       window.alert("No file selected.");
@@ -193,15 +213,20 @@ function Desktop8() {
           </div>
           <div className="d8RadioButtons">
             <label className="d11RadioButtonsLabel">
-              <input type="radio" value="PIT Data" checked={{}} onChange={{}} />
+              <input
+                type="radio"
+                value="PIT Data"
+                checked={selectedOption === "PII Data"}
+                onChange={handleOptionChange}
+              />
               PIT Data
             </label>
             <label className="d11RadioButtonsLabel">
               <input
                 type="radio"
                 value="Payment Details"
-                checked={{}}
-                onChange={{}}
+                checked={selectedOption === "Payment Details"}
+                onChange={handleOptionChange}
               />
               Payment Details
             </label>
@@ -209,8 +234,8 @@ function Desktop8() {
               <input
                 type="radio"
                 value="Agreements"
-                checked={{}}
-                onChange={{}}
+                checked={selectedOption === "Agreements"}
+                onChange={handleOptionChange}
               />
               Agreements
             </label>
