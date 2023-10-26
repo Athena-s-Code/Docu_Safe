@@ -129,33 +129,59 @@ function Desktop7() {
           </div>
         </div>
         <div className="top_container7">
-          <div className="item_container7 ">
-            <p className="colTopic">Pdf File</p>
-          </div>
-          <div className="item_container7 ">
-            {/* <p className="colTopic">Image File</p> */}
-          </div>
-          <div className="item_container7">
-            {/* text file--------------------------------------------------------  */}
-            <input
-              type="file"
-              accept=".pdf"
-              style={{ display: "none" }} // Hide the default file input
-              onChange={handleFileChange}
-              ref={fileInputRef} // Create a ref to the file input
-            />
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)"
-              endGradientColor="rgb(5, 167, 244)"
-              onClick={() => fileInputRef.current.click()}
-              height="48px"
-              buttonText="Browse"
-            />
-            <p>{txtContent}</p>
-          </div>
+          <div>
+            <div className="item_container7 ">
+              <p className="colTopic">Pdf File</p>
+            </div>
+            <div className="item_container7 ">
+              {/* <p className="colTopic">Image File</p> */}
+            </div>
+            <div className="item_container7">
+              {/* text file--------------------------------------------------------  */}
+              <input
+                type="file"
+                accept=".pdf"
+                style={{ display: "none" }} // Hide the default file input
+                onChange={handleFileChange}
+                ref={fileInputRef} // Create a ref to the file input
+              />
+              <GradientButton
+                startGradientColor="rgb(10, 111, 168)"
+                endGradientColor="rgb(5, 167, 244)"
+                onClick={() => fileInputRef.current.click()}
+                height="48px"
+                buttonText="Browse"
+              />
+              <p>{txtContent}</p>
+            </div>
 
-          {/* image file---------------------------------------------------------------------------- */}
-          <div className="item_container7"></div>
+            {/* image file---------------------------------------------------------------------------- */}
+            <div className="item_container7"></div>
+          </div>
+          <div className="d8RadioButtons">
+            <label className="d11RadioButtonsLabel">
+              <input type="radio" value="PIT Data" checked={{}} onChange={{}} />
+              PIT Data
+            </label>
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="Payment Details"
+                checked={{}}
+                onChange={{}}
+              />
+              Payment Details
+            </label>
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="Agreements"
+                checked={{}}
+                onChange={{}}
+              />
+              Agreements
+            </label>
+          </div>
         </div>
         <div className="middle_container7">
           <div className="item_container_middle7">
