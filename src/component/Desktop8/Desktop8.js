@@ -17,6 +17,7 @@ function Desktop8() {
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [isPayment, setIsPayment] = useState(false);
 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
@@ -108,7 +109,7 @@ function Desktop8() {
     if (selectedFile) {
       const obj = { file: selectedFile };
 
-      if (selectedOption !== "Payment Details") {
+      if (isPayment === true) {
         console.log(selectedOption);
         await Client.post("/decrypt_payment", obj)
           .then((res) => {
@@ -217,7 +218,9 @@ function Desktop8() {
                 type="radio"
                 value="PIT Data"
                 checked={selectedOption === "PII Data"}
-                onChange={handleOptionChange}
+                onChange={() => {
+                  setIsPayment(false);
+                }}
               />
               PIT Data
             </label>
@@ -226,7 +229,9 @@ function Desktop8() {
                 type="radio"
                 value="Payment Details"
                 checked={selectedOption === "Payment Details"}
-                onChange={handleOptionChange}
+                onChange={() => {
+                  setIsPayment(true);
+                }}
               />
               Payment Details
             </label>
@@ -235,7 +240,9 @@ function Desktop8() {
                 type="radio"
                 value="Agreements"
                 checked={selectedOption === "Agreements"}
-                onChange={handleOptionChange}
+                onChange={() => {
+                  setIsPayment(false);
+                }}
               />
               Agreements
             </label>
