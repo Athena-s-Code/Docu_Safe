@@ -14,7 +14,7 @@ function Desktop7() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
-  const [isPayment,setIsPayment]= useState(false)
+  const [isPayment, setIsPayment] = useState(false);
   const [selectedOption, setSelectedOption] = useState("PII Data");
 
   const fileInputRef = useRef(null);
@@ -63,7 +63,7 @@ function Desktop7() {
     if (selectedFile) {
       const obj = { file: selectedFile };
 
-      if (isPayment===true) {
+      if (isPayment === true) {
         await Client.post("/encrypt_payment", obj)
           .then((res) => {
             console.log(res.data);
@@ -183,7 +183,8 @@ function Desktop7() {
                 type="radio"
                 value="PIT Data"
                 checked={selectedOption === "PII Data"}
-                onChange={() => {
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
                   setIsPayment(false);
                 }}
               />
@@ -194,7 +195,8 @@ function Desktop7() {
                 type="radio"
                 value="Payment Details"
                 checked={selectedOption === "Payment Details"}
-                onChange={() => {
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
                   setIsPayment(true);
                 }}
               />
@@ -205,7 +207,8 @@ function Desktop7() {
                 type="radio"
                 value="Agreements"
                 checked={selectedOption === "Agreements"}
-                onChange={() => {
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
                   setIsPayment(false);
                 }}
               />

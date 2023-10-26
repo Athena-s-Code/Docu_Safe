@@ -17,9 +17,10 @@ function Desktop10() {
   const [isLoadingImage, setIsLoadingImage] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("PII Data");
   const [savedHideFileURL, setSavedHideFileURl] = useState(null);
   const [error, setError] = useState();
+  const [isPayment, setIsPayment] = useState(false);
 
   const [pdfData, setPdfData] = useState(null);
   var pdfFile
@@ -151,7 +152,7 @@ function Desktop10() {
   const handleUpload = async () => {
     let obj;
 
-    if (selectedOption !== "Payment Details") {
+    if (isPayment === true) {
       console.log("text file");
       setIsLoadingText(true);
       obj = { file: selectedFile };
@@ -170,22 +171,20 @@ function Desktop10() {
       setIsLoadingImage(false);
       setIsLoadingText(false);
       fileInputRef.current.value = "";
-     
     } else {
-
       if (selectedFile) {
         setIsLoadingText(true);
         obj = { file: selectedFile };
         await Client.post("/highlight", obj, {
-          responseType: 'arraybuffer', // Important for binary data like PDFs
+          responseType: "arraybuffer", // Important for binary data like PDFs
         })
           .then((res) => {
             //console.log(res.data);
-            //setPdfURL(res.data); 
+            //setPdfURL(res.data);
             //pdfFile = new Blob([res.data], { type: 'application/pdf' });
             setPdfData(res.data);
-          
-            console.log(pdfData)// Set the PDF URL received from the server
+
+            console.log(pdfData); // Set the PDF URL received from the server
           })
           .catch((err) => {
             console.log(err);
@@ -280,7 +279,10 @@ function Desktop10() {
                   type="radio"
                   value="PIT Data"
                   checked={selectedOption === "PIT Data"}
-                  onChange={handleOptionChange}
+                  onChange={(event) => {
+                    setSelectedOption(event.target.value);
+                    setIsPayment(false);
+                  }}
                 />
                 PIT Data
               </label>
@@ -289,7 +291,10 @@ function Desktop10() {
                   type="radio"
                   value="Payment Details"
                   checked={selectedOption === "Payment Details"}
-                  onChange={handleOptionChange}
+                  onChange={(event) => {
+                    setSelectedOption(event.target.value);
+                    setIsPayment(true);
+                  }}
                 />
                 Payment Details
               </label>
@@ -298,15 +303,17 @@ function Desktop10() {
                   type="radio"
                   value="Agreements"
                   checked={selectedOption === "Agreements"}
-                  onChange={handleOptionChange}
+                  onChange={(event) => {
+                    setSelectedOption(event.target.value);
+                    setIsPayment(false);
+                  }}
                 />
                 Agreements
               </label>
             </div>
           </div>
 
-
-          {selectedOption !== "Payment Details" ?
+          {selectedOption !== "Payment Details" ? (
             <div className="item_container10">
               <p className="colTopic">Image File</p>
               <input
@@ -325,7 +332,10 @@ function Desktop10() {
                 buttonText="Browse"
               />
               {imgContent}
-            </div> : ""}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="middle_container10">
