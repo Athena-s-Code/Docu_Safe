@@ -21,9 +21,10 @@ function Desktop19() {
   const GetValidationData = async () => {
     await Client.get("/validate")
       .then((res) => {
+        console.log(res.data);
         setResponseData(res.data);
         setValidate(true);
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -33,10 +34,10 @@ function Desktop19() {
     window.alert("Click download button");
   };
   const downloadHandler = () => {
-    setwriteData(localStorage.getItem("Path"));
-    if (writeData) {
+    //setwriteData(localStorage.getItem("Path"));
+    if (responseData) {
       // Create a Blob from the text data
-      const blob = new Blob([writeData], {
+      const blob = new Blob([responseData], {
         type: "application/octet-stream",
       });
 
@@ -58,9 +59,9 @@ function Desktop19() {
   //view
 
   const viewdHandler = () => {
-    if (responseData) {
+    if (writeData) {
       try {
-        window.open(BACKEND_URL + responseData, "_blank");
+        window.open(BACKEND_URL + writeData, "_blank");
       } catch (error) {
         window.alert("Error saving response data to excel file:", error);
       }
@@ -70,6 +71,7 @@ function Desktop19() {
   };
   //when loading
   useEffect(() => {
+    setwriteData(localStorage.getItem("Path"));
     GetValidationData();
   }, []);
   let txtContent = (

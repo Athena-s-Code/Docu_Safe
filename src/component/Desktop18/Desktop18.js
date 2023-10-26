@@ -37,20 +37,19 @@ function Desktop18() {
     if (selectedFile) {
       console.log(selectedFile);
       setIsLoadingText(true);
-      obj = { file: selectedFile };
+      obj = { files: selectedFile };
       await Client.post("/validate", obj)
         .then((res) => {
+          console.log(res.data.filepath);
           setResponseData(res.data);
           setValidate(true);
-          localStorage.setItem("Path",res.data);
-          console.log(res.data);
+          localStorage.setItem("Path", res.data.filepath);
         })
         .catch((err) => {
           console.log(err);
           setError(err.message);
           window.alert(err.message);
         });
-      window.alert("Click download button");
     } else {
       console.log("No file selected.");
       window.alert("No file selected");
