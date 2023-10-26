@@ -30,7 +30,7 @@ function Desktop17() {
     if (selectedFile) {
       console.log(selectedFile);
       setIsLoadingText(true);
-      obj = { file: selectedFile };
+      obj = { files: selectedFile };
       await Client.post("/job_title_predict", obj)
         .then((res) => {
           setResponseData(res.data);

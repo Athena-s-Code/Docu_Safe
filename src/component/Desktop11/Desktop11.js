@@ -113,7 +113,7 @@ function Desktop10() {
       console.log("text file");
       setIsLoadingText(true);
       obj = { file: selectedFile };
-      await Client.post("/hide_payments", obj)
+      await Client.post("/hide_payment", obj)
         .then((res) => {
           console.log(res.data);
           const resData = res.data;
@@ -247,7 +247,7 @@ function Desktop10() {
                   checked={selectedOption === "PIT Data"}
                   onChange={handleOptionChange}
                 />
-                PIT Data
+                PII Data
               </label>
               <label className="d11RadioButtonsLable">
                 <input
