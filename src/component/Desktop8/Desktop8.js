@@ -191,6 +191,30 @@ function Desktop8() {
             />
             {txtContent}
           </div>
+          <div className="d8RadioButtons">
+            <label className="d11RadioButtonsLabel">
+              <input type="radio" value="PIT Data" checked={{}} onChange={{}} />
+              PIT Data
+            </label>
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="Payment Details"
+                checked={{}}
+                onChange={{}}
+              />
+              Payment Details
+            </label>
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="Agreements"
+                checked={{}}
+                onChange={{}}
+              />
+              Agreements
+            </label>
+          </div>
         </div>
         <div className="middle_container8">
           <div className="item_container8 ">
