@@ -16,7 +16,7 @@ function Desktop8() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("PII Data");
   const [isPayment, setIsPayment] = useState(false);
 
   const fileInputRef = useRef(null);
@@ -223,7 +223,7 @@ function Desktop8() {
                   setIsPayment(false);
                 }}
               />
-              PIT Data
+              PII Data
             </label>
             <label className="d11RadioButtonsLabel">
               <input

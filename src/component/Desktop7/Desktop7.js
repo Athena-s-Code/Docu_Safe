@@ -15,7 +15,7 @@ function Desktop7() {
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("PII Data");
+const [selectedOption, setSelectedOption] = useState("PII Data");
 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
@@ -25,7 +25,7 @@ function Desktop7() {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    console.log(selectedOption);
+    
   };
 
   const handleFileChange = (event) => {
@@ -188,7 +188,7 @@ function Desktop7() {
                   setIsPayment(false);
                 }}
               />
-              PIT Data
+              PII Data
             </label>
             <label className="d11RadioButtonsLabel">
               <input

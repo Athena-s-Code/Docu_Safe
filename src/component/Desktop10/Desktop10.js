@@ -284,7 +284,7 @@ function Desktop10() {
                     setIsPayment(false);
                   }}
                 />
-                PIT Data
+                PII Data
               </label>
               <label className="d11RadioButtonsLabel">
                 <input
