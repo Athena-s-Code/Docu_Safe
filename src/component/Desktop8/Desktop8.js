@@ -218,7 +218,8 @@ function Desktop8() {
                 type="radio"
                 value="PIT Data"
                 checked={selectedOption === "PII Data"}
-                onChange={() => {
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
                   setIsPayment(false);
                 }}
               />
@@ -229,7 +230,8 @@ function Desktop8() {
                 type="radio"
                 value="Payment Details"
                 checked={selectedOption === "Payment Details"}
-                onChange={() => {
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
                   setIsPayment(true);
                 }}
               />
@@ -240,7 +242,8 @@ function Desktop8() {
                 type="radio"
                 value="Agreements"
                 checked={selectedOption === "Agreements"}
-                onChange={() => {
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
                   setIsPayment(false);
                 }}
               />
