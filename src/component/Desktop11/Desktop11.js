@@ -14,7 +14,7 @@ function Desktop10() {
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
-  const [isPayment, setIsPayment] = useState(false);
+const [isPayment, setIsPayment] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState("PII Data");
   const [savedHideFileURL, setSavedHideFileURl] = useState(null);
@@ -191,6 +191,10 @@ function Desktop10() {
   if (isLoadingImage) {
     imgContent = <Loader />;
   }
+
+
+
+
 
   return (
     <div>
