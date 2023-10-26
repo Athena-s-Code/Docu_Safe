@@ -7,17 +7,19 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
 import { BACKEND_URL } from "../http/Constant";
+import { PDFDocument, rgb } from "pdf-lib";
 
 function Desktop19() {
   const [isValidate, setValidate] = useState(false);
   //response
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState("");
+  const [writeData, setwriteData] = useState("");
 
   const fileInputRef = useRef(null);
 
   const GetValidationData = async () => {
-    await Client.get("/validator")
+    await Client.get("/validate")
       .then((res) => {
         setResponseData(res.data);
         setValidate(true);
@@ -31,6 +33,31 @@ function Desktop19() {
     window.alert("Click download button");
   };
   const downloadHandler = () => {
+    setwriteData(localStorage.getItem("Path"));
+    if (writeData) {
+      // Create a Blob from the text data
+      const blob = new Blob([writeData], {
+        type: "application/octet-stream",
+      });
+
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Validation.txt";
+      link.click();
+
+      // Clean up by revoking the Blob URL
+      URL.revokeObjectURL(url);
+    } else {
+      window.alert("No response data to save as a file.");
+    }
+  };
+
+  //view
+
+  const viewdHandler = () => {
     if (responseData) {
       try {
         window.open(BACKEND_URL + responseData, "_blank");
@@ -100,6 +127,7 @@ function Desktop19() {
                 endGradientColor="rgb(5, 167, 244)"
                 height="48px"
                 width="160px"
+                onClick={viewdHandler}
                 link="/desktop3"
                 buttonText="View"
               />
