@@ -96,6 +96,7 @@ const handleUpload = async () => {
       })
       .catch((err) => {
         console.log(err);
+        window.alert(err);
       });
   } catch (error) {
     // Handle any errors that occur during the upload

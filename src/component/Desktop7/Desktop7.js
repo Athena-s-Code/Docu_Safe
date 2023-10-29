@@ -14,8 +14,12 @@ function Desktop7() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
+
+  const [isPIData, setIsPIData] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
-const [selectedOption, setSelectedOption] = useState("PII Data");
+  const [isAgreement, setIsAgreement] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState("PII Data");
 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
@@ -25,7 +29,6 @@ const [selectedOption, setSelectedOption] = useState("PII Data");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    
   };
 
   const handleFileChange = (event) => {
@@ -77,8 +80,22 @@ const [selectedOption, setSelectedOption] = useState("PII Data");
             setError(err.message);
             window.alert("Click View Button to See Response");
           });
-      } else {
+      } else if (isPIData) {
         await Client.post("/encrypt", obj)
+          .then((res) => {
+            console.log(res.data);
+            const data = res.data;
+            setResponseData(JSON.stringify(data));
+
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            setError(err.message);
+            window.alert("Click View Button to See Response");
+          });
+      } else if (isAgreement) {
+        await Client.post("/encrypt_wholefile", obj)
           .then((res) => {
             console.log(res.data);
             const data = res.data;
@@ -94,8 +111,11 @@ const [selectedOption, setSelectedOption] = useState("PII Data");
       }
     } else {
       console.log("No file selected.");
+      window.alert("No file selected.");
     }
-
+    setIsPIData(false);
+    setIsAgreement(false);
+    setIsPayment(false);
     setIsLoading(false);
   };
   //
@@ -181,11 +201,12 @@ const [selectedOption, setSelectedOption] = useState("PII Data");
             <label className="d11RadioButtonsLabel">
               <input
                 type="radio"
-                value="PIT Data"
+                value="PII Data"
                 checked={selectedOption === "PII Data"}
                 onChange={(event) => {
                   setSelectedOption(event.target.value);
-                  setIsPayment(false);
+                  setIsPIData(true);
+                  //setIsPayment(false);
                 }}
               />
               PII Data
@@ -209,7 +230,8 @@ const [selectedOption, setSelectedOption] = useState("PII Data");
                 checked={selectedOption === "Agreements"}
                 onChange={(event) => {
                   setSelectedOption(event.target.value);
-                  setIsPayment(false);
+                  setIsAgreement(true);
+                  //setIsPayment(false);
                 }}
               />
               Agreements
