@@ -17,9 +17,15 @@ function Desktop10() {
 
   const [selectedOption, setSelectedOption] = useState("");
   const [savedHideFileURL, setSavedHideFileURl] = useState(null);
+
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    console.log(selectedOption)
   };
+
+  useEffect(() => {
+    console.log(selectedOption); // This will log the updated value
+  }, [selectedOption]);
 
   const [error, setError] = useState();
 
@@ -242,6 +248,7 @@ function Desktop10() {
             <div className="d11RadioButtons">
               <label className="d11RadioButtonsLable">
                 <input
+                  name="data_option"
                   type="radio"
                   value="PIT Data"
                   checked={selectedOption === "PIT Data"}
@@ -251,6 +258,7 @@ function Desktop10() {
               </label>
               <label className="d11RadioButtonsLable">
                 <input
+                  name="data_option"
                   type="radio"
                   value="Payment Details"
                   checked={selectedOption === "Payment Details"}
@@ -260,6 +268,7 @@ function Desktop10() {
               </label>
               <label className="d11RadioButtonsLable">
                 <input
+                  name="data_option"
                   type="radio"
                   value="Agreements"
                   checked={selectedOption === "Agreements"}
