@@ -18,9 +18,15 @@ const [isPayment, setIsPayment] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState("PII Data");
   const [savedHideFileURL, setSavedHideFileURl] = useState(null);
+
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    console.log(selectedOption)
   };
+
+  useEffect(() => {
+    console.log(selectedOption); // This will log the updated value
+  }, [selectedOption]);
 
   const [error, setError] = useState();
 
@@ -238,6 +244,7 @@ const [isPayment, setIsPayment] = useState(false);
             <div className="d11RadioButtons">
               <label className="d11RadioButtonsLable">
                 <input
+                  name="data_option"
                   type="radio"
                   value="PIT Data"
                   checked={selectedOption === "PIT Data"}
@@ -250,6 +257,7 @@ const [isPayment, setIsPayment] = useState(false);
               </label>
               <label className="d11RadioButtonsLable">
                 <input
+                  name="data_option"
                   type="radio"
                   value="Payment Details"
                   checked={selectedOption === "Payment Details"}
@@ -262,6 +270,7 @@ const [isPayment, setIsPayment] = useState(false);
               </label>
               <label className="d11RadioButtonsLable">
                 <input
+                  name="data_option"
                   type="radio"
                   value="Agreements"
                   checked={selectedOption === "Agreements"}

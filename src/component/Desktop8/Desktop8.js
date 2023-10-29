@@ -17,7 +17,10 @@ function Desktop8() {
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
   const [selectedOption, setSelectedOption] = useState("PII Data");
+
+  const [isPIData, setIsPIData] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
+  const [isAgreement, setIsAgreement] = useState(false);
 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
@@ -121,7 +124,7 @@ function Desktop8() {
             console.log(err);
             window.alert("Click View Button to See Response");
           });
-      } else {
+      } else if (isPIData) {
         await Client.post("/decrypt", obj)
           .then((res) => {
             console.log(res.data);
@@ -132,6 +135,17 @@ function Desktop8() {
             console.log(err);
             window.alert("Click View Button to See Response");
           });
+      } else if (isAgreement) { 
+        await Client.post("/decrypt_wholefile", obj)
+        .then((res) => {
+          console.log(res.data);
+          setResponseData(res.data);
+          window.alert("Click View Button to See Response");
+        })
+        .catch((err) => {
+          console.log(err);
+          window.alert("Click View Button to See Response");
+        });
       }
     } else {
       console.log("No file selected.");
@@ -216,11 +230,11 @@ function Desktop8() {
             <label className="d11RadioButtonsLabel">
               <input
                 type="radio"
-                value="PIT Data"
+                value="PII Data"
                 checked={selectedOption === "PII Data"}
                 onChange={(event) => {
                   setSelectedOption(event.target.value);
-                  setIsPayment(false);
+                 setIsPIData(true)
                 }}
               />
               PII Data
@@ -232,7 +246,7 @@ function Desktop8() {
                 checked={selectedOption === "Payment Details"}
                 onChange={(event) => {
                   setSelectedOption(event.target.value);
-                  setIsPayment(true);
+                  setIsPayment(true)
                 }}
               />
               Payment Details
@@ -244,7 +258,7 @@ function Desktop8() {
                 checked={selectedOption === "Agreements"}
                 onChange={(event) => {
                   setSelectedOption(event.target.value);
-                  setIsPayment(false);
+                  setIsAgreement(true)
                 }}
               />
               Agreements
