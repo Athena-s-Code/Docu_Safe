@@ -14,8 +14,9 @@ function Desktop10() {
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
+const [isPayment, setIsPayment] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("PII Data");
   const [savedHideFileURL, setSavedHideFileURl] = useState(null);
 
   const handleOptionChange = (event) => {
@@ -115,7 +116,7 @@ function Desktop10() {
   const handleUpload = async () => {
     let obj;
 
-    if (selectedOption !== "Payment Details") {
+    if (isPayment === true) {
       console.log("text file");
       setIsLoadingText(true);
       obj = { file: selectedFile };
@@ -134,10 +135,7 @@ function Desktop10() {
       setIsLoadingImage(false);
       setIsLoadingText(false);
       fileInputRef.current.value = "";
-     
     } else {
-
-
       if (selectedFile) {
         console.log("text file");
         setIsLoadingText(true);
@@ -173,8 +171,6 @@ function Desktop10() {
       } else {
         console.log("No file selected.");
       }
-      
-      
     }
     setIsLoadingImage(false);
     setIsLoadingText(false);
@@ -252,7 +248,10 @@ function Desktop10() {
                   type="radio"
                   value="PIT Data"
                   checked={selectedOption === "PIT Data"}
-                  onChange={handleOptionChange}
+                  onChange={(event) => {
+                    setSelectedOption(event.target.value);
+                    setIsPayment(false);
+                  }}
                 />
                 PII Data
               </label>
@@ -262,7 +261,10 @@ function Desktop10() {
                   type="radio"
                   value="Payment Details"
                   checked={selectedOption === "Payment Details"}
-                  onChange={handleOptionChange}
+                  onChange={(event) => {
+                    setSelectedOption(event.target.value);
+                    setIsPayment(true);
+                  }}
                 />
                 Payement Details
               </label>
@@ -272,32 +274,38 @@ function Desktop10() {
                   type="radio"
                   value="Agreements"
                   checked={selectedOption === "Agreements"}
-                  onChange={handleOptionChange}
+                  onChange={(event) => {
+                    setSelectedOption(event.target.value);
+                    setIsPayment(false);
+                  }}
                 />
                 Agreements
               </label>
             </div>
           </div>
-          { selectedOption !== "Payment Details" ? <div className="item_container11">
-            <p className="colTopic">Image File</p>
-            <input
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              style={{ display: "none" }} // Hide the default file input
-              onChange={handleImgFileChange}
-              ref={imageInputRef} // Create a ref to the file input
-            />
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)" // Start color
-              endGradientColor="rgb(5, 167, 244)"
-              link="#"
-              onClick={() => imageInputRef.current.click()}
-              height="48px"
-              buttonText="Browse"
-            />
-            {imgContent}
-          </div>:""  }
-          
+          {selectedOption !== "Payment Details" ? (
+            <div className="item_container11">
+              <p className="colTopic">Image File</p>
+              <input
+                type="file"
+                accept=".jpg, .jpeg, .png"
+                style={{ display: "none" }} // Hide the default file input
+                onChange={handleImgFileChange}
+                ref={imageInputRef} // Create a ref to the file input
+              />
+              <GradientButton
+                startGradientColor="rgb(10, 111, 168)" // Start color
+                endGradientColor="rgb(5, 167, 244)"
+                link="#"
+                onClick={() => imageInputRef.current.click()}
+                height="48px"
+                buttonText="Browse"
+              />
+              {imgContent}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="middle_container11">

@@ -14,15 +14,22 @@ import Loader from "../UI/Loader";
 function Desktop8() {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
-
   const [isLoading, setIsLoading] = useState(false);
-  // const [isShowResponse, setIsShowResponse] = useState(false);
-  const fileInputRef = useRef(null);
   const [isShowData, setIsShowData] = useState(false);
-  //response
+  const [selectedOption, setSelectedOption] = useState("PII Data");
+  const [isPayment, setIsPayment] = useState(false);
+
+  const fileInputRef = useRef(null);
+  const imageInputRef = useRef(null);
 
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    debugger;
+    console.log(selectedOption);
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -102,16 +109,30 @@ function Desktop8() {
     if (selectedFile) {
       const obj = { file: selectedFile };
 
-      await Client.post("/decrypt", obj)
-        .then((res) => {
-          console.log(res.data);
-          setResponseData(res.data);
-          window.alert("Click View Button to See Response");
-        })
-        .catch((err) => {
-          console.log(err);
-          window.alert("Click View Button to See Response");
-        });
+      if (isPayment === true) {
+        console.log(selectedOption);
+        await Client.post("/decrypt_payment", obj)
+          .then((res) => {
+            console.log(res.data);
+            setResponseData(res.data);
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            window.alert("Click View Button to See Response");
+          });
+      } else {
+        await Client.post("/decrypt", obj)
+          .then((res) => {
+            console.log(res.data);
+            setResponseData(res.data);
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            window.alert("Click View Button to See Response");
+          });
+      }
     } else {
       console.log("No file selected.");
       window.alert("No file selected.");
@@ -190,6 +211,44 @@ function Desktop8() {
               icon={<FontAwesomeIcon icon={faPaperclip} />}
             />
             {txtContent}
+          </div>
+          <div className="d8RadioButtons">
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="PIT Data"
+                checked={selectedOption === "PII Data"}
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
+                  setIsPayment(false);
+                }}
+              />
+              PII Data
+            </label>
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="Payment Details"
+                checked={selectedOption === "Payment Details"}
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
+                  setIsPayment(true);
+                }}
+              />
+              Payment Details
+            </label>
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="Agreements"
+                checked={selectedOption === "Agreements"}
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
+                  setIsPayment(false);
+                }}
+              />
+              Agreements
+            </label>
           </div>
         </div>
         <div className="middle_container8">

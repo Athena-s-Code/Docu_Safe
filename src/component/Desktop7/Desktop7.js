@@ -12,25 +12,28 @@ import Loader from "../UI/Loader";
 function Desktop7() {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
-  //const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
+  const [isPayment, setIsPayment] = useState(false);
+const [selectedOption, setSelectedOption] = useState("PII Data");
 
-  // const [isShowResponse, setIsShowResponse] = useState(false);
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
   const [error, setError] = useState();
   const [responseData, setResponseData] = useState();
 
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    
+  };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
-
   const showResponseData = () => {
     if (responseData) {
-      // Create a new window or tab with the data
       const newWindow = window.open("", "_blank");
       newWindow.document.open();
       newWindow.document.write(`<pre>${responseData}</pre>`);
@@ -60,19 +63,35 @@ function Desktop7() {
     if (selectedFile) {
       const obj = { file: selectedFile };
 
-      await Client.post("/encrypt", obj)
-        .then((res) => {
-          console.log(res.data);
-          const data = res.data;
-          setResponseData(JSON.stringify(data));
+      if (isPayment === true) {
+        await Client.post("/encrypt_payment", obj)
+          .then((res) => {
+            console.log(res.data);
+            const data = res.data;
+            setResponseData(JSON.stringify(data));
 
-          window.alert("Click View Button to See Response");
-        })
-        .catch((err) => {
-          console.log(err);
-          setError(err.message);
-          window.alert("Click View Button to See Response");
-        });
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            setError(err.message);
+            window.alert("Click View Button to See Response");
+          });
+      } else {
+        await Client.post("/encrypt", obj)
+          .then((res) => {
+            console.log(res.data);
+            const data = res.data;
+            setResponseData(JSON.stringify(data));
+
+            window.alert("Click View Button to See Response");
+          })
+          .catch((err) => {
+            console.log(err);
+            setError(err.message);
+            window.alert("Click View Button to See Response");
+          });
+      }
     } else {
       console.log("No file selected.");
     }
@@ -129,33 +148,73 @@ function Desktop7() {
           </div>
         </div>
         <div className="top_container7">
-          <div className="item_container7 ">
-            <p className="colTopic">Pdf File</p>
-          </div>
-          <div className="item_container7 ">
-            {/* <p className="colTopic">Image File</p> */}
-          </div>
-          <div className="item_container7">
-            {/* text file--------------------------------------------------------  */}
-            <input
-              type="file"
-              accept=".pdf"
-              style={{ display: "none" }} // Hide the default file input
-              onChange={handleFileChange}
-              ref={fileInputRef} // Create a ref to the file input
-            />
-            <GradientButton
-              startGradientColor="rgb(10, 111, 168)"
-              endGradientColor="rgb(5, 167, 244)"
-              onClick={() => fileInputRef.current.click()}
-              height="48px"
-              buttonText="Browse"
-            />
-            <p>{txtContent}</p>
-          </div>
+          <div>
+            <div className="item_container7 ">
+              <p className="colTopic">Pdf File</p>
+            </div>
+            <div className="item_container7 ">
+              {/* <p className="colTopic">Image File</p> */}
+            </div>
+            <div className="item_container7">
+              {/* text file--------------------------------------------------------  */}
+              <input
+                type="file"
+                accept=".pdf"
+                style={{ display: "none" }} // Hide the default file input
+                onChange={handleFileChange}
+                ref={fileInputRef} // Create a ref to the file input
+              />
+              <GradientButton
+                startGradientColor="rgb(10, 111, 168)"
+                endGradientColor="rgb(5, 167, 244)"
+                onClick={() => fileInputRef.current.click()}
+                height="48px"
+                buttonText="Browse"
+              />
+              <p>{txtContent}</p>
+            </div>
 
-          {/* image file---------------------------------------------------------------------------- */}
-          <div className="item_container7"></div>
+            {/* image file---------------------------------------------------------------------------- */}
+            <div className="item_container7"></div>
+          </div>
+          <div className="d8RadioButtons">
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="PIT Data"
+                checked={selectedOption === "PII Data"}
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
+                  setIsPayment(false);
+                }}
+              />
+              PII Data
+            </label>
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="Payment Details"
+                checked={selectedOption === "Payment Details"}
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
+                  setIsPayment(true);
+                }}
+              />
+              Payment Details
+            </label>
+            <label className="d11RadioButtonsLabel">
+              <input
+                type="radio"
+                value="Agreements"
+                checked={selectedOption === "Agreements"}
+                onChange={(event) => {
+                  setSelectedOption(event.target.value);
+                  setIsPayment(false);
+                }}
+              />
+              Agreements
+            </label>
+          </div>
         </div>
         <div className="middle_container7">
           <div className="item_container_middle7">
