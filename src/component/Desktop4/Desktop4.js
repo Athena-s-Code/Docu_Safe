@@ -211,7 +211,7 @@ const handleUpload = async () => {
               endGradientColor="rgb(5, 167, 244)"
               height="60px"
               width="160px"
-              link="/desktop3/desktop4/desktop5"
+              link="/desktop3/desktop15/desktop4/desktop5"
               buttonText="Next >>"
             />
           </div>
