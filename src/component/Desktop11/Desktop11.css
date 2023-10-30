@@ -25,7 +25,6 @@
   height: 30vh;
   margin-left: 9%;
   margin-right: 9%;
- 
 }
 .item_container11 {
   display: flex;
@@ -42,7 +41,7 @@
   align-items: center;
   overflow: hidden;
   align-items: center;
-  
+
   margin-top: 15vh;
 }
 .item_container_middle11 {
@@ -51,7 +50,6 @@
   justify-content: center;
   align-items: center;
   margin-top: 5%;
-  
 }
 .middle_container11 {
   display: grid;
@@ -61,25 +59,23 @@
   align-items: center;
   margin-left: 9%;
   margin-right: 9%;
-  
 }
-.item_container_last11{
+.item_container_last11 {
   display: flex;
   flex-direction: column; /* Stack image and button vertically */
-  
-  overflow: hidden;  
+
+  overflow: hidden;
   align-items: center;
 }
 .bottom_container11 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(1, 1fr);
-  height: 10vh;
+  height: 20vh;
   margin-left: 9%;
   margin-right: 9%;
   justify-content: center;
   align-items: center;
-  
 }
 .d11RadioButtons {
   display: flex;
@@ -87,7 +83,7 @@
   align-items: start;
   justify-content: start;
   padding-bottom: 60px;
-  
+
   padding-top: 30px;
 }
 

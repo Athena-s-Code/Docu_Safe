@@ -14,14 +14,14 @@ function Desktop10() {
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
-const [isPayment, setIsPayment] = useState(false);
+  const [isPayment, setIsPayment] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState("PII Data");
   const [savedHideFileURL, setSavedHideFileURl] = useState(null);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    console.log(selectedOption)
+    console.log(selectedOption);
   };
 
   useEffect(() => {
@@ -114,12 +114,11 @@ const [isPayment, setIsPayment] = useState(false);
   };
 
   const clearHandler = () => {
-    setSelectedFile(null)
-    setSelectedImgFile(null)
-    fileInputRef.current.value = ""
-    imageInputRef.current.value=""
-
-  }
+    setSelectedFile(null);
+    setSelectedImgFile(null);
+    fileInputRef.current.value = "";
+    imageInputRef.current.value = "";
+  };
 
   const handleUpload = async () => {
     let obj;
@@ -205,10 +204,6 @@ const [isPayment, setIsPayment] = useState(false);
   if (isLoadingImage) {
     imgContent = <Loader />;
   }
-
-
-
-
 
   return (
     <div>
