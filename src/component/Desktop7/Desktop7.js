@@ -234,7 +234,7 @@ function Desktop7() {
                   //setIsPayment(false);
                 }}
               />
-              Agreements
+              Hole file
             </label>
           </div>
         </div>
