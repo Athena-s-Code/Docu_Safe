@@ -39,72 +39,133 @@ function Desktop8() {
     setSelectedFile(file);
   };
 
+  // const saveToFile = async () => {
+  //   if (responseData) {
+  //     try {
+  //       const pdfDoc = await PDFDocument.create();
+
+  //       const page = pdfDoc.addPage([400, 400]);
+  //       const { width, height } = page.getSize();
+
+  //       page.drawText(responseData, {
+  //         x: 50,
+  //         y: height - 50,
+  //         size: 12,
+  //         color: rgb(0, 0, 0),
+  //       });
+
+  //       const pdfBytes = await pdfDoc.save();
+
+  //       const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+  //       const url = URL.createObjectURL(blob);
+
+  //       const a = document.createElement("a");
+  //       a.href = url;
+  //       a.download = "data.pdf";
+  //       a.click();
+
+  //       URL.revokeObjectURL(url);
+  //     } catch (error) {
+  //       console.error("Error creating and saving PDF:", error);
+  //     }
+  //   } else {
+  //     console.error("No response data to save as PDF.");
+  //   }
+  // };
+
   const saveToFile = async () => {
     if (responseData) {
       try {
-        const pdfDoc = await PDFDocument.create();
-
-        const page = pdfDoc.addPage([400, 400]);
-        const { width, height } = page.getSize();
-
-        page.drawText(responseData, {
-          x: 50,
-          y: height - 50,
-          size: 12,
-          color: rgb(0, 0, 0),
-        });
-
-        const pdfBytes = await pdfDoc.save();
-
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
+        // Create a Blob with the response data
+        const blob = new Blob([responseData], { type: "text/plain" });
+  
+        // Create a URL for the Blob
         const url = URL.createObjectURL(blob);
-
+  
+        // Create an 'a' element to trigger the download
         const a = document.createElement("a");
         a.href = url;
-        a.download = "data.pdf";
+        a.download = "data.txt"; // Set the filename for the downloaded file
+        a.style.display = "none"; // Hide the 'a' element
+  
+        // Append the 'a' element to the DOM
+        document.body.appendChild(a);
+  
+        // Trigger a click event on the 'a' element
         a.click();
-
+  
+        // Remove the 'a' element from the DOM
+        document.body.removeChild(a);
+  
+        // Revoke the URL to release resources
         URL.revokeObjectURL(url);
       } catch (error) {
-        console.error("Error creating and saving PDF:", error);
+        console.error("Error creating and saving text file:", error);
       }
     } else {
-      console.error("No response data to save as PDF.");
+      console.error("No response data to save as text file.");
     }
   };
+  
+
+
+
+  // const showResponseData = async () => {
+  //   if (responseData) {
+  //     try {
+  //       const pdfDoc = await PDFDocument.create();
+
+  //       const page = pdfDoc.addPage([400, 400]);
+  //       const { width, height } = page.getSize();
+
+  //       const textContent = responseData;
+
+  //       page.drawText(textContent, {
+  //         x: 50,
+  //         y: height - 50,
+  //         size: 12,
+  //         color: rgb(0, 0, 0),
+  //       });
+
+  //       const pdfBytes = await pdfDoc.save();
+
+  //       const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+  //       const pdfUrl = URL.createObjectURL(blob);
+
+  //       window.open(pdfUrl, "_blank");
+  //     } catch (error) {
+  //       console.error("Error creating and opening PDF:", error);
+  //     }
+  //   } else {
+  //     console.error("No response data to open as PDF.");
+  //   }
+  // };
+
 
   const showResponseData = async () => {
     if (responseData) {
       try {
-        const pdfDoc = await PDFDocument.create();
-
-        const page = pdfDoc.addPage([400, 400]);
-        const { width, height } = page.getSize();
-
         const textContent = responseData;
-
-        page.drawText(textContent, {
-          x: 50,
-          y: height - 50,
-          size: 12,
-          color: rgb(0, 0, 0),
-        });
-
-        const pdfBytes = await pdfDoc.save();
-
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-        const pdfUrl = URL.createObjectURL(blob);
-
-        window.open(pdfUrl, "_blank");
+  
+        // Create a Blob with the text content
+        const blob = new Blob([textContent], { type: "text/plain" });
+  
+        // Create a URL for the Blob
+        const textUrl = URL.createObjectURL(blob);
+  
+        // Open the URL in a new tab or window
+        window.open(textUrl, "_blank");
       } catch (error) {
-        console.error("Error creating and opening PDF:", error);
+        console.error("Error opening text content:", error);
       }
     } else {
-      console.error("No response data to open as PDF.");
+      console.error("No response data to open as text.");
     }
   };
+  
+
 
   //upload handler
   const handleUpload = async () => {
@@ -264,7 +325,7 @@ function Desktop8() {
                   setIsAgreement(true)
                 }}
               />
-              Hole file
+              Whole file
             </label>
           </div>
         </div>

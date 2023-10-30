@@ -8,6 +8,7 @@ import HeadingBox from "../HeadingBox/HeadingBox";
 import CurvedButton from "../UI/CurvedButton";
 import { Client } from "../http/Config";
 import Loader from "../UI/Loader";
+import { BACKEND_URL } from '../http/Constant';
 
 function Desktop7() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function Desktop7() {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
+
   const showResponseData = () => {
     if (responseData) {
       const newWindow = window.open("", "_blank");
@@ -46,8 +48,23 @@ function Desktop7() {
     }
   };
 
+  // const showResponseData = () => {
+  //   if (responseData) {
+  //     try {
+  //       console.log(BACKEND_URL + responseData.filepath)
+  //      window.open(BACKEND_URL + responseData.filepath, "_blank");
+  //     } catch (error) {
+  //       window.alert("Error saving response data to  file:", error);
+  //     }
+  //   } else {
+  //     window.alert("No response data to save as a  file.");
+  //   }
+  // };
+
+
   const saveToFile = () => {
     if (responseData) {
+      
       const blob = new Blob([responseData], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -71,7 +88,7 @@ function Desktop7() {
           .then((res) => {
             console.log(res.data);
             const data = res.data;
-            setResponseData(JSON.stringify(data));
+            setResponseData(data);
 
             window.alert("Click View Button to See Response");
           })
@@ -99,7 +116,7 @@ function Desktop7() {
           .then((res) => {
             console.log(res.data);
             const data = res.data;
-            setResponseData(JSON.stringify(data));
+            setResponseData(data);
 
             window.alert("Click View Button to See Response");
           })
@@ -234,7 +251,7 @@ function Desktop7() {
                   //setIsPayment(false);
                 }}
               />
-              Hole file
+              Whole file
             </label>
           </div>
         </div>
