@@ -11,7 +11,7 @@ import { PDFDocument, rgb } from "pdf-lib";
 
 function Desktop10() {
   const navigate = useNavigate();
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState();
   const [selectedImgFile, setSelectedImgFile] = useState();
   const [isLoadingText, setIsLoadingText] = useState(false);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
@@ -54,7 +54,7 @@ function Desktop10() {
     setSelectedImgFile(file);
   };
 
-  useEffect(() => {}, [selectedFile]);
+  //useEffect(() => {}, [selectedFile,selectedImgFile]);
 
   const showResponseData = () => {
     //setIsShowData((isShowData) => !isShowData);
@@ -107,52 +107,55 @@ function Desktop10() {
   const clearHandler = () => {
     setSelectedFile(null)
     setSelectedImgFile(null)
+    fileInputRef.current.value = ""
+    imageInputRef.current.value=""
+
   }
 
  
-  const handleTxtToPDF = async (txtData, fileName) => {
-    try {
-      const lines = txtData.split("\n"); // Split the text into lines
+  // const handleTxtToPDF = async (txtData, fileName) => {
+  //   try {
+  //     const lines = txtData.split("\n"); // Split the text into lines
 
-      const pdfDoc = await PDFDocument.create();
-      let currentPage = pdfDoc.addPage([600, 400]);
-      let y = 350; // Initial y position for text
+  //     const pdfDoc = await PDFDocument.create();
+  //     let currentPage = pdfDoc.addPage([600, 400]);
+  //     let y = 350; // Initial y position for text
 
-      // Function to add text to the current page and create a new page if necessary
-      const addTextToPage = async (text) => {
-        // Check if the text exceeds the current page height
-        if (y - 20 < 0) {
-          currentPage = pdfDoc.addPage([600, 400]);
-          y = 350; // Reset y position for the new page
-        }
+  //     // Function to add text to the current page and create a new page if necessary
+  //     const addTextToPage = async (text) => {
+  //       // Check if the text exceeds the current page height
+  //       if (y - 20 < 0) {
+  //         currentPage = pdfDoc.addPage([600, 400]);
+  //         y = 350; // Reset y position for the new page
+  //       }
 
-        currentPage.drawText(text, {
-          x: 50,
-          y,
-          size: 20,
-          color: rgb(0, 0, 0),
-        });
+  //       currentPage.drawText(text, {
+  //         x: 50,
+  //         y,
+  //         size: 20,
+  //         color: rgb(0, 0, 0),
+  //       });
 
-        y -= 20; // Move y position up for the next line of text
-      };
+  //       y -= 20; // Move y position up for the next line of text
+  //     };
 
-      // Iterate through lines and add them to the PDF
-      for (const line of lines) {
-        await addTextToPage(line);
-      }
+  //     // Iterate through lines and add them to the PDF
+  //     for (const line of lines) {
+  //       await addTextToPage(line);
+  //     }
 
-      // Save the PDF
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  //     // Save the PDF
+  //     const pdfBytes = await pdfDoc.save();
+  //     const blob = new Blob([pdfBytes], { type: "application/pdf" });
 
-      const pdfFile = new File([blob], fileName, { type: "application/pdf" });
-      const fileURL = URL.createObjectURL(pdfFile);
-      setSavedHideFileURl(fileURL);
-      localStorage.setItem("savedHideFileURL", fileURL);
-    } catch (err) {
-      console.error("Error converting text to PDF:", err);
-    }
-  };
+  //     const pdfFile = new File([blob], fileName, { type: "application/pdf" });
+  //     const fileURL = URL.createObjectURL(pdfFile);
+  //     setSavedHideFileURl(fileURL);
+  //     localStorage.setItem("savedHideFileURL", fileURL);
+  //   } catch (err) {
+  //     console.error("Error converting text to PDF:", err);
+  //   }
+  // };
 
 
   const handleUpload = async () => {
@@ -162,7 +165,9 @@ function Desktop10() {
       console.log("text file");
       setIsLoadingText(true);
       obj = { file: selectedFile };
-      await Client.post("/highlight_payment", obj)
+      await Client.post("/highlight_payment", obj,{
+        responseType: "arraybuffer", // Important for binary data like PDFs
+      })
         .then((res) => {
           console.log(res.data);
           //const resData = res.data;
