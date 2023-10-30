@@ -19,7 +19,7 @@ function Desktop7() {
   const [isPayment, setIsPayment] = useState(false);
   const [isAgreement, setIsAgreement] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState("PII Data");
+  const [selectedOption, setSelectedOption] = useState("");
 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);

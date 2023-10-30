@@ -16,7 +16,7 @@ function Desktop8() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowData, setIsShowData] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("PII Data");
+  const [selectedOption, setSelectedOption] = useState("");
 
   const [isPIData, setIsPIData] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
