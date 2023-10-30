@@ -159,9 +159,10 @@ function Desktop10() {
       await Client.post("/highlight_payment", obj)
         .then((res) => {
           console.log(res.data);
-          const resData = res.data;
-          const fileName = `dataHide.pdf`;
-          handleTxtToPDF(resData, fileName);
+          //const resData = res.data;
+          //const fileName = `dataHide.pdf`;
+          setPdfData(res.data);
+         // handleTxtToPDF(resData, fileName);
         })
         .catch((err) => {
           console.log(err);
@@ -196,6 +197,7 @@ function Desktop10() {
         await Client.post("/highlight", obj)
           .then((res) => {
             console.log(res.data);
+            setPdfData(res.data)
             //setPdfURL(res.data.pdfURL); // Set the PDF URL received from the server
           })
           .catch((err) => {
@@ -209,7 +211,7 @@ function Desktop10() {
     setIsLoadingImage(false);
     setIsLoadingText(false);
     fileInputRef.current.value = "";
-    imageInputRef.current.value = "";
+    //imageInputRef.current.value = "";
   };
 
   let txtContent = (

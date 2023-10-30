@@ -113,6 +113,7 @@ function Desktop8() {
       const obj = { file: selectedFile };
 
       if (isPayment === true) {
+        console.log("payment")
         console.log(selectedOption);
         await Client.post("/decrypt_payment", obj)
           .then((res) => {
@@ -125,6 +126,7 @@ function Desktop8() {
             window.alert("Click View Button to See Response");
           });
       } else if (isPIData) {
+        console.log("pi data")
         await Client.post("/decrypt", obj)
           .then((res) => {
             console.log(res.data);
@@ -136,6 +138,7 @@ function Desktop8() {
             window.alert("Click View Button to See Response");
           });
       } else if (isAgreement) { 
+        console.log("Hole file")
         await Client.post("/decrypt_wholefile", obj)
         .then((res) => {
           console.log(res.data);
@@ -209,7 +212,7 @@ function Desktop8() {
             {/* text file--------------------------------------------------------  */}
             <input
               type="file"
-              accept=".pdf"
+              accept=".txt"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleFileChange}
               ref={fileInputRef} // Create a ref to the file input
@@ -261,7 +264,7 @@ function Desktop8() {
                   setIsAgreement(true)
                 }}
               />
-              Agreements
+              Hole file
             </label>
           </div>
         </div>
