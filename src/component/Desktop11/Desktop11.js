@@ -288,15 +288,15 @@ function Desktop10() {
           </div>
           {selectedOption !== "Payment Details" ? (
             <div className="item_container11">
-              <p className="colTopic">Image File</p>
-              <input
+              {/* <p className="colTopic">Image File</p> */}
+              {/* <input
                 type="file"
                 accept=".jpg, .jpeg, .png"
                 style={{ display: "none" }} // Hide the default file input
                 onChange={handleImgFileChange}
                 ref={imageInputRef} // Create a ref to the file input
-              />
-              <GradientButton
+              /> */}
+              {/* <GradientButton
                 startGradientColor="rgb(10, 111, 168)" // Start color
                 endGradientColor="rgb(5, 167, 244)"
                 link="#"
@@ -304,7 +304,7 @@ function Desktop10() {
                 height="48px"
                 buttonText="Browse"
               />
-              {imgContent}
+              {imgContent} */}
             </div>
           ) : (
             ""
