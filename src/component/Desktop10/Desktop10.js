@@ -103,6 +103,12 @@ function Desktop10() {
       URL.revokeObjectURL(url);
     }
   };
+
+  const clearHandler = () => {
+    setSelectedFile(null)
+    setSelectedImgFile(null)
+  }
+
  
   const handleTxtToPDF = async (txtData, fileName) => {
     try {
@@ -383,6 +389,19 @@ function Desktop10() {
               onClick={handleDownload}
             />
           </div>
+
+          <div className="item_container_last10">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)"
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              buttonText="Clear"
+              onClick={clearHandler}
+            />
+          </div>
+
+
           {isShowData && responseView}
         </div>
       </div>
