@@ -48,7 +48,7 @@ const [isPayment, setIsPayment] = useState(false);
     setSelectedImgFile(file);
   };
 
-  useEffect(() => {}, [selectedFile]);
+  //useEffect(() => {}, [selectedFile]);
   // Function to handle viewing the file
   const handleViewFile = () => {
     console.log("Clicked View!");
@@ -112,6 +112,14 @@ const [isPayment, setIsPayment] = useState(false);
       console.error("Error converting text to PDF:", err);
     }
   };
+
+  const clearHandler = () => {
+    setSelectedFile(null)
+    setSelectedImgFile(null)
+    fileInputRef.current.value = ""
+    imageInputRef.current.value=""
+
+  }
 
   const handleUpload = async () => {
     let obj;
@@ -349,6 +357,16 @@ const [isPayment, setIsPayment] = useState(false);
               height="48px"
               onClick={handleDownloadFile}
               buttonText="Download"
+            />
+          </div>
+          <div className="item_container_last10">
+            <GradientButton
+              startGradientColor="rgb(10, 111, 168)"
+              endGradientColor="rgb(5, 167, 244)"
+              link="#"
+              height="48px"
+              buttonText="Clear"
+              onClick={clearHandler}
             />
           </div>
         </div>
