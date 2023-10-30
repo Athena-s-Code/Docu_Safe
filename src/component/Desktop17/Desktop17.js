@@ -10,7 +10,7 @@ import Loader from "../UI/Loader";
 import { BACKEND_URL } from '../http/Constant';
 
 function Desktop17() {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState([]);
   const [isLoadingText, setIsLoadingText] = useState(false);
 
   //response
@@ -19,19 +19,29 @@ function Desktop17() {
 
   const fileInputRef = useRef(null);
 
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectedFile(file);
+  // };
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+    const files = event.target.files;
+    setSelectedFile([...selectedFile, ...files]);
   };
+
+ 
 
   const submitHandler = async () => {
     let obj;
+    if (selectedFile.length > 0) {
+      const formData = new FormData();
+      selectedFile.forEach((file, index) => {
+        formData.append("files", file);
+      });
 
-    if (selectedFile) {
       console.log(selectedFile);
       setIsLoadingText(true);
       obj = { files: selectedFile };
-      await Client.post("/job_title_predict", obj)
+      await Client.post("/job_title_predict", formData)
         .then((res) => {
           setResponseData(res.data);
           console.log(res.data);
@@ -63,8 +73,13 @@ function Desktop17() {
   };
 
   let txtContent = (
-    <input type="text" value={selectedFile ? selectedFile.name : ""} readOnly />
+    <input
+      type="text"
+      value={selectedFile.length > 0 ? selectedFile.map(file => file.name).join(", ") : ""}
+      readOnly
+    />
   );
+  
   if (isLoadingText) {
     txtContent = <Loader />;
   }
@@ -92,6 +107,7 @@ function Desktop17() {
           <div className="item_container17">
             <input
               type="file"
+              multiple
               accept=".pdf"
               style={{ display: "none" }} // Hide the default file input
               onChange={handleFileChange}

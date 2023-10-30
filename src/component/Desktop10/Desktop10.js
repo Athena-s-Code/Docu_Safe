@@ -205,7 +205,9 @@ function Desktop10() {
       } else if (selectedImgFile) {
         setIsLoadingImage(true);
         obj = { file: selectedImgFile };
-        await Client.post("/highlight", obj)
+        await Client.post("/highlight", obj,{
+          responseType: "arraybuffer", // Important for binary data like PDFs
+        })
           .then((res) => {
             console.log(res.data);
             setPdfData(res.data)
